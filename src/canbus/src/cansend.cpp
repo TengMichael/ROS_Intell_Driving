@@ -7,7 +7,7 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "cansend");
   ros::NodeHandle nh;
 
-  ros::Publisher chatter_pub = nh.advertise<canbus::candata_multi>("can_device0_can1_send", 2000);
+  ros::Publisher chatter_pub = nh.advertise<canbus::candata_multi>("can_device0_can0_send_chatter", 2000);
   uint8_t j=0;
   ros::Rate loop_rate(1);
   while (ros::ok())
@@ -18,8 +18,7 @@ int main(int argc, char **argv)
       msg.data[i]=i;
     msg.id =j++;
     msg_multi.frame.push_back(msg);
-    msg.id =j++;
-    msg_multi.frame.push_back(msg);
+
     chatter_pub.publish(msg_multi);
 
     ros::spinOnce();

@@ -133,8 +133,11 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/canbus_node.cpp)
-add_executable(can_deviceX_canX src/can_deviceX_canX.cpp)
+add_executable(can_deviceX_init src/can_deviceX_init.cpp)
+add_executable(can_deviceX_canX_rec src/can_deviceX_canX_rec.cpp)
+add_executable(can_deviceX_canX_send src/can_deviceX_canX_send.cpp)
 add_executable(cansend src/cansend.cpp)
+add_executable(test src/test.cpp)
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -143,18 +146,23 @@ add_executable(cansend src/cansend.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-add_dependencies( can_deviceX_canX cansend
+add_dependencies(can_deviceX_init can_deviceX_canX_rec can_deviceX_canX_send cansend test
     ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
-target_link_libraries(can_deviceX_canX ${catkin_LIBRARIES})
+target_link_libraries(can_deviceX_init ${catkin_LIBRARIES})
+target_link_libraries(can_deviceX_canX_rec ${catkin_LIBRARIES})
+target_link_libraries(can_deviceX_canX_send ${catkin_LIBRARIES})
 target_link_libraries(cansend ${catkin_LIBRARIES})
+target_link_libraries(test ${catkin_LIBRARIES})
 
 LINK_DIRECTORIES(${catkin_LIB_DIRS} lib)
-target_link_libraries(can_deviceX_canX ${catkin_LIBRARIES} controlcan)
+target_link_libraries(can_deviceX_init ${catkin_LIBRARIES} controlcan)
+target_link_libraries(can_deviceX_canX_rec ${catkin_LIBRARIES} controlcan)
+target_link_libraries(can_deviceX_canX_send ${catkin_LIBRARIES} controlcan)
 #############
 ## Install ##
 #############
