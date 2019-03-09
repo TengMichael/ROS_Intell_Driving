@@ -1,0 +1,16 @@
+uint8 ID
+float32 DistX
+float32 DistY
+float32 VrelX
+float32 VrelY
+float32 RCS
+uint8 DynProp
+uint8 Orientation_rms
+uint8 MeasState
+uint8 ProbOfExist
+float32 ArelX
+float32 ArelY
+uint8 Class
+float32 OrientationAngel
+float32 Length
+float32 Width

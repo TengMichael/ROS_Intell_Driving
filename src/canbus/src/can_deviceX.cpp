@@ -66,16 +66,16 @@ void chatterCallback(const canbus::candata_multi::ConstPtr& msg,UINT8 DevInd,UIN
 }
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "can_deviceX_canX");
+  ros::init(argc, argv, "can_deviceX");
   ros::NodeHandle nh;
 
   std::stringstream rec1,rec2;
   rec1 << "can_device" << argv[1]<<"_can1_receive";
   ROS_INFO("%s", rec1.str().c_str());
-  ros::Publisher rec1_pub = nh.advertise<canbus::candata_multi>(rec1.str().c_str(), 2000);
+  ros::Publisher rec1_pub = nh.advertise<canbus::candata_multi>(rec1.str().c_str(), 1000);
   rec2 << "can_device" << argv[1]<<"_can2_receive";
   ROS_INFO("%s", rec2.str().c_str());
-  ros::Publisher rec2_pub = nh.advertise<canbus::candata_multi>(rec2.str().c_str(), 2000);
+  ros::Publisher rec2_pub = nh.advertise<canbus::candata_multi>(rec2.str().c_str(), 1000);
 
   UINT8 DevInd;//need to change
   DevInd=argv[1][0]-48;//from str to dec
@@ -92,8 +92,8 @@ int main(int argc, char **argv)
   ROS_INFO("%s", send1.str().c_str());
   send2 << "can_device" << argv[1]<<"_can2_send";
   ROS_INFO("%s", send2.str().c_str());
-  ros::Subscriber send1_sub = nh.subscribe<canbus::candata_multi> (send1.str().c_str(), 2000, boost::bind(&chatterCallback,_1,DevInd,Can1));
-  ros::Subscriber send2_sub = nh.subscribe<canbus::candata_multi> (send2.str().c_str(), 2000, boost::bind(&chatterCallback,_1,DevInd,Can2));
+  ros::Subscriber send1_sub = nh.subscribe<canbus::candata_multi> (send1.str().c_str(), 1000, boost::bind(&chatterCallback,_1,DevInd,Can1));
+  ros::Subscriber send2_sub = nh.subscribe<canbus::candata_multi> (send2.str().c_str(), 1000, boost::bind(&chatterCallback,_1,DevInd,Can2));
 
   ros::Rate loop_rate(20);
   while (ros::ok())
@@ -107,7 +107,8 @@ int main(int argc, char **argv)
       msg.id=CanData1[i].ID;
       memcpy(&(msg.data),&(CanData1[i].Data),sizeof(CanData1[i].Data));
       msg_multi1.frame.push_back(msg);
-      ROS_INFO("Rec ID: %x %d %d",msg.id,msg.data[0],msg.data[7]);
+      ROS_INFO("Rec ID: %x %d %d %d %d %d %d %d %d",msg.id,msg.data[0],msg.data[1]
+          ,msg.data[2],msg.data[3],msg.data[4],msg.data[5],msg.data[6],msg.data[7]);
     }
     rec1_pub.publish(msg_multi1);
     /**************CAN2 received data publish***************************/
@@ -117,7 +118,8 @@ int main(int argc, char **argv)
       msg.id=CanData2[i].ID;
       memcpy(&(msg.data),&(CanData2[i].Data),sizeof(CanData2[i].Data));
       msg_multi2.frame.push_back(msg);
-      ROS_INFO("Rec ID: %x %d %d",msg.id,msg.data[0],msg.data[7]);
+      ROS_INFO("Rec ID: %x %d %d %d %d %d %d %d %d",msg.id,msg.data[0],msg.data[1]
+          ,msg.data[2],msg.data[3],msg.data[4],msg.data[5],msg.data[6],msg.data[7]);
     }
     rec2_pub.publish(msg_multi2);
     ros::spinOnce();
