@@ -133,7 +133,7 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/canbus_node.cpp)
-add_executable(can_deviceX_canX src/can_deviceX_canX.cpp)
+add_executable(can_deviceX src/can_deviceX.cpp)
 add_executable(cansend src/cansend.cpp)
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -143,18 +143,18 @@ add_executable(cansend src/cansend.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-add_dependencies( can_deviceX_canX cansend
+add_dependencies( can_deviceX cansend
     ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
-target_link_libraries(can_deviceX_canX ${catkin_LIBRARIES})
+target_link_libraries(can_deviceX ${catkin_LIBRARIES})
 target_link_libraries(cansend ${catkin_LIBRARIES})
 
 LINK_DIRECTORIES(${catkin_LIB_DIRS} lib)
-target_link_libraries(can_deviceX_canX ${catkin_LIBRARIES} controlcan)
+target_link_libraries(can_deviceX ${catkin_LIBRARIES} controlcan)
 #############
 ## Install ##
 #############
