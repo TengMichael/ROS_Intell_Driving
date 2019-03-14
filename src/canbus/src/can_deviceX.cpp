@@ -107,7 +107,7 @@ int main(int argc, char **argv)
       msg.id=CanData1[i].ID;
       memcpy(&(msg.data),&(CanData1[i].Data),sizeof(CanData1[i].Data));
       msg_multi1.frame.push_back(msg);
-      ROS_INFO("Rec ID: %x %d %d %d %d %d %d %d %d",msg.id,msg.data[0],msg.data[1]
+      ROS_INFO("CAN1_Rec ID: %x %d %d %d %d %d %d %d %d",msg.id,msg.data[0],msg.data[1]
           ,msg.data[2],msg.data[3],msg.data[4],msg.data[5],msg.data[6],msg.data[7]);
     }
     rec1_pub.publish(msg_multi1);
@@ -118,7 +118,7 @@ int main(int argc, char **argv)
       msg.id=CanData2[i].ID;
       memcpy(&(msg.data),&(CanData2[i].Data),sizeof(CanData2[i].Data));
       msg_multi2.frame.push_back(msg);
-      ROS_INFO("Rec ID: %x %d %d %d %d %d %d %d %d",msg.id,msg.data[0],msg.data[1]
+      ROS_INFO("CAN2_Rec ID: %x %d %d %d %d %d %d %d %d",msg.id,msg.data[0],msg.data[1]
           ,msg.data[2],msg.data[3],msg.data[4],msg.data[5],msg.data[6],msg.data[7]);
     }
     rec2_pub.publish(msg_multi2);
