@@ -66,7 +66,7 @@ void chatterCallback(const canbus::candata_multi::ConstPtr& msg,UINT8 DevInd,UIN
 }
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "can_deviceX");
+  ros::init(argc, argv, "can_device2");
   ros::NodeHandle nh;
 
   std::stringstream rec1,rec2;
@@ -95,7 +95,7 @@ int main(int argc, char **argv)
   ros::Subscriber send1_sub = nh.subscribe<canbus::candata_multi> (send1.str().c_str(), 1000, boost::bind(&chatterCallback,_1,DevInd,Can1));
   ros::Subscriber send2_sub = nh.subscribe<canbus::candata_multi> (send2.str().c_str(), 1000, boost::bind(&chatterCallback,_1,DevInd,Can2));
 
-  ros::Rate loop_rate(20);
+  ros::Rate loop_rate(10);
   while (ros::ok())
   {
     canbus::candata msg;
@@ -110,7 +110,7 @@ int main(int argc, char **argv)
       ROS_INFO("CAN1_Rec ID: %x %d %d %d %d %d %d %d %d",msg.id,msg.data[0],msg.data[1]
           ,msg.data[2],msg.data[3],msg.data[4],msg.data[5],msg.data[6],msg.data[7]);
     }
-    rec1_pub.publish(msg_multi1);
+    if(CAN_RecNum>0)rec1_pub.publish(msg_multi1);
     /**************CAN2 received data publish***************************/
     CAN_RecNum=CAN_Receive(CanData2,DevInd,Can2,CAN_BuffMax);
     //ROS_INFO("CAN_RecNum: %d",CAN_RecNum);
@@ -121,7 +121,7 @@ int main(int argc, char **argv)
       ROS_INFO("CAN2_Rec ID: %x %d %d %d %d %d %d %d %d",msg.id,msg.data[0],msg.data[1]
           ,msg.data[2],msg.data[3],msg.data[4],msg.data[5],msg.data[6],msg.data[7]);
     }
-    rec2_pub.publish(msg_multi2);
+    if(CAN_RecNum>0)rec2_pub.publish(msg_multi2);
     ros::spinOnce();
     loop_rate.sleep();
   }

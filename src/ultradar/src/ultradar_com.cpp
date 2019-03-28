@@ -35,7 +35,7 @@ int main (int argc, char** argv){
      }else{
          return -1;
      }
-     ros::Rate loop_rate(5);
+     ros::Rate loop_rate(1);
      while(ros::ok()){
          ros::spinOnce();
          //if(ros_ser.available()){
@@ -50,7 +50,7 @@ int main (int argc, char** argv){
                usleep(15);
                ros_ser.read(arr,2);
                serial_data.data.push_back((uint16_t)arr[0]*256+arr[1]);
-               ROS_INFO("Read: %d",serial_data.data[i]);
+               ROS_INFO("Read ch%d: %d",i,serial_data.data[i]);
              }
              //serial_data.data = ros_ser.read(ros_ser.available());
              //ROS_INFO_STREAM("Read: "<<serial_data.data);
