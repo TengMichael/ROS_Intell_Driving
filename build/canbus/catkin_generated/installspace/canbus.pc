@@ -1,8 +1,0 @@
-prefix=/home/michael/Desktop/Intell_driving/ROS_Intell_Driving/install
-
-Name: canbus
-Description: Description of canbus
-Version: 0.1.0
-Cflags: -I/home/michael/Desktop/Intell_driving/ROS_Intell_Driving/install/include
-Libs: -L/home/michael/Desktop/Intell_driving/ROS_Intell_Driving/install/lib 
-Requires: 
