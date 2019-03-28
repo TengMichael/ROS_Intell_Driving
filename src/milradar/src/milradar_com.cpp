@@ -51,6 +51,7 @@ void Radar408_dataprocess1(milradar::obj408 objs408[],uint8_t *ID_Total_Prt){
 void Radar408_dataprocess(void){
     uint8_t k=0;
     milradar::obj408 objs408_temp[Object_408Num]={};
+    //ROS_INFO("Obj408_ID_Total: %d",Obj408_ID_Total);
     for(uint8_t i=0;i<Obj408_ID_Total;i++){
         if((objs408[i].RCS<=RCS_threshold)||(objs408[i].ProbOfExist<=ProbOfExist_threshold)||
                 (objs408[i].DistX==0)||(objs408[i].DistY==0))
@@ -60,8 +61,9 @@ void Radar408_dataprocess(void){
             memcpy(&(objs408_temp[k]),&(objs408[i]),sizeof(objs408[i]));
             k++;
         }
-        Obj408_ID_Total=k;
     }
+    Obj408_ID_Total=k;
+    //ROS_INFO("Obj408_ID_Total_AT: %d",Obj408_ID_Total);
     memcpy(&(objs408),&(objs408_temp),sizeof(objs408_temp));
 }
 /**********data processing for the radar 208************/
@@ -89,15 +91,13 @@ void Radar208_dataprocess(void){
 /*Receive and analysis radar208 CAN data to objects information*/
 void Radar208_extract(const canbus::candata_multi CanData){
     uint8_t Obj_index;
-    uint8_t Obj_ID_Total[Sensors_208Num]={0};
-    uint8_t *Data;
-    memset(objs208,0,sizeof(objs208));
+    uint8_t Data[8];
+    //memset(objs208,0,sizeof(objs208));
     for (uint16_t i = 0; i < CanData.frame.size(); i++) {
         memcpy(Data,&(CanData.frame[i].data),sizeof(CanData.frame[i].data));
         for(uint16_t j=0;j<Sensors_208Num;j++){
             if (CanData.frame[i].id==(uint16_t)(0x61B+0x10*j)){
-                Obj_ID_Total[j] = Data[0];
-                Obj208_ID_Total[j]=Obj_ID_Total[j];
+                Obj208_ID_Total[j]= Data[0];
             }
             else if (CanData.frame[i].id==(uint16_t)(0x61C+0x10*j)){
                 Obj_index =Data[3]%32;
@@ -121,17 +121,17 @@ void Radar208_extract(const canbus::candata_multi CanData){
 }
 /*Receive and analysis radar408 CAN data to objects information*/
 void Radar408_extract(const canbus::candata_multi CanData){
-    uint8_t Obj_ID,Obj_index,Obj_ID_Total;
-    uint8_t *Data;
+    uint8_t Obj_ID;
+    uint8_t Obj_index=0;
+    uint8_t Data[8];
     uint8_t objs408_mask[Object_408Num];
-    milradar::obj408 objs408_temp[Object_408Num]={};
+    milradar::obj408 objs408_temp[Object_408Num];
 
     for (uint16_t i= 0; i < CanData.frame.size(); i++) {
         memcpy(Data,&(CanData.frame[i].data),sizeof(CanData.frame[i].data));
         switch (CanData.frame[i].id) {
         case 0x60A:
-            Obj_ID_Total = Data[0];
-            Obj408_ID_Total = Obj_ID_Total;
+            Obj408_ID_Total = Data[0];
             break;
         case 0x60B:
             Obj_ID = Data[0];
@@ -163,8 +163,8 @@ void Radar408_extract(const canbus::candata_multi CanData){
         }
     }
     memset(objs408,0,sizeof(objs408));
-    for (uint16_t i= 0; i< Obj_ID_Total; i++)
-        /***************rank the objects matrix by index other than random object ID****************/
+    /***************rank the objects matrix by index other than random object ID****************/
+    for (uint16_t i= 0; i< Obj408_ID_Total; i++)
         memcpy(&(objs408[i]),&(objs408_temp[objs408_mask[i]]),sizeof(objs408[i]));
     Radar408_dataprocess();
 }
@@ -174,8 +174,9 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "milradar_com");
     ros::NodeHandle nh;
 
-    ros::Subscriber sub1 = nh.subscribe ("can_device0_can1_receive", 1000,Radar408_extract);
+    ros::Subscriber sub1 = nh.subscribe ("can_device0_can1_receive", 1000,Radar208_extract);
     ros::Subscriber sub2 = nh.subscribe ("can_device0_can2_receive", 1000,Radar208_extract);
+    ros::Subscriber sub3 = nh.subscribe ("can_device1_can2_receive", 1000,Radar208_extract);
 
     ros::Publisher pub408= nh.advertise<milradar::obj408_multi>("milradar_obj408", 1000);
     ros::Publisher pub208_1= nh.advertise<milradar::obj208_multi>("milradar_obj208_1", 1000);
@@ -184,7 +185,6 @@ int main(int argc, char **argv)
     ros::Publisher pub208_4= nh.advertise<milradar::obj208_multi>("milradar_obj208_4", 1000);
     ros::Publisher pub208_5= nh.advertise<milradar::obj208_multi>("milradar_obj208_5", 1000);
     ros::Publisher pub208_6= nh.advertise<milradar::obj208_multi>("milradar_obj208_6", 1000);
-
     //ros::Publisher pub208= nh.advertise<milradar::obj208>("milradar_obj208", 1000);
 
     ros::Rate loop_rate(10);
@@ -192,7 +192,8 @@ int main(int argc, char **argv)
     {
         milradar::obj208_multi objs208multiarray[Sensors_208Num];
         milradar::obj408_multi objs408multiarray;
-
+        //ROS_INFO("Obj408_ID_Total: %d",Obj408_ID_Total);
+        //ROS_INFO("objs408[i].ID: %d",objs408[0].ID);
         for(uint16_t i=0;i<Obj408_ID_Total;i++)
             objs408multiarray.objs.push_back(objs408[i]);
         for(uint16_t j=0;j<Sensors_208Num;j++){

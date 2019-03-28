@@ -1,0 +1,2 @@
+set(milradar_MESSAGE_FILES "/home/michael/Desktop/Intell_driving/ROS_Intell_Driving/src/milradar/msg/obj208.msg;/home/michael/Desktop/Intell_driving/ROS_Intell_Driving/src/milradar/msg/obj408.msg;/home/michael/Desktop/Intell_driving/ROS_Intell_Driving/src/milradar/msg/obj208_multi.msg;/home/michael/Desktop/Intell_driving/ROS_Intell_Driving/src/milradar/msg/obj408_multi.msg")
+set(milradar_SERVICE_FILES "")
