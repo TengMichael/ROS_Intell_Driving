@@ -1,0 +1,2 @@
+canbus:milradar:serial:ultradar
+-G CodeBlocks - Unix Makefiles -DCMAKE_BUILD_TYPE=Debug -DCATKIN_DEVEL_PREFIX=/home/michael/Desktop/Intell_driving/ROS_Intell_Driving/devel -DCMAKE_INSTALL_PREFIX=/home/michael/Desktop/Intell_driving/ROS_Intell_Driving/install

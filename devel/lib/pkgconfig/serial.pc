@@ -1,0 +1,8 @@
+prefix=/home/michael/Desktop/Intell_driving/ROS_Intell_Driving/devel
+
+Name: serial
+Description: Description of serial
+Version: 1.2.1
+Cflags: -I/home/michael/Desktop/Intell_driving/ROS_Intell_Driving/src/serial/include
+Libs: -L/home/michael/Desktop/Intell_driving/ROS_Intell_Driving/devel/lib -lserial -lrt -lpthread
+Requires: 
