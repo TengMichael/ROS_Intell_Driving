@@ -21,13 +21,13 @@ void display208(const milradar::obj208_multi::ConstPtr& msg,uint8_t ch)
   for (i = 0; i < msg->objs.size(); i++) {
     if ((msg->objs[i].DistX != 0)&&(msg->objs[i].RCS>= 0))
     {
-      rectangle(objects_image, Rect(msg->objs[i].DistX, msg->objs[i].DistY+ Win_height / 2, 4, 4),
+      rectangle(objects_image, Rect(msg->objs[i].DistX*2, msg->objs[i].DistY*2+ Win_height / 2, 4, 4),
                 Scalar(0, 0, 255),//B G R
                 -1, LINE_8);
     }
   }
-  if(i>0)imshow(objects_window.str(), objects_image);
-  //moveWindow(objects_window, 100, 200);
+  imshow(objects_window.str(), objects_image);
+  moveWindow(objects_window.str(), Win_width*((ch-1)%2),Win_height*((ch-1)/2));
   waitKey(10);
 }
 
@@ -39,11 +39,11 @@ void display408(const milradar::obj408_multi::ConstPtr& msg)
   line(objects_image, Point(0, Win_height / 2 - 50), Point(Win_width, Win_height / 2 - 50),Scalar(0, 255, 255), 2, LINE_8);//left lane
   line(objects_image, Point(0, Win_height / 2 + 50), Point(Win_width, Win_height / 2 + 50),Scalar(0, 255, 255), 2, LINE_8);//right lane
   for ( i = 0; i < msg->objs.size(); i++) {
-    rectangle(objects_image, Rect(msg->objs[i].DistX*10, msg->objs[i].DistY*10+ Win_height / 2, 10, 10),
+    rectangle(objects_image, Rect(msg->objs[i].DistX*2, msg->objs[i].DistY*2+ Win_height / 2, 4, 4),
               Scalar(255, 0, 0),//B G R
               -1, LINE_8);
   }
-  if(i>0)imshow(objects_window, objects_image);
+  imshow(objects_window, objects_image);
   //moveWindow(objects_window, 100, 200);
   waitKey(10);
 }
