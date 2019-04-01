@@ -28,12 +28,20 @@ include_directories(
  include
  ${catkin_INCLUDE_DIRS}
 )
-
+add_executable(milradar208_12 src/milradar208_12.cpp)
+add_executable(milradar208_35 src/milradar208_35.cpp)
+add_executable(milradar208_46 src/milradar208_46.cpp)
+add_executable(milradar408 src/milradar408.cpp)
 add_executable(milradar_com src/milradar_com.cpp)
 add_executable(milradar_display src/milradar_display.cpp)
-add_dependencies(milradar_com milradar_display
+add_dependencies(milradar_com milradar408 milradar208_12 milradar208_35 milradar208_46 milradar_display
     ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
 target_link_libraries(milradar_com ${catkin_LIBRARIES})
 target_link_libraries(milradar_display ${catkin_LIBRARIES})
+target_link_libraries(milradar408 ${catkin_LIBRARIES})
+target_link_libraries(milradar208_12 ${catkin_LIBRARIES})
+target_link_libraries(milradar208_35 ${catkin_LIBRARIES})
+target_link_libraries(milradar208_46 ${catkin_LIBRARIES})
 
 target_link_libraries(milradar_display ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})

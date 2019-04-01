@@ -1,6 +1,7 @@
 <launch>
- <node pkg="canbus" name="can_device0" type="can_device0" args="0" respawn="true"/>
- <node pkg="canbus" name="can_device1" type="can_device1" args="1" respawn="true"/>
- <node pkg="milradar" name="milradar_com" type="milradar_com" respawn="true"/>
- <node pkg="milradar" name="milradar_display" type="milradar_display" respawn="true"/>
+ <node pkg="milradar" name="milradar408" type="milradar408" output="screen" respawn="true"/>
+ <node pkg="milradar" name="milradar208_12" type="milradar208_12" output="screen" respawn="true"/>
+ <node pkg="milradar" name="milradar208_35" type="milradar208_35" output="screen" respawn="true"/>
+ <node pkg="milradar" name="milradar208_46" type="milradar208_46" output="screen" respawn="true"/>
+ <node pkg="milradar" name="milradar_display" type="milradar_display" output="screen" respawn="true"/>
 </launch>
