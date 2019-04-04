@@ -1,0 +1,15 @@
+(cl:defpackage Mobileye-msg
+  (:use )
+  (:export
+   "<MOBILEYE_TSR>"
+   "MOBILEYE_TSR"
+   "<MOBILEYE_TSR_MULTI>"
+   "MOBILEYE_TSR_MULTI"
+   "<MOBILEYE_OBSTACLE_MULTI>"
+   "MOBILEYE_OBSTACLE_MULTI"
+   "<MOBILEYE_OBSTACLE>"
+   "MOBILEYE_OBSTACLE"
+   "<MOBILEYE_LANE>"
+   "MOBILEYE_LANE"
+  ))
+

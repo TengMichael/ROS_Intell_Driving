@@ -1,0 +1,21 @@
+
+(cl:in-package :asdf)
+
+(defsystem "mobileye-msg"
+  :depends-on (:roslisp-msg-protocol :roslisp-utils )
+  :components ((:file "_package")
+    (:file "mobileye_Lane" :depends-on ("_package_mobileye_Lane"))
+    (:file "_package_mobileye_Lane" :depends-on ("_package"))
+    (:file "mobileye_TSR" :depends-on ("_package_mobileye_TSR"))
+    (:file "_package_mobileye_TSR" :depends-on ("_package"))
+    (:file "mobileye_Obstacle" :depends-on ("_package_mobileye_Obstacle"))
+    (:file "_package_mobileye_Obstacle" :depends-on ("_package"))
+    (:file "mobileye_Obstacle_multi" :depends-on ("_package_mobileye_Obstacle_multi"))
+    (:file "_package_mobileye_Obstacle_multi" :depends-on ("_package"))
+    (:file "mobileye_LKA_Lane_multi" :depends-on ("_package_mobileye_LKA_Lane_multi"))
+    (:file "_package_mobileye_LKA_Lane_multi" :depends-on ("_package"))
+    (:file "mobileye_LKA_Lane" :depends-on ("_package_mobileye_LKA_Lane"))
+    (:file "_package_mobileye_LKA_Lane" :depends-on ("_package"))
+    (:file "mobileye_TSR_multi" :depends-on ("_package_mobileye_TSR_multi"))
+    (:file "_package_mobileye_TSR_multi" :depends-on ("_package"))
+  ))

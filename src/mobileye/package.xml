@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>milradar</name>
+  <name>mobileye</name>
   <version>0.1.0</version>
-  <description>The milradar package</description>
+  <description>The mobileye package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
@@ -13,13 +13,13 @@
   <!-- One license tag required, multiple allowed, one license per tag -->
   <!-- Commonly used license strings: -->
   <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
-  <license>BSD</license>
+  <license>Apache 2.0</license>
 
 
   <!-- Url tags are optional, but multiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/milradar</url> -->
+  <!-- <url type="website">http://wiki.ros.org/mobileye</url> -->
 
 
   <!-- Author tags are optional, multiple are allowed, one per tag -->
@@ -27,7 +27,6 @@
   <!-- Example: -->
   <!-- <author email="jane.doe@example.com">Jane Doe</author> -->
   <author >Michael Teng</author>
-
 
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>roscpp std_msgs message_generation </build_depend>

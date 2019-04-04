@@ -7,44 +7,48 @@
 
 using namespace cv;
 
-#define Win_height 200
-#define Win_width 400
+#define load_width 20*10
+#define load_length 60*10
+#define car_length 2*10
+#define car_width 1*10
 
 void display208(const milradar::obj208_multi::ConstPtr& msg,uint8_t ch)
 {
   uint8_t i=0;
-  std::stringstream objects_window;
-  objects_window<<"Objs208_sensor"<<(ch+10);
-  Mat objects_image = Mat(Win_height, Win_width, CV_8UC3, Scalar(205, 205, 205));
-  line(objects_image, Point(0, Win_height / 2 - 50), Point(Win_width, Win_height / 2 - 50),Scalar(0, 255, 255), 2, LINE_8);//left lane
-  line(objects_image, Point(0, Win_height / 2 + 50), Point(Win_width, Win_height / 2 + 50),Scalar(0, 255, 255), 2, LINE_8);//right lane
+  std::stringstream window;
+  window<<"Objs208_sensor"<<(ch+10);
+  Mat radar_image = Mat(load_length,load_width,CV_8UC3, Scalar(205, 205, 205));
+  rectangle(radar_image, Rect(load_width/2-car_width/2,load_length-car_length,car_width, car_length), Scalar(0,255,0),2,LINE_8,0);
+  line(radar_image, Point(load_width/4,0), Point(load_width/4,load_length),Scalar(0, 255, 255), 2, LINE_8);//left lane
+  line(radar_image, Point(load_width/4*3,0), Point(load_width/4*3,load_length),Scalar(0, 255, 255), 2, LINE_8);//right lane
   for (i = 0; i < msg->objs.size(); i++) {
     if ((msg->objs[i].DistX != 0)&&(msg->objs[i].RCS>= 0))
     {
-      rectangle(objects_image, Rect(msg->objs[i].DistX*4, msg->objs[i].DistY+ Win_height / 2, 4, 4),
+      rectangle(radar_image, Rect(msg->objs[i].DistY+ load_width / 2,load_length-msg->objs[i].DistX*4,4,4),
                 Scalar(fabs(msg->objs[i].VrelX)*20, fabs(msg->objs[i].VrelY)*20, 55),//B G R
                 -1, LINE_8);
     }
   }
-  imshow(objects_window.str(), objects_image);
-  moveWindow(objects_window.str(), (Win_width+100)*((ch-1)%2),(Win_height+100)*((ch-1)/2));
+  imshow(window.str(), radar_image);
+  moveWindow(window.str(),50+load_width*(ch-1),0);
   waitKey(10);
 }
 
 void display408(const milradar::obj408_multi::ConstPtr& msg)
 {
   uint8_t i=0;
-  char objects_window[] = "Objs408";
-  Mat objects_image = Mat(Win_height, Win_width, CV_8UC3, Scalar(205, 205, 205));
-  line(objects_image, Point(0, Win_height / 2 - 50), Point(Win_width, Win_height / 2 - 50),Scalar(0, 255, 255), 2, LINE_8);//left lane
-  line(objects_image, Point(0, Win_height / 2 + 50), Point(Win_width, Win_height / 2 + 50),Scalar(0, 255, 255), 2, LINE_8);//right lane
+  char window[] = "Objs408";
+  Mat radar_image = Mat(load_length,load_width,CV_8UC3, Scalar(205, 205, 205));
+  rectangle(radar_image, Rect(load_width/2-car_width/2,load_length-car_length,car_width, car_length), Scalar(0,255,0),2,LINE_8,0);
+  line(radar_image, Point(load_width/4,0), Point(load_width/4,load_length),Scalar(0, 255, 255), 2, LINE_8);//left lane
+  line(radar_image, Point(load_width/4*3,0), Point(load_width/4*3,load_length),Scalar(0, 255, 255), 2, LINE_8);//right lane
   for ( i = 0; i < msg->objs.size(); i++) {
-    rectangle(objects_image, Rect(msg->objs[i].DistX*2, msg->objs[i].DistY+ Win_height / 2, 4, 4),
-              Scalar(55, fabs(msg->objs[i].VrelX)*20, fabs(msg->objs[i].VrelY)*20),//B G R
+    rectangle(radar_image, Rect(msg->objs[i].DistY+ load_width / 2,load_length-msg->objs[i].DistX*4,4,4),
+              Scalar(fabs(msg->objs[i].VrelX)*20, fabs(msg->objs[i].VrelY)*20, 55),//B G R
               -1, LINE_8);
   }
-  imshow(objects_window, objects_image);
-  //moveWindow(objects_window, 100, 200);
+  imshow(window, radar_image);
+  //moveWindow(window,load_width*(ch-1),0);
   waitKey(10);
 }
 int main(int argc, char **argv)

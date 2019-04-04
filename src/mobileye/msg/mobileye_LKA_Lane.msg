@@ -1,0 +1,9 @@
+uint8 MType
+uint8 Quality
+uint8 Model_degree
+float32 Position
+float32 Curvature
+float32 Heading
+float32 Curvature_deriv
+float32 Width
+float32 View_range
