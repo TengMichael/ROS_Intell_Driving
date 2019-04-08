@@ -41,7 +41,7 @@ struct mobileye_Obstacle_
     , CIPV(0)
     , AngleRate(0.0)
     , ScaleChange(0.0)
-    , AccelX(0.0)
+    , ArelX(0.0)
     , Angle(0.0)
     , Replaced(0)  {
     }
@@ -63,7 +63,7 @@ struct mobileye_Obstacle_
     , CIPV(0)
     , AngleRate(0.0)
     , ScaleChange(0.0)
-    , AccelX(0.0)
+    , ArelX(0.0)
     , Angle(0.0)
     , Replaced(0)  {
   (void)_alloc;
@@ -122,8 +122,8 @@ struct mobileye_Obstacle_
    typedef float _ScaleChange_type;
   _ScaleChange_type ScaleChange;
 
-   typedef float _AccelX_type;
-  _AccelX_type AccelX;
+   typedef float _ArelX_type;
+  _ArelX_type ArelX;
 
    typedef float _Angle_type;
   _Angle_type Angle;
@@ -208,12 +208,12 @@ struct MD5Sum< ::mobileye::mobileye_Obstacle_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "daa4d2ee849152973a6c14f07fc64bd5";
+    return "5d3c8bbb55939d00b6248790b776a82f";
   }
 
   static const char* value(const ::mobileye::mobileye_Obstacle_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xdaa4d2ee84915297ULL;
-  static const uint64_t static_value2 = 0x3a6c14f07fc64bd5ULL;
+  static const uint64_t static_value1 = 0x5d3c8bbb55939d00ULL;
+  static const uint64_t static_value2 = 0xb6248790b776a82fULL;
 };
 
 template<class ContainerAllocator>
@@ -249,7 +249,7 @@ uint8 ObsLane\n\
 uint8 CIPV\n\
 float32 AngleRate\n\
 float32 ScaleChange\n\
-float32 AccelX\n\
+float32 ArelX\n\
 float32 Angle\n\
 uint8 Replaced\n\
 ";
@@ -287,7 +287,7 @@ namespace serialization
       stream.next(m.CIPV);
       stream.next(m.AngleRate);
       stream.next(m.ScaleChange);
-      stream.next(m.AccelX);
+      stream.next(m.ArelX);
       stream.next(m.Angle);
       stream.next(m.Replaced);
     }
@@ -342,8 +342,8 @@ struct Printer< ::mobileye::mobileye_Obstacle_<ContainerAllocator> >
     Printer<float>::stream(s, indent + "  ", v.AngleRate);
     s << indent << "ScaleChange: ";
     Printer<float>::stream(s, indent + "  ", v.ScaleChange);
-    s << indent << "AccelX: ";
-    Printer<float>::stream(s, indent + "  ", v.AccelX);
+    s << indent << "ArelX: ";
+    Printer<float>::stream(s, indent + "  ", v.ArelX);
     s << indent << "Angle: ";
     Printer<float>::stream(s, indent + "  ", v.Angle);
     s << indent << "Replaced: ";

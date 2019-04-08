@@ -92,9 +92,9 @@
     :initarg :ScaleChange
     :type cl:float
     :initform 0.0)
-   (AccelX
-    :reader AccelX
-    :initarg :AccelX
+   (ArelX
+    :reader ArelX
+    :initarg :ArelX
     :type cl:float
     :initform 0.0)
    (Angle
@@ -202,10 +202,10 @@
   (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader mobileye-msg:ScaleChange-val is deprecated.  Use mobileye-msg:ScaleChange instead.")
   (ScaleChange m))
 
-(cl:ensure-generic-function 'AccelX-val :lambda-list '(m))
-(cl:defmethod AccelX-val ((m <mobileye_Obstacle>))
-  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader mobileye-msg:AccelX-val is deprecated.  Use mobileye-msg:AccelX instead.")
-  (AccelX m))
+(cl:ensure-generic-function 'ArelX-val :lambda-list '(m))
+(cl:defmethod ArelX-val ((m <mobileye_Obstacle>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader mobileye-msg:ArelX-val is deprecated.  Use mobileye-msg:ArelX instead.")
+  (ArelX m))
 
 (cl:ensure-generic-function 'Angle-val :lambda-list '(m))
 (cl:defmethod Angle-val ((m <mobileye_Obstacle>))
@@ -263,7 +263,7 @@
     (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
-  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'AccelX))))
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'ArelX))))
     (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
@@ -334,7 +334,7 @@
       (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
       (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
       (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
-    (cl:setf (cl:slot-value msg 'AccelX) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:setf (cl:slot-value msg 'ArelX) (roslisp-utils:decode-single-float-bits bits)))
     (cl:let ((bits 0))
       (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
       (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
@@ -352,16 +352,16 @@
   "mobileye/mobileye_Obstacle")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<mobileye_Obstacle>)))
   "Returns md5sum for a message object of type '<mobileye_Obstacle>"
-  "daa4d2ee849152973a6c14f07fc64bd5")
+  "5d3c8bbb55939d00b6248790b776a82f")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'mobileye_Obstacle)))
   "Returns md5sum for a message object of type 'mobileye_Obstacle"
-  "daa4d2ee849152973a6c14f07fc64bd5")
+  "5d3c8bbb55939d00b6248790b776a82f")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<mobileye_Obstacle>)))
   "Returns full string definition for message of type '<mobileye_Obstacle>"
-  (cl:format cl:nil "uint8 ID~%float32 PosX~%float32 PosY~%uint8 Blinker~%uint8 CutState~%float32 VrelX~%uint8 MType~%uint8 Status~%uint8 Brake~%uint8 Valid~%float32 Length~%float32 Width~%uint8 Age~%uint8 ObsLane~%uint8 CIPV~%float32 AngleRate~%float32 ScaleChange~%float32 AccelX~%float32 Angle~%uint8 Replaced~%~%~%"))
+  (cl:format cl:nil "uint8 ID~%float32 PosX~%float32 PosY~%uint8 Blinker~%uint8 CutState~%float32 VrelX~%uint8 MType~%uint8 Status~%uint8 Brake~%uint8 Valid~%float32 Length~%float32 Width~%uint8 Age~%uint8 ObsLane~%uint8 CIPV~%float32 AngleRate~%float32 ScaleChange~%float32 ArelX~%float32 Angle~%uint8 Replaced~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'mobileye_Obstacle)))
   "Returns full string definition for message of type 'mobileye_Obstacle"
-  (cl:format cl:nil "uint8 ID~%float32 PosX~%float32 PosY~%uint8 Blinker~%uint8 CutState~%float32 VrelX~%uint8 MType~%uint8 Status~%uint8 Brake~%uint8 Valid~%float32 Length~%float32 Width~%uint8 Age~%uint8 ObsLane~%uint8 CIPV~%float32 AngleRate~%float32 ScaleChange~%float32 AccelX~%float32 Angle~%uint8 Replaced~%~%~%"))
+  (cl:format cl:nil "uint8 ID~%float32 PosX~%float32 PosY~%uint8 Blinker~%uint8 CutState~%float32 VrelX~%uint8 MType~%uint8 Status~%uint8 Brake~%uint8 Valid~%float32 Length~%float32 Width~%uint8 Age~%uint8 ObsLane~%uint8 CIPV~%float32 AngleRate~%float32 ScaleChange~%float32 ArelX~%float32 Angle~%uint8 Replaced~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <mobileye_Obstacle>))
   (cl:+ 0
      1
@@ -405,7 +405,7 @@
     (cl:cons ':CIPV (CIPV msg))
     (cl:cons ':AngleRate (AngleRate msg))
     (cl:cons ':ScaleChange (ScaleChange msg))
-    (cl:cons ':AccelX (AccelX msg))
+    (cl:cons ':ArelX (ArelX msg))
     (cl:cons ':Angle (Angle msg))
     (cl:cons ':Replaced (Replaced msg))
 ))

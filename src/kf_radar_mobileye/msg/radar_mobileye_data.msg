@@ -1,0 +1,12 @@
+uint32 timestamp
+uint8 ID
+float32 radar_DistX
+float32 radar_DistY
+float32 radar_VrelX
+float32 radar_VrelY
+float32 radar_ArelX
+float32 radar_ArelY
+float32 mobileye_DistX
+float32 mobileye_DistY
+float32 mobileye_VrelX
+float32 mobileye_ArelX

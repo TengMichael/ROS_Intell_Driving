@@ -7,6 +7,7 @@
 #include <mobileye/mobileye_Obstacle_multi.h>
 #include <mobileye/mobileye_LKA_Lane.h>
 #include <mobileye/mobileye_LKA_Lane_multi.h>
+#include <math.h>
 
 #define TSR_Num 7
 #define Obstacle_Num 64
@@ -22,6 +23,21 @@ int16_t uint_int(uint16_t num,uint8_t len){
   int16_t temp;
   temp=num/(0x1<<(len-1))*(-1*(0x1<<(len-1)))+num%(0x1<<(len-1));
   return (temp);
+}
+/*Coordinate exchange for mobileye*/
+void Coordinate_Exc_mobileye(float delta_x, float delta_y, float angle) {
+    float px, py, vx, vy,ax,ay;
+    for(uint8_t i=0;i<Obstacle_Total;i++){
+        px = Obstacle[i].PosX;
+        py = Obstacle[i].PosY;
+        vx = Obstacle[i].VrelX;
+        ax = Obstacle[i].ArelX;
+
+        Obstacle[i].PosX = px*cos(angle) - py*sin(angle) + delta_x;//Euler rotation+Offset
+        Obstacle[i].PosY = px*sin(angle) + py*cos(angle) + delta_y;
+        Obstacle[i].VrelX= vx*cos(angle) - vy*sin(angle);//Euler rotation
+        Obstacle[i].ArelX= ax*cos(angle) - ay*sin(angle);//Euler rotation
+    }
 }
 /*Analysis mobileyeQ2 CAN data to objects information*/
 void mobileye_extract(const canbus::candata_multi::ConstPtr& CanData) {
@@ -146,8 +162,8 @@ void mobileye_extract(const canbus::candata_multi::ConstPtr& CanData) {
           Obstacle[j].AngleRate=(int16_t)((uint16_t)Data[1]*256+Data[0])*0.01;//-327.68:327.68[degree/sec]
           if(((uint16_t)Data[3]*256+Data[2])!=0x7FF)Obstacle[j].ScaleChange=(int16_t)((uint16_t)Data[3]*256+Data[2])*0.0002;//-6.5532:6.5532[pix/sec];invalid value:7FFh
           else Obstacle[j].ScaleChange=0;
-          if(((uint16_t)(Data[5]%4)*256+Data[4])!=0x200)Obstacle[j].AccelX=uint_int((uint16_t)(Data[5]%4)*256+Data[4],10)*0.03;//-14.97:14.97[m/s^2];invalid value:200h
-          else Obstacle[j].AccelX=0;
+          if(((uint16_t)(Data[5]%4)*256+Data[4])!=0x200)Obstacle[j].ArelX=uint_int((uint16_t)(Data[5]%4)*256+Data[4],10)*0.03;//-14.97:14.97[m/s^2];invalid value:200h
+          else Obstacle[j].ArelX=0;
           Obstacle[j].Replaced=Data[5]%32/16;
           Obstacle[j].Angle=(int16_t)((uint16_t)Data[7]*256+Data[6])*0.01;//-327.68:327.68[degree]
         }
@@ -156,7 +172,9 @@ void mobileye_extract(const canbus::candata_multi::ConstPtr& CanData) {
       break;
     }
   }
+  Coordinate_Exc_mobileye(0,0,0);
 }
+
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "mobileye_com");
