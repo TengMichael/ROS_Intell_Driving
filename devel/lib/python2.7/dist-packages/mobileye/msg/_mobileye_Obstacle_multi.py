@@ -8,7 +8,7 @@ import struct
 import mobileye.msg
 
 class mobileye_Obstacle_multi(genpy.Message):
-  _md5sum = "915a530a0724fce732099e5ed869e2b4"
+  _md5sum = "93cc6615c74e649a9b044fa25cd8f15e"
   _type = "mobileye/mobileye_Obstacle_multi"
   _has_header = False #flag to mark the presence of a Header object
   _full_text = """mobileye_Obstacle[] Obstacles
@@ -32,7 +32,7 @@ uint8 ObsLane
 uint8 CIPV
 float32 AngleRate
 float32 ScaleChange
-float32 AccelX
+float32 ArelX
 float32 Angle
 uint8 Replaced
 """
@@ -77,7 +77,7 @@ uint8 Replaced
       buff.write(_struct_I.pack(length))
       for val1 in self.Obstacles:
         _x = val1
-        buff.write(_struct_B2f2Bf4B2f3B4fB.pack(_x.ID, _x.PosX, _x.PosY, _x.Blinker, _x.CutState, _x.VrelX, _x.MType, _x.Status, _x.Brake, _x.Valid, _x.Length, _x.Width, _x.Age, _x.ObsLane, _x.CIPV, _x.AngleRate, _x.ScaleChange, _x.AccelX, _x.Angle, _x.Replaced))
+        buff.write(_struct_B2f2Bf4B2f3B4fB.pack(_x.ID, _x.PosX, _x.PosY, _x.Blinker, _x.CutState, _x.VrelX, _x.MType, _x.Status, _x.Brake, _x.Valid, _x.Length, _x.Width, _x.Age, _x.ObsLane, _x.CIPV, _x.AngleRate, _x.ScaleChange, _x.ArelX, _x.Angle, _x.Replaced))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -99,7 +99,7 @@ uint8 Replaced
         _x = val1
         start = end
         end += 47
-        (_x.ID, _x.PosX, _x.PosY, _x.Blinker, _x.CutState, _x.VrelX, _x.MType, _x.Status, _x.Brake, _x.Valid, _x.Length, _x.Width, _x.Age, _x.ObsLane, _x.CIPV, _x.AngleRate, _x.ScaleChange, _x.AccelX, _x.Angle, _x.Replaced,) = _struct_B2f2Bf4B2f3B4fB.unpack(str[start:end])
+        (_x.ID, _x.PosX, _x.PosY, _x.Blinker, _x.CutState, _x.VrelX, _x.MType, _x.Status, _x.Brake, _x.Valid, _x.Length, _x.Width, _x.Age, _x.ObsLane, _x.CIPV, _x.AngleRate, _x.ScaleChange, _x.ArelX, _x.Angle, _x.Replaced,) = _struct_B2f2Bf4B2f3B4fB.unpack(str[start:end])
         self.Obstacles.append(val1)
       return self
     except struct.error as e:
@@ -117,7 +117,7 @@ uint8 Replaced
       buff.write(_struct_I.pack(length))
       for val1 in self.Obstacles:
         _x = val1
-        buff.write(_struct_B2f2Bf4B2f3B4fB.pack(_x.ID, _x.PosX, _x.PosY, _x.Blinker, _x.CutState, _x.VrelX, _x.MType, _x.Status, _x.Brake, _x.Valid, _x.Length, _x.Width, _x.Age, _x.ObsLane, _x.CIPV, _x.AngleRate, _x.ScaleChange, _x.AccelX, _x.Angle, _x.Replaced))
+        buff.write(_struct_B2f2Bf4B2f3B4fB.pack(_x.ID, _x.PosX, _x.PosY, _x.Blinker, _x.CutState, _x.VrelX, _x.MType, _x.Status, _x.Brake, _x.Valid, _x.Length, _x.Width, _x.Age, _x.ObsLane, _x.CIPV, _x.AngleRate, _x.ScaleChange, _x.ArelX, _x.Angle, _x.Replaced))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -140,7 +140,7 @@ uint8 Replaced
         _x = val1
         start = end
         end += 47
-        (_x.ID, _x.PosX, _x.PosY, _x.Blinker, _x.CutState, _x.VrelX, _x.MType, _x.Status, _x.Brake, _x.Valid, _x.Length, _x.Width, _x.Age, _x.ObsLane, _x.CIPV, _x.AngleRate, _x.ScaleChange, _x.AccelX, _x.Angle, _x.Replaced,) = _struct_B2f2Bf4B2f3B4fB.unpack(str[start:end])
+        (_x.ID, _x.PosX, _x.PosY, _x.Blinker, _x.CutState, _x.VrelX, _x.MType, _x.Status, _x.Brake, _x.Valid, _x.Length, _x.Width, _x.Age, _x.ObsLane, _x.CIPV, _x.AngleRate, _x.ScaleChange, _x.ArelX, _x.Angle, _x.Replaced,) = _struct_B2f2Bf4B2f3B4fB.unpack(str[start:end])
         self.Obstacles.append(val1)
       return self
     except struct.error as e:

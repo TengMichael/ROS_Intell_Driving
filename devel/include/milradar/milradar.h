@@ -1,6 +1,7 @@
 #ifndef MILRADAR_H
 #define MILRADAR_H
 
+#include <math.h>
 #include <canbus/candata_multi.h>
 #include <milradar/obj208.h>
 #include <milradar/obj208_multi.h>
@@ -21,6 +22,23 @@
 namespace Radar408 {
 milradar::obj408 objs408[Object_408Num]={};
 uint8_t Obj408_ID_Total=0;
+/**********data preprocessing for the radar 408 by setting threshold************/
+void Radar408_dataprocess1(void){
+    uint8_t k=0;
+    milradar::obj408 objs408_temp[Object_408Num]={};
+    for(uint8_t i=0;i<Obj408_ID_Total;i++){
+        if((objs408[i].RCS<=RCS_threshold)||(objs408[i].ProbOfExist<=ProbOfExist_threshold)||
+                (objs408[i].DistX<=0)||(objs408[i].DistY==0))
+            continue;
+        else
+        {
+            memcpy(&(objs408_temp[k]),&(objs408[i]),sizeof(objs408[i]));
+            k++;
+        }
+    }
+    Obj408_ID_Total=k;
+    memcpy(&(objs408),&(objs408_temp),sizeof(objs408_temp));
+}
 /**********data preprocessing for the radar 408 by comparing two times sampling values************/
 void Radar408_dataprocess2(void){
     uint8_t k=0;
@@ -49,22 +67,24 @@ void Radar408_dataprocess2(void){
     memcpy(&(objs408_last),&(objs408),sizeof(objs408));
     memcpy(&(objs408),&(objs408_temp),sizeof(objs408_temp));
 }
-/**********data preprocessing for the radar 408 by setting threshold************/
-void Radar408_dataprocess1(void){
-    uint8_t k=0;
-    milradar::obj408 objs408_temp[Object_408Num]={};
+/*Coordinate exchange for 408radars*/
+void Coordinate_Exc_408(float delta_x, float delta_y, float angle) {
+    float px, py, vx, vy,ax,ay;
     for(uint8_t i=0;i<Obj408_ID_Total;i++){
-        if((objs408[i].RCS<=RCS_threshold)||(objs408[i].ProbOfExist<=ProbOfExist_threshold)||
-                (objs408[i].DistX<=0)||(objs408[i].DistY==0))
-            continue;
-        else
-        {
-            memcpy(&(objs408_temp[k]),&(objs408[i]),sizeof(objs408[i]));
-            k++;
-        }
+        px = objs408[i].DistX;
+        py = objs408[i].DistY;
+        vx = objs408[i].VrelX;
+        vy = objs408[i].VrelY;
+        ax = objs408[i].ArelX;
+        ay = objs408[i].ArelY;
+
+        objs408[i].DistX = px*cos(angle) - py*sin(angle) + delta_x;//Euler rotation+Offset
+        objs408[i].DistY = px*sin(angle) + py*cos(angle) + delta_y;
+        objs408[i].VrelX= vx*cos(angle) - vy*sin(angle);//Euler rotation
+        objs408[i].VrelY= vx*sin(angle) + vy*cos(angle);
+        objs408[i].ArelX= ax*cos(angle) - ay*sin(angle);//Euler rotation
+        objs408[i].ArelY= ax*sin(angle) + ay*cos(angle);
     }
-    Obj408_ID_Total=k;
-    memcpy(&(objs408),&(objs408_temp),sizeof(objs408_temp));
 }
 /*Receive and analysis radar408 CAN data to objects information*/
 void Radar408_extract(const canbus::candata_multi CanData){
@@ -113,13 +133,35 @@ void Radar408_extract(const canbus::candata_multi CanData){
     for (uint16_t i= 0; i< Obj408_ID_Total; i++)
         memcpy(&(objs408[i]),&(objs408_temp[objs408_mask[i]]),sizeof(objs408[i]));
     Radar408_dataprocess1();
-    //Radar408_dataprocess2();
+    Radar408_dataprocess2();
+    Coordinate_Exc_408(0,0,0);
 }
 }
 /****************************************************************************/
 namespace Radar208 {
 milradar::obj208 objs208[2][Object_208Num]={};
 uint8_t Obj208_ID_Total[2]={0};
+/**********data preprocessing for the radar 408 by setting threshold************/
+void Radar208_dataprocess1(void){
+    uint8_t k=0;
+    milradar::obj208 objs208_temp[2][Object_208Num]={};
+
+    for(uint8_t j=0;j<2;j++){
+        k=0;
+        for(uint8_t i=0;i<Obj208_ID_Total[j];i++){
+            if((objs208[j][i].RCS<=RCS_threshold)||(objs208[j][i].Lifetime<=Lifetime_threshold)||
+                    (objs208[j][i].DistX<=0)||(objs208[j][i].DistY==0))
+                continue;
+            else
+            {
+                memcpy(&(objs208_temp[j][k]),&(objs208[j][i]),sizeof(objs208[j][i]));
+                k++;
+            }
+        }
+        Obj208_ID_Total[j]=k;
+    }
+    memcpy(&(objs208),&(objs208_temp),sizeof(objs208_temp));
+}
 /**********data preprocessing for the radar 408 by comparing two times sampling values************/
 void Radar208_dataprocess2(void){
     uint8_t k=0;
@@ -151,26 +193,20 @@ void Radar208_dataprocess2(void){
     memcpy(&(objs208_last),&(objs208),sizeof(objs208));
     memcpy(&(objs208),&(objs208_temp),sizeof(objs208_temp));
 }
-/**********data preprocessing for the radar 408 by setting threshold************/
-void Radar208_dataprocess1(void){
-    uint8_t k=0;
-    milradar::obj208 objs208_temp[2][Object_208Num]={};
+/*Coordinate exchange for 208radars*/
+void Coordinate_Exc_208(uint8_t s, float delta_x, float delta_y, float angle) {
+    float px, py, vx, vy;
+    for(uint8_t i=0;i<Obj208_ID_Total[s];i++){
+        px = objs208[s][i].DistX;
+        py = objs208[s][i].DistY;
+        vx = objs208[s][i].VrelX;
+        vy = objs208[s][i].VrelY;
 
-    for(uint8_t j=0;j<2;j++){
-        k=0;
-        for(uint8_t i=0;i<Obj208_ID_Total[j];i++){
-            if((objs208[j][i].RCS<=RCS_threshold)||(objs208[j][i].Lifetime<=Lifetime_threshold)||
-                    (objs208[j][i].DistX<=0)||(objs208[j][i].DistY==0))
-                continue;
-            else
-            {
-                memcpy(&(objs208_temp[j][k]),&(objs208[j][i]),sizeof(objs208[j][i]));
-                k++;
-            }
-        }
-        Obj208_ID_Total[j]=k;
+        objs208[s][i].DistX = px*cos(angle) - py*sin(angle) + delta_x;//Euler rotation+Offset
+        objs208[s][i].DistY = px*sin(angle) + py*cos(angle) + delta_y;
+        objs208[s][i].VrelX = vx*cos(angle) - vy*sin(angle);//Euler rotation
+        objs208[s][i].VrelY = vx*sin(angle) + vy*cos(angle);
     }
-    memcpy(&(objs208),&(objs208_temp),sizeof(objs208_temp));
 }
 /*Receive and analysis radar208 CAN data to objects information*/
 void Radar208_extract(const canbus::candata_multi::ConstPtr& CanData,uint8_t s1,uint8_t s2){
@@ -208,8 +244,22 @@ void Radar208_extract(const canbus::candata_multi::ConstPtr& CanData,uint8_t s1,
         }
     }
     Radar208_dataprocess1();
-    //Radar208_dataprocess2();
+    Radar208_dataprocess2();
+    if((s1==1)&&(s2==2)){
+        Coordinate_Exc_208(0,0,0,0);
+        Coordinate_Exc_208(1,0,0,0);
+    }
+    else if((s1==3)&&(s2==5)){
+        Coordinate_Exc_208(0,0,0,0);
+        Coordinate_Exc_208(1,0,0,0);
+    }
+    else if((s1==4)&&(s2==6)){
+        Coordinate_Exc_208(0,0,0,0);
+        Coordinate_Exc_208(1,0,0,0);
+    }
+    else{}
 }
 }
+
 
 #endif // MILRADAR_H

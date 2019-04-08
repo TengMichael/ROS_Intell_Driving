@@ -15,6 +15,6 @@ uint8 ObsLane
 uint8 CIPV
 float32 AngleRate
 float32 ScaleChange
-float32 AccelX
+float32 ArelX
 float32 Angle
 uint8 Replaced

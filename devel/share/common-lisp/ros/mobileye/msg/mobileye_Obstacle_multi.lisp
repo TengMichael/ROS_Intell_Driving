@@ -58,16 +58,16 @@
   "mobileye/mobileye_Obstacle_multi")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<mobileye_Obstacle_multi>)))
   "Returns md5sum for a message object of type '<mobileye_Obstacle_multi>"
-  "915a530a0724fce732099e5ed869e2b4")
+  "93cc6615c74e649a9b044fa25cd8f15e")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'mobileye_Obstacle_multi)))
   "Returns md5sum for a message object of type 'mobileye_Obstacle_multi"
-  "915a530a0724fce732099e5ed869e2b4")
+  "93cc6615c74e649a9b044fa25cd8f15e")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<mobileye_Obstacle_multi>)))
   "Returns full string definition for message of type '<mobileye_Obstacle_multi>"
-  (cl:format cl:nil "mobileye_Obstacle[] Obstacles~%~%================================================================================~%MSG: mobileye/mobileye_Obstacle~%uint8 ID~%float32 PosX~%float32 PosY~%uint8 Blinker~%uint8 CutState~%float32 VrelX~%uint8 MType~%uint8 Status~%uint8 Brake~%uint8 Valid~%float32 Length~%float32 Width~%uint8 Age~%uint8 ObsLane~%uint8 CIPV~%float32 AngleRate~%float32 ScaleChange~%float32 AccelX~%float32 Angle~%uint8 Replaced~%~%~%"))
+  (cl:format cl:nil "mobileye_Obstacle[] Obstacles~%~%================================================================================~%MSG: mobileye/mobileye_Obstacle~%uint8 ID~%float32 PosX~%float32 PosY~%uint8 Blinker~%uint8 CutState~%float32 VrelX~%uint8 MType~%uint8 Status~%uint8 Brake~%uint8 Valid~%float32 Length~%float32 Width~%uint8 Age~%uint8 ObsLane~%uint8 CIPV~%float32 AngleRate~%float32 ScaleChange~%float32 ArelX~%float32 Angle~%uint8 Replaced~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'mobileye_Obstacle_multi)))
   "Returns full string definition for message of type 'mobileye_Obstacle_multi"
-  (cl:format cl:nil "mobileye_Obstacle[] Obstacles~%~%================================================================================~%MSG: mobileye/mobileye_Obstacle~%uint8 ID~%float32 PosX~%float32 PosY~%uint8 Blinker~%uint8 CutState~%float32 VrelX~%uint8 MType~%uint8 Status~%uint8 Brake~%uint8 Valid~%float32 Length~%float32 Width~%uint8 Age~%uint8 ObsLane~%uint8 CIPV~%float32 AngleRate~%float32 ScaleChange~%float32 AccelX~%float32 Angle~%uint8 Replaced~%~%~%"))
+  (cl:format cl:nil "mobileye_Obstacle[] Obstacles~%~%================================================================================~%MSG: mobileye/mobileye_Obstacle~%uint8 ID~%float32 PosX~%float32 PosY~%uint8 Blinker~%uint8 CutState~%float32 VrelX~%uint8 MType~%uint8 Status~%uint8 Brake~%uint8 Valid~%float32 Length~%float32 Width~%uint8 Age~%uint8 ObsLane~%uint8 CIPV~%float32 AngleRate~%float32 ScaleChange~%float32 ArelX~%float32 Angle~%uint8 Replaced~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <mobileye_Obstacle_multi>))
   (cl:+ 0
      4 (cl:reduce #'cl:+ (cl:slot-value msg 'Obstacles) :key #'(cl:lambda (ele) (cl:declare (cl:ignorable ele)) (cl:+ (roslisp-msg-protocol:serialization-length ele))))

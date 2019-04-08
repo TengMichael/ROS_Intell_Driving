@@ -1,0 +1,314 @@
+; Auto-generated. Do not edit!
+
+
+(cl:in-package kf_radar_mobileye-msg)
+
+
+;//! \htmlinclude radar_mobileye_data.msg.html
+
+(cl:defclass <radar_mobileye_data> (roslisp-msg-protocol:ros-message)
+  ((timestamp
+    :reader timestamp
+    :initarg :timestamp
+    :type cl:integer
+    :initform 0)
+   (ID
+    :reader ID
+    :initarg :ID
+    :type cl:fixnum
+    :initform 0)
+   (radar_DistX
+    :reader radar_DistX
+    :initarg :radar_DistX
+    :type cl:float
+    :initform 0.0)
+   (radar_DistY
+    :reader radar_DistY
+    :initarg :radar_DistY
+    :type cl:float
+    :initform 0.0)
+   (radar_VrelX
+    :reader radar_VrelX
+    :initarg :radar_VrelX
+    :type cl:float
+    :initform 0.0)
+   (radar_VrelY
+    :reader radar_VrelY
+    :initarg :radar_VrelY
+    :type cl:float
+    :initform 0.0)
+   (radar_ArelX
+    :reader radar_ArelX
+    :initarg :radar_ArelX
+    :type cl:float
+    :initform 0.0)
+   (radar_ArelY
+    :reader radar_ArelY
+    :initarg :radar_ArelY
+    :type cl:float
+    :initform 0.0)
+   (mobileye_DistX
+    :reader mobileye_DistX
+    :initarg :mobileye_DistX
+    :type cl:float
+    :initform 0.0)
+   (mobileye_DistY
+    :reader mobileye_DistY
+    :initarg :mobileye_DistY
+    :type cl:float
+    :initform 0.0)
+   (mobileye_VrelX
+    :reader mobileye_VrelX
+    :initarg :mobileye_VrelX
+    :type cl:float
+    :initform 0.0)
+   (mobileye_ArelX
+    :reader mobileye_ArelX
+    :initarg :mobileye_ArelX
+    :type cl:float
+    :initform 0.0))
+)
+
+(cl:defclass radar_mobileye_data (<radar_mobileye_data>)
+  ())
+
+(cl:defmethod cl:initialize-instance :after ((m <radar_mobileye_data>) cl:&rest args)
+  (cl:declare (cl:ignorable args))
+  (cl:unless (cl:typep m 'radar_mobileye_data)
+    (roslisp-msg-protocol:msg-deprecation-warning "using old message class name kf_radar_mobileye-msg:<radar_mobileye_data> is deprecated: use kf_radar_mobileye-msg:radar_mobileye_data instead.")))
+
+(cl:ensure-generic-function 'timestamp-val :lambda-list '(m))
+(cl:defmethod timestamp-val ((m <radar_mobileye_data>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader kf_radar_mobileye-msg:timestamp-val is deprecated.  Use kf_radar_mobileye-msg:timestamp instead.")
+  (timestamp m))
+
+(cl:ensure-generic-function 'ID-val :lambda-list '(m))
+(cl:defmethod ID-val ((m <radar_mobileye_data>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader kf_radar_mobileye-msg:ID-val is deprecated.  Use kf_radar_mobileye-msg:ID instead.")
+  (ID m))
+
+(cl:ensure-generic-function 'radar_DistX-val :lambda-list '(m))
+(cl:defmethod radar_DistX-val ((m <radar_mobileye_data>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader kf_radar_mobileye-msg:radar_DistX-val is deprecated.  Use kf_radar_mobileye-msg:radar_DistX instead.")
+  (radar_DistX m))
+
+(cl:ensure-generic-function 'radar_DistY-val :lambda-list '(m))
+(cl:defmethod radar_DistY-val ((m <radar_mobileye_data>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader kf_radar_mobileye-msg:radar_DistY-val is deprecated.  Use kf_radar_mobileye-msg:radar_DistY instead.")
+  (radar_DistY m))
+
+(cl:ensure-generic-function 'radar_VrelX-val :lambda-list '(m))
+(cl:defmethod radar_VrelX-val ((m <radar_mobileye_data>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader kf_radar_mobileye-msg:radar_VrelX-val is deprecated.  Use kf_radar_mobileye-msg:radar_VrelX instead.")
+  (radar_VrelX m))
+
+(cl:ensure-generic-function 'radar_VrelY-val :lambda-list '(m))
+(cl:defmethod radar_VrelY-val ((m <radar_mobileye_data>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader kf_radar_mobileye-msg:radar_VrelY-val is deprecated.  Use kf_radar_mobileye-msg:radar_VrelY instead.")
+  (radar_VrelY m))
+
+(cl:ensure-generic-function 'radar_ArelX-val :lambda-list '(m))
+(cl:defmethod radar_ArelX-val ((m <radar_mobileye_data>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader kf_radar_mobileye-msg:radar_ArelX-val is deprecated.  Use kf_radar_mobileye-msg:radar_ArelX instead.")
+  (radar_ArelX m))
+
+(cl:ensure-generic-function 'radar_ArelY-val :lambda-list '(m))
+(cl:defmethod radar_ArelY-val ((m <radar_mobileye_data>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader kf_radar_mobileye-msg:radar_ArelY-val is deprecated.  Use kf_radar_mobileye-msg:radar_ArelY instead.")
+  (radar_ArelY m))
+
+(cl:ensure-generic-function 'mobileye_DistX-val :lambda-list '(m))
+(cl:defmethod mobileye_DistX-val ((m <radar_mobileye_data>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader kf_radar_mobileye-msg:mobileye_DistX-val is deprecated.  Use kf_radar_mobileye-msg:mobileye_DistX instead.")
+  (mobileye_DistX m))
+
+(cl:ensure-generic-function 'mobileye_DistY-val :lambda-list '(m))
+(cl:defmethod mobileye_DistY-val ((m <radar_mobileye_data>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader kf_radar_mobileye-msg:mobileye_DistY-val is deprecated.  Use kf_radar_mobileye-msg:mobileye_DistY instead.")
+  (mobileye_DistY m))
+
+(cl:ensure-generic-function 'mobileye_VrelX-val :lambda-list '(m))
+(cl:defmethod mobileye_VrelX-val ((m <radar_mobileye_data>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader kf_radar_mobileye-msg:mobileye_VrelX-val is deprecated.  Use kf_radar_mobileye-msg:mobileye_VrelX instead.")
+  (mobileye_VrelX m))
+
+(cl:ensure-generic-function 'mobileye_ArelX-val :lambda-list '(m))
+(cl:defmethod mobileye_ArelX-val ((m <radar_mobileye_data>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader kf_radar_mobileye-msg:mobileye_ArelX-val is deprecated.  Use kf_radar_mobileye-msg:mobileye_ArelX instead.")
+  (mobileye_ArelX m))
+(cl:defmethod roslisp-msg-protocol:serialize ((msg <radar_mobileye_data>) ostream)
+  "Serializes a message object of type '<radar_mobileye_data>"
+  (cl:write-byte (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'timestamp)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 8) (cl:slot-value msg 'timestamp)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 16) (cl:slot-value msg 'timestamp)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 24) (cl:slot-value msg 'timestamp)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'ID)) ostream)
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'radar_DistX))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'radar_DistY))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'radar_VrelX))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'radar_VrelY))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'radar_ArelX))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'radar_ArelY))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'mobileye_DistX))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'mobileye_DistY))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'mobileye_VrelX))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'mobileye_ArelX))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+)
+(cl:defmethod roslisp-msg-protocol:deserialize ((msg <radar_mobileye_data>) istream)
+  "Deserializes a message object of type '<radar_mobileye_data>"
+    (cl:setf (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'timestamp)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 8) (cl:slot-value msg 'timestamp)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 16) (cl:slot-value msg 'timestamp)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 24) (cl:slot-value msg 'timestamp)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'ID)) (cl:read-byte istream))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'radar_DistX) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'radar_DistY) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'radar_VrelX) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'radar_VrelY) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'radar_ArelX) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'radar_ArelY) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'mobileye_DistX) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'mobileye_DistY) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'mobileye_VrelX) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'mobileye_ArelX) (roslisp-utils:decode-single-float-bits bits)))
+  msg
+)
+(cl:defmethod roslisp-msg-protocol:ros-datatype ((msg (cl:eql '<radar_mobileye_data>)))
+  "Returns string type for a message object of type '<radar_mobileye_data>"
+  "kf_radar_mobileye/radar_mobileye_data")
+(cl:defmethod roslisp-msg-protocol:ros-datatype ((msg (cl:eql 'radar_mobileye_data)))
+  "Returns string type for a message object of type 'radar_mobileye_data"
+  "kf_radar_mobileye/radar_mobileye_data")
+(cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<radar_mobileye_data>)))
+  "Returns md5sum for a message object of type '<radar_mobileye_data>"
+  "ce92474b70167fa88c94e831ca031fe2")
+(cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'radar_mobileye_data)))
+  "Returns md5sum for a message object of type 'radar_mobileye_data"
+  "ce92474b70167fa88c94e831ca031fe2")
+(cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<radar_mobileye_data>)))
+  "Returns full string definition for message of type '<radar_mobileye_data>"
+  (cl:format cl:nil "uint32 timestamp~%uint8 ID~%float32 radar_DistX~%float32 radar_DistY~%float32 radar_VrelX~%float32 radar_VrelY~%float32 radar_ArelX~%float32 radar_ArelY~%float32 mobileye_DistX~%float32 mobileye_DistY~%float32 mobileye_VrelX~%float32 mobileye_ArelX~%~%~%"))
+(cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'radar_mobileye_data)))
+  "Returns full string definition for message of type 'radar_mobileye_data"
+  (cl:format cl:nil "uint32 timestamp~%uint8 ID~%float32 radar_DistX~%float32 radar_DistY~%float32 radar_VrelX~%float32 radar_VrelY~%float32 radar_ArelX~%float32 radar_ArelY~%float32 mobileye_DistX~%float32 mobileye_DistY~%float32 mobileye_VrelX~%float32 mobileye_ArelX~%~%~%"))
+(cl:defmethod roslisp-msg-protocol:serialization-length ((msg <radar_mobileye_data>))
+  (cl:+ 0
+     4
+     1
+     4
+     4
+     4
+     4
+     4
+     4
+     4
+     4
+     4
+     4
+))
+(cl:defmethod roslisp-msg-protocol:ros-message-to-list ((msg <radar_mobileye_data>))
+  "Converts a ROS message object to a list"
+  (cl:list 'radar_mobileye_data
+    (cl:cons ':timestamp (timestamp msg))
+    (cl:cons ':ID (ID msg))
+    (cl:cons ':radar_DistX (radar_DistX msg))
+    (cl:cons ':radar_DistY (radar_DistY msg))
+    (cl:cons ':radar_VrelX (radar_VrelX msg))
+    (cl:cons ':radar_VrelY (radar_VrelY msg))
+    (cl:cons ':radar_ArelX (radar_ArelX msg))
+    (cl:cons ':radar_ArelY (radar_ArelY msg))
+    (cl:cons ':mobileye_DistX (mobileye_DistX msg))
+    (cl:cons ':mobileye_DistY (mobileye_DistY msg))
+    (cl:cons ':mobileye_VrelX (mobileye_VrelX msg))
+    (cl:cons ':mobileye_ArelX (mobileye_ArelX msg))
+))

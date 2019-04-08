@@ -33,8 +33,8 @@
           ANGLERATE
           SCALECHANGE-VAL
           SCALECHANGE
-          ACCELX-VAL
-          ACCELX
+          ARELX-VAL
+          ARELX
           ANGLE-VAL
           ANGLE
           REPLACED-VAL
