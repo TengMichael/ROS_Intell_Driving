@@ -11,13 +11,14 @@
 #define Object_408Num 100
 #define Object_208Num 25
 #define Sensors_208Num 6
-#define RCS_threshold 0 //dBm^2
-#define ProbOfExist_threshold 1 //0x01:<25%;0x02:<50%;
+#define RCS_threshold 1 //dBm^2
+#define ProbOfExist_threshold 2 //0x01:<25%;0x02:<50%;
 #define Lifetime_threshold 1 //s
 #define DistX_threshold 5//2.5m for 20hz, 5m for 10hz
 #define DistY_threshold 5
 #define VrelX_threshold 2//1m/s for 20hz, 2m/s for 10hz
 #define VrelY_threshold 2
+#define pi 3.1415926
 
 namespace Radar408 {
 milradar::obj408 objs408[Object_408Num]={};
@@ -134,7 +135,7 @@ void Radar408_extract(const canbus::candata_multi CanData){
         memcpy(&(objs408[i]),&(objs408_temp[objs408_mask[i]]),sizeof(objs408[i]));
     Radar408_dataprocess1();
     Radar408_dataprocess2();
-    Coordinate_Exc_408(0,0,0);
+    Coordinate_Exc_408(0.52,0.02,0);//(x,y,angle)
 }
 }
 /****************************************************************************/
@@ -194,7 +195,7 @@ void Radar208_dataprocess2(void){
     memcpy(&(objs208),&(objs208_temp),sizeof(objs208_temp));
 }
 /*Coordinate exchange for 208radars*/
-void Coordinate_Exc_208(uint8_t s, float delta_x, float delta_y, float angle) {
+void Coordinate_Exc_208(uint8_t s, float delta_x,float delta_y,float angle) {
     float px, py, vx, vy;
     for(uint8_t i=0;i<Obj208_ID_Total[s];i++){
         px = objs208[s][i].DistX;
@@ -246,16 +247,16 @@ void Radar208_extract(const canbus::candata_multi::ConstPtr& CanData,uint8_t s1,
     Radar208_dataprocess1();
     Radar208_dataprocess2();
     if((s1==1)&&(s2==2)){
-        Coordinate_Exc_208(0,0,0,0);
-        Coordinate_Exc_208(1,0,0,0);
+        Coordinate_Exc_208(0,0.45,0.64,0.05);//(x,y,angle)
+        Coordinate_Exc_208(1,0.45,-0.62,-0.0878);
     }
     else if((s1==3)&&(s2==5)){
-        Coordinate_Exc_208(0,0,0,0);
-        Coordinate_Exc_208(1,0,0,0);
+        Coordinate_Exc_208(0,-1.79,0.842,pi/2);
+        Coordinate_Exc_208(1,-3.52,0.7,pi-0.3047);
     }
     else if((s1==4)&&(s2==6)){
-        Coordinate_Exc_208(0,0,0,0);
-        Coordinate_Exc_208(1,0,0,0);
+        Coordinate_Exc_208(0,-1.84,-0.842,-pi/2);
+        Coordinate_Exc_208(1,-3.51,-0.695,-(pi-0.2014));
     }
     else{}
 }

@@ -83,19 +83,23 @@ void mobileye_display_obstacles(const mobileye::mobileye_Obstacle_multi msg)
   char window[] = "Mobileye_Obstacles";
 
   Mat mobileye_image = Mat(load_length,load_width,CV_8UC3, Scalar(205, 205, 205));
-  rectangle(mobileye_image, Rect(load_width/2-car_width/2,load_length-car_length,car_width, car_length), Scalar(0,255,0),2,LINE_8,0);
+  rectangle(mobileye_image, Rect(load_width/2-car_width/2,load_length/2,car_width, car_length), Scalar(0,255,0),2,LINE_8,0);
   line(mobileye_image, Point(load_width/4,0), Point(load_width/4,load_length),Scalar(0, 255, 255), 2, LINE_8);//left lane
   line(mobileye_image, Point(load_width/4*3,0), Point(load_width/4*3,load_length),Scalar(0, 255, 255), 2, LINE_8);//right lane
   for (uint8_t i = 0; i < msg.Obstacles.size(); i++) {
-    Scalar colortype;
-    if(msg.Obstacles[i].MType==3)colortype=(0,0,255);
-    else if(msg.Obstacles[i].MType<=1)colortype=(255,0,0);
-    else if((msg.Obstacles[i].MType==2)||(msg.Obstacles[i].MType==4))colortype=(255,0,255);
-    else colortype=(0,0,0);
     //0 vehicle;1 truck;2 bike;3 ped;4 bicyle;5-7 unused
-    rectangle(mobileye_image, Rect(msg.Obstacles[i].PosY+ load_width / 2,load_length-msg.Obstacles[i].PosX*4,msg.Obstacles[i].Width*5, msg.Obstacles[i].Length*5),
-              colortype,//B G R
-              -1, LINE_8);
+    if(msg.Obstacles[i].MType==3)
+      rectangle(mobileye_image, Rect(load_width/2-msg.Obstacles[i].PosY,load_length/2-msg.Obstacles[i].PosX*2,msg.Obstacles[i].Width*5, msg.Obstacles[i].Length*5),
+                Scalar(0,0,255),-1, LINE_8);//B G R
+    else if(msg.Obstacles[i].MType<=1)
+      rectangle(mobileye_image, Rect(load_width/2-msg.Obstacles[i].PosY,load_length/2-msg.Obstacles[i].PosX*2,msg.Obstacles[i].Width*5, msg.Obstacles[i].Length*5),
+                Scalar(255,0,0),-1, LINE_8);
+    else if((msg.Obstacles[i].MType==2)||(msg.Obstacles[i].MType==4))
+      rectangle(mobileye_image, Rect(load_width/2-msg.Obstacles[i].PosY,load_length/2-msg.Obstacles[i].PosX*2,msg.Obstacles[i].Width*5, msg.Obstacles[i].Length*5),
+                Scalar(255,0,255),-1, LINE_8);
+    else
+      rectangle(mobileye_image, Rect(load_width/2-msg.Obstacles[i].PosY,load_length/2-msg.Obstacles[i].PosX*2,msg.Obstacles[i].Width*5, msg.Obstacles[i].Length*5),
+                Scalar(0,0,0),-1, LINE_8);
   }
   imshow(window, mobileye_image);
   //moveWindow(window, 100,200);

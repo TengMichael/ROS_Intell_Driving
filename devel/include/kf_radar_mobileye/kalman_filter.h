@@ -32,7 +32,7 @@ public:
     Eigen::MatrixXd R_radar,R_mobileye;
 
     // state vector
-    Eigen::VectorXd z_;
+    Eigen::VectorXd z_radar,z_mobileye;
     // timestamp
     uint previous_timestamp_;
 
@@ -49,16 +49,8 @@ public:
 
     /*** Updates the state by using standard Kalman Filter equations
    * @param z The measurement at k+1 */
-    void Update_radar(const Eigen::VectorXd &z);
-    void Update_mobileye(const Eigen::VectorXd &z);
+    void Update_radar();
+    void Update_mobileye();
 };
-// Struct with kalman data and timestamp for next time
-struct kalman_data{
-  Eigen::VectorXd x_;
-  Eigen::MatrixXd P_;
-  uint previous_timestamp_;
-};
-// Vector for kalman_data structure
-std::vector <kalman_data> kalman_vector;
 
 #endif /* KALMAN_FILTER_H_ */

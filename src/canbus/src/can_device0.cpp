@@ -77,8 +77,7 @@ int main(int argc, char **argv)
   ROS_INFO("%s", rec2.str().c_str());
   ros::Publisher rec2_pub = nh.advertise<canbus::candata_multi>(rec2.str().c_str(), 1000);
 
-  UINT8 DevInd;//need to change
-  DevInd=argv[1][0]-48;//from str to dec
+  UINT8 DevInd=0;//need to change
   UINT16 i, CAN_RecNum;
   VCI_CAN_OBJ CanData1[CAN_BuffMax]= {};
   VCI_CAN_OBJ CanData2[CAN_BuffMax]= {};

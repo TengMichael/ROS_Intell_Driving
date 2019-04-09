@@ -18,4 +18,6 @@
     (:file "_package_mobileye_LKA_Lane" :depends-on ("_package"))
     (:file "mobileye_TSR_multi" :depends-on ("_package_mobileye_TSR_multi"))
     (:file "_package_mobileye_TSR_multi" :depends-on ("_package"))
+    (:file "vehicle_info" :depends-on ("_package_vehicle_info"))
+    (:file "_package_vehicle_info" :depends-on ("_package"))
   ))

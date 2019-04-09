@@ -35,7 +35,13 @@ struct radar_mobileye_data_
     , mobileye_DistX(0.0)
     , mobileye_DistY(0.0)
     , mobileye_VrelX(0.0)
-    , mobileye_ArelX(0.0)  {
+    , mobileye_ArelX(0.0)
+    , fusion_DistX(0.0)
+    , fusion_DistY(0.0)
+    , fusion_VrelX(0.0)
+    , fusion_VrelY(0.0)
+    , fusion_ArelX(0.0)
+    , fusion_ArelY(0.0)  {
     }
   radar_mobileye_data_(const ContainerAllocator& _alloc)
     : timestamp(0)
@@ -49,7 +55,13 @@ struct radar_mobileye_data_
     , mobileye_DistX(0.0)
     , mobileye_DistY(0.0)
     , mobileye_VrelX(0.0)
-    , mobileye_ArelX(0.0)  {
+    , mobileye_ArelX(0.0)
+    , fusion_DistX(0.0)
+    , fusion_DistY(0.0)
+    , fusion_VrelX(0.0)
+    , fusion_VrelY(0.0)
+    , fusion_ArelX(0.0)
+    , fusion_ArelY(0.0)  {
   (void)_alloc;
     }
 
@@ -90,6 +102,24 @@ struct radar_mobileye_data_
 
    typedef float _mobileye_ArelX_type;
   _mobileye_ArelX_type mobileye_ArelX;
+
+   typedef float _fusion_DistX_type;
+  _fusion_DistX_type fusion_DistX;
+
+   typedef float _fusion_DistY_type;
+  _fusion_DistY_type fusion_DistY;
+
+   typedef float _fusion_VrelX_type;
+  _fusion_VrelX_type fusion_VrelX;
+
+   typedef float _fusion_VrelY_type;
+  _fusion_VrelY_type fusion_VrelY;
+
+   typedef float _fusion_ArelX_type;
+  _fusion_ArelX_type fusion_ArelX;
+
+   typedef float _fusion_ArelY_type;
+  _fusion_ArelY_type fusion_ArelY;
 
 
 
@@ -168,12 +198,12 @@ struct MD5Sum< ::kf_radar_mobileye::radar_mobileye_data_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "ce92474b70167fa88c94e831ca031fe2";
+    return "7321b64a7d3c42bfbb3b29cb3dbd37f1";
   }
 
   static const char* value(const ::kf_radar_mobileye::radar_mobileye_data_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xce92474b70167fa8ULL;
-  static const uint64_t static_value2 = 0x8c94e831ca031fe2ULL;
+  static const uint64_t static_value1 = 0x7321b64a7d3c42bfULL;
+  static const uint64_t static_value2 = 0xbb3b29cb3dbd37f1ULL;
 };
 
 template<class ContainerAllocator>
@@ -204,6 +234,12 @@ float32 mobileye_DistX\n\
 float32 mobileye_DistY\n\
 float32 mobileye_VrelX\n\
 float32 mobileye_ArelX\n\
+float32 fusion_DistX\n\
+float32 fusion_DistY\n\
+float32 fusion_VrelX\n\
+float32 fusion_VrelY\n\
+float32 fusion_ArelX\n\
+float32 fusion_ArelY\n\
 ";
   }
 
@@ -234,6 +270,12 @@ namespace serialization
       stream.next(m.mobileye_DistY);
       stream.next(m.mobileye_VrelX);
       stream.next(m.mobileye_ArelX);
+      stream.next(m.fusion_DistX);
+      stream.next(m.fusion_DistY);
+      stream.next(m.fusion_VrelX);
+      stream.next(m.fusion_VrelY);
+      stream.next(m.fusion_ArelX);
+      stream.next(m.fusion_ArelY);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -276,6 +318,18 @@ struct Printer< ::kf_radar_mobileye::radar_mobileye_data_<ContainerAllocator> >
     Printer<float>::stream(s, indent + "  ", v.mobileye_VrelX);
     s << indent << "mobileye_ArelX: ";
     Printer<float>::stream(s, indent + "  ", v.mobileye_ArelX);
+    s << indent << "fusion_DistX: ";
+    Printer<float>::stream(s, indent + "  ", v.fusion_DistX);
+    s << indent << "fusion_DistY: ";
+    Printer<float>::stream(s, indent + "  ", v.fusion_DistY);
+    s << indent << "fusion_VrelX: ";
+    Printer<float>::stream(s, indent + "  ", v.fusion_VrelX);
+    s << indent << "fusion_VrelY: ";
+    Printer<float>::stream(s, indent + "  ", v.fusion_VrelY);
+    s << indent << "fusion_ArelX: ";
+    Printer<float>::stream(s, indent + "  ", v.fusion_ArelX);
+    s << indent << "fusion_ArelY: ";
+    Printer<float>::stream(s, indent + "  ", v.fusion_ArelY);
   }
 };
 
