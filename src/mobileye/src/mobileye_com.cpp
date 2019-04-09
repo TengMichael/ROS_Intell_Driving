@@ -1,5 +1,6 @@
 #include <ros/ros.h>
 #include <canbus/candata_multi.h>
+#include <mobileye/vehicle_info.h>
 #include <mobileye/mobileye_Lane.h>
 #include <mobileye/mobileye_TSR.h>
 #include <mobileye/mobileye_TSR_multi.h>
@@ -11,8 +12,8 @@
 
 #define TSR_Num 7
 #define Obstacle_Num 64
-#define pi 3.1415926
 
+mobileye::vehicle_info Carinfo;
 mobileye::mobileye_Lane Lane;
 mobileye::mobileye_LKA_Lane_multi LKA;
 mobileye::mobileye_TSR TSR[TSR_Num];
@@ -45,6 +46,11 @@ void mobileye_extract(const canbus::candata_multi::ConstPtr& CanData) {
   for (uint16_t i = 0; i < CanData->frame.size(); i++) {
     memcpy(Data,&(CanData->frame[i].data),sizeof(CanData->frame[i].data));
     switch(CanData->frame[i].id){
+    case 0x760:
+      Carinfo.Speed=Data[2]/3.6;
+      Carinfo.YawAngle=Lane.YawAngle;
+      Carinfo.PitchAngle=Lane.PitchAngle;
+      break;
     case 0x737:
       if(((uint16_t)Data[1]*256+Data[0])!=0x8000)Lane.Curvature=(int16_t)((uint16_t)Data[1]*256+Data[0])*3.81*0.000001;//-0.12:0.12[1/m];invalid value:8000h
       else Lane.Curvature=0;
@@ -172,7 +178,7 @@ void mobileye_extract(const canbus::candata_multi::ConstPtr& CanData) {
       break;
     }
   }
-  Coordinate_Exc_mobileye(0,0,0);
+  Coordinate_Exc_mobileye(0.45,-0.1,0);
 }
 
 int main(int argc, char **argv)
@@ -182,6 +188,7 @@ int main(int argc, char **argv)
 
   ros::Subscriber sub = nh.subscribe ("can_device2_can2_receive", 1000,mobileye_extract);
 
+  ros::Publisher pub_car= nh.advertise<mobileye::vehicle_info>("vehicle_info", 1000);
   ros::Publisher pub_lane= nh.advertise<mobileye::mobileye_Lane>("mobileye_Lane", 1000);
   ros::Publisher pub_LKA= nh.advertise<mobileye::mobileye_LKA_Lane_multi>("mobileye_LKA", 1000);
   ros::Publisher pub_TSR= nh.advertise<mobileye::mobileye_TSR_multi>("mobileye_TSR_", 1000);
@@ -199,6 +206,7 @@ int main(int argc, char **argv)
     for(uint16_t i=0;i<Obstacle_Total;i++)
       Obstacle_multiarray.Obstacles.push_back(Obstacle[i]);
 
+    pub_car.publish(Carinfo);
     pub_lane.publish(Lane);
     pub_LKA.publish(LKA);
     pub_TSR.publish(TSR_multiarray);

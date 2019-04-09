@@ -5,3 +5,4 @@ from ._mobileye_Obstacle import *
 from ._mobileye_Obstacle_multi import *
 from ._mobileye_TSR import *
 from ._mobileye_TSR_multi import *
+from ._vehicle_info import *

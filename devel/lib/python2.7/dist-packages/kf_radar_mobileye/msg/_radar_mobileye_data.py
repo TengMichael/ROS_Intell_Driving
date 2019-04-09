@@ -7,7 +7,7 @@ import struct
 
 
 class radar_mobileye_data(genpy.Message):
-  _md5sum = "ce92474b70167fa88c94e831ca031fe2"
+  _md5sum = "7321b64a7d3c42bfbb3b29cb3dbd37f1"
   _type = "kf_radar_mobileye/radar_mobileye_data"
   _has_header = False #flag to mark the presence of a Header object
   _full_text = """uint32 timestamp
@@ -22,9 +22,15 @@ float32 mobileye_DistX
 float32 mobileye_DistY
 float32 mobileye_VrelX
 float32 mobileye_ArelX
+float32 fusion_DistX
+float32 fusion_DistY
+float32 fusion_VrelX
+float32 fusion_VrelY
+float32 fusion_ArelX
+float32 fusion_ArelY
 """
-  __slots__ = ['timestamp','ID','radar_DistX','radar_DistY','radar_VrelX','radar_VrelY','radar_ArelX','radar_ArelY','mobileye_DistX','mobileye_DistY','mobileye_VrelX','mobileye_ArelX']
-  _slot_types = ['uint32','uint8','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32']
+  __slots__ = ['timestamp','ID','radar_DistX','radar_DistY','radar_VrelX','radar_VrelY','radar_ArelX','radar_ArelY','mobileye_DistX','mobileye_DistY','mobileye_VrelX','mobileye_ArelX','fusion_DistX','fusion_DistY','fusion_VrelX','fusion_VrelY','fusion_ArelX','fusion_ArelY']
+  _slot_types = ['uint32','uint8','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32']
 
   def __init__(self, *args, **kwds):
     """
@@ -34,7 +40,7 @@ float32 mobileye_ArelX
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       timestamp,ID,radar_DistX,radar_DistY,radar_VrelX,radar_VrelY,radar_ArelX,radar_ArelY,mobileye_DistX,mobileye_DistY,mobileye_VrelX,mobileye_ArelX
+       timestamp,ID,radar_DistX,radar_DistY,radar_VrelX,radar_VrelY,radar_ArelX,radar_ArelY,mobileye_DistX,mobileye_DistY,mobileye_VrelX,mobileye_ArelX,fusion_DistX,fusion_DistY,fusion_VrelX,fusion_VrelY,fusion_ArelX,fusion_ArelY
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -67,6 +73,18 @@ float32 mobileye_ArelX
         self.mobileye_VrelX = 0.
       if self.mobileye_ArelX is None:
         self.mobileye_ArelX = 0.
+      if self.fusion_DistX is None:
+        self.fusion_DistX = 0.
+      if self.fusion_DistY is None:
+        self.fusion_DistY = 0.
+      if self.fusion_VrelX is None:
+        self.fusion_VrelX = 0.
+      if self.fusion_VrelY is None:
+        self.fusion_VrelY = 0.
+      if self.fusion_ArelX is None:
+        self.fusion_ArelX = 0.
+      if self.fusion_ArelY is None:
+        self.fusion_ArelY = 0.
     else:
       self.timestamp = 0
       self.ID = 0
@@ -80,6 +98,12 @@ float32 mobileye_ArelX
       self.mobileye_DistY = 0.
       self.mobileye_VrelX = 0.
       self.mobileye_ArelX = 0.
+      self.fusion_DistX = 0.
+      self.fusion_DistY = 0.
+      self.fusion_VrelX = 0.
+      self.fusion_VrelY = 0.
+      self.fusion_ArelX = 0.
+      self.fusion_ArelY = 0.
 
   def _get_types(self):
     """
@@ -94,7 +118,7 @@ float32 mobileye_ArelX
     """
     try:
       _x = self
-      buff.write(_struct_IB10f.pack(_x.timestamp, _x.ID, _x.radar_DistX, _x.radar_DistY, _x.radar_VrelX, _x.radar_VrelY, _x.radar_ArelX, _x.radar_ArelY, _x.mobileye_DistX, _x.mobileye_DistY, _x.mobileye_VrelX, _x.mobileye_ArelX))
+      buff.write(_struct_IB16f.pack(_x.timestamp, _x.ID, _x.radar_DistX, _x.radar_DistY, _x.radar_VrelX, _x.radar_VrelY, _x.radar_ArelX, _x.radar_ArelY, _x.mobileye_DistX, _x.mobileye_DistY, _x.mobileye_VrelX, _x.mobileye_ArelX, _x.fusion_DistX, _x.fusion_DistY, _x.fusion_VrelX, _x.fusion_VrelY, _x.fusion_ArelX, _x.fusion_ArelY))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -107,8 +131,8 @@ float32 mobileye_ArelX
       end = 0
       _x = self
       start = end
-      end += 45
-      (_x.timestamp, _x.ID, _x.radar_DistX, _x.radar_DistY, _x.radar_VrelX, _x.radar_VrelY, _x.radar_ArelX, _x.radar_ArelY, _x.mobileye_DistX, _x.mobileye_DistY, _x.mobileye_VrelX, _x.mobileye_ArelX,) = _struct_IB10f.unpack(str[start:end])
+      end += 69
+      (_x.timestamp, _x.ID, _x.radar_DistX, _x.radar_DistY, _x.radar_VrelX, _x.radar_VrelY, _x.radar_ArelX, _x.radar_ArelY, _x.mobileye_DistX, _x.mobileye_DistY, _x.mobileye_VrelX, _x.mobileye_ArelX, _x.fusion_DistX, _x.fusion_DistY, _x.fusion_VrelX, _x.fusion_VrelY, _x.fusion_ArelX, _x.fusion_ArelY,) = _struct_IB16f.unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -122,7 +146,7 @@ float32 mobileye_ArelX
     """
     try:
       _x = self
-      buff.write(_struct_IB10f.pack(_x.timestamp, _x.ID, _x.radar_DistX, _x.radar_DistY, _x.radar_VrelX, _x.radar_VrelY, _x.radar_ArelX, _x.radar_ArelY, _x.mobileye_DistX, _x.mobileye_DistY, _x.mobileye_VrelX, _x.mobileye_ArelX))
+      buff.write(_struct_IB16f.pack(_x.timestamp, _x.ID, _x.radar_DistX, _x.radar_DistY, _x.radar_VrelX, _x.radar_VrelY, _x.radar_ArelX, _x.radar_ArelY, _x.mobileye_DistX, _x.mobileye_DistY, _x.mobileye_VrelX, _x.mobileye_ArelX, _x.fusion_DistX, _x.fusion_DistY, _x.fusion_VrelX, _x.fusion_VrelY, _x.fusion_ArelX, _x.fusion_ArelY))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -136,11 +160,11 @@ float32 mobileye_ArelX
       end = 0
       _x = self
       start = end
-      end += 45
-      (_x.timestamp, _x.ID, _x.radar_DistX, _x.radar_DistY, _x.radar_VrelX, _x.radar_VrelY, _x.radar_ArelX, _x.radar_ArelY, _x.mobileye_DistX, _x.mobileye_DistY, _x.mobileye_VrelX, _x.mobileye_ArelX,) = _struct_IB10f.unpack(str[start:end])
+      end += 69
+      (_x.timestamp, _x.ID, _x.radar_DistX, _x.radar_DistY, _x.radar_VrelX, _x.radar_VrelY, _x.radar_ArelX, _x.radar_ArelY, _x.mobileye_DistX, _x.mobileye_DistY, _x.mobileye_VrelX, _x.mobileye_ArelX, _x.fusion_DistX, _x.fusion_DistY, _x.fusion_VrelX, _x.fusion_VrelY, _x.fusion_ArelX, _x.fusion_ArelY,) = _struct_IB16f.unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
 
 _struct_I = genpy.struct_I
-_struct_IB10f = struct.Struct("<IB10f")
+_struct_IB16f = struct.Struct("<IB16f")

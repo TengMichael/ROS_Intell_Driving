@@ -8,6 +8,7 @@ find_package(OpenCV REQUIRED)
 ## Generate messages in the 'msg' folder
  add_message_files(
    FILES
+   vehicle_info.msg
    mobileye_Lane.msg
    mobileye_TSR.msg
    mobileye_TSR_multi.msg

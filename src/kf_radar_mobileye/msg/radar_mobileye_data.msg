@@ -10,3 +10,9 @@ float32 mobileye_DistX
 float32 mobileye_DistY
 float32 mobileye_VrelX
 float32 mobileye_ArelX
+float32 fusion_DistX
+float32 fusion_DistY
+float32 fusion_VrelX
+float32 fusion_VrelY
+float32 fusion_ArelX
+float32 fusion_ArelY

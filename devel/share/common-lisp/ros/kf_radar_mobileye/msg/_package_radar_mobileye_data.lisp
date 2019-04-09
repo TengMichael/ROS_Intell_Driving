@@ -23,4 +23,16 @@
           MOBILEYE_VRELX
           MOBILEYE_ARELX-VAL
           MOBILEYE_ARELX
+          FUSION_DISTX-VAL
+          FUSION_DISTX
+          FUSION_DISTY-VAL
+          FUSION_DISTY
+          FUSION_VRELX-VAL
+          FUSION_VRELX
+          FUSION_VRELY-VAL
+          FUSION_VRELY
+          FUSION_ARELX-VAL
+          FUSION_ARELX
+          FUSION_ARELY-VAL
+          FUSION_ARELY
 ))
