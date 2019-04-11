@@ -1,6 +1,8 @@
 (cl:in-package mobileye-msg)
 (cl:export '(ID-VAL
           ID
+          TIMESTAMP-VAL
+          TIMESTAMP
           POSX-VAL
           POSX
           POSY-VAL

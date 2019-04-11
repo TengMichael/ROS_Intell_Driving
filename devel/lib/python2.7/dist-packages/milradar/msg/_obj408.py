@@ -7,10 +7,11 @@ import struct
 
 
 class obj408(genpy.Message):
-  _md5sum = "1abcb56f3f65e8d71e8aabff6ec3e1af"
+  _md5sum = "6746331b89c775f9d4d284533d0ef80d"
   _type = "milradar/obj408"
   _has_header = False #flag to mark the presence of a Header object
   _full_text = """uint8 ID
+uint32 timestamp
 float32 DistX
 float32 DistY
 float32 VrelX
@@ -27,8 +28,8 @@ float32 OrientationAngel
 float32 Length
 float32 Width
 """
-  __slots__ = ['ID','DistX','DistY','VrelX','VrelY','RCS','DynProp','Orientation_rms','MeasState','ProbOfExist','ArelX','ArelY','Class','OrientationAngel','Length','Width']
-  _slot_types = ['uint8','float32','float32','float32','float32','float32','uint8','uint8','uint8','uint8','float32','float32','uint8','float32','float32','float32']
+  __slots__ = ['ID','timestamp','DistX','DistY','VrelX','VrelY','RCS','DynProp','Orientation_rms','MeasState','ProbOfExist','ArelX','ArelY','Class','OrientationAngel','Length','Width']
+  _slot_types = ['uint8','uint32','float32','float32','float32','float32','float32','uint8','uint8','uint8','uint8','float32','float32','uint8','float32','float32','float32']
 
   def __init__(self, *args, **kwds):
     """
@@ -38,7 +39,7 @@ float32 Width
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       ID,DistX,DistY,VrelX,VrelY,RCS,DynProp,Orientation_rms,MeasState,ProbOfExist,ArelX,ArelY,Class,OrientationAngel,Length,Width
+       ID,timestamp,DistX,DistY,VrelX,VrelY,RCS,DynProp,Orientation_rms,MeasState,ProbOfExist,ArelX,ArelY,Class,OrientationAngel,Length,Width
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -49,6 +50,8 @@ float32 Width
       #message fields cannot be None, assign default values for those that are
       if self.ID is None:
         self.ID = 0
+      if self.timestamp is None:
+        self.timestamp = 0
       if self.DistX is None:
         self.DistX = 0.
       if self.DistY is None:
@@ -81,6 +84,7 @@ float32 Width
         self.Width = 0.
     else:
       self.ID = 0
+      self.timestamp = 0
       self.DistX = 0.
       self.DistY = 0.
       self.VrelX = 0.
@@ -110,7 +114,7 @@ float32 Width
     """
     try:
       _x = self
-      buff.write(_struct_B5f4B2fB3f.pack(_x.ID, _x.DistX, _x.DistY, _x.VrelX, _x.VrelY, _x.RCS, _x.DynProp, _x.Orientation_rms, _x.MeasState, _x.ProbOfExist, _x.ArelX, _x.ArelY, _x.Class, _x.OrientationAngel, _x.Length, _x.Width))
+      buff.write(_struct_BI5f4B2fB3f.pack(_x.ID, _x.timestamp, _x.DistX, _x.DistY, _x.VrelX, _x.VrelY, _x.RCS, _x.DynProp, _x.Orientation_rms, _x.MeasState, _x.ProbOfExist, _x.ArelX, _x.ArelY, _x.Class, _x.OrientationAngel, _x.Length, _x.Width))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -123,8 +127,8 @@ float32 Width
       end = 0
       _x = self
       start = end
-      end += 46
-      (_x.ID, _x.DistX, _x.DistY, _x.VrelX, _x.VrelY, _x.RCS, _x.DynProp, _x.Orientation_rms, _x.MeasState, _x.ProbOfExist, _x.ArelX, _x.ArelY, _x.Class, _x.OrientationAngel, _x.Length, _x.Width,) = _struct_B5f4B2fB3f.unpack(str[start:end])
+      end += 50
+      (_x.ID, _x.timestamp, _x.DistX, _x.DistY, _x.VrelX, _x.VrelY, _x.RCS, _x.DynProp, _x.Orientation_rms, _x.MeasState, _x.ProbOfExist, _x.ArelX, _x.ArelY, _x.Class, _x.OrientationAngel, _x.Length, _x.Width,) = _struct_BI5f4B2fB3f.unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -138,7 +142,7 @@ float32 Width
     """
     try:
       _x = self
-      buff.write(_struct_B5f4B2fB3f.pack(_x.ID, _x.DistX, _x.DistY, _x.VrelX, _x.VrelY, _x.RCS, _x.DynProp, _x.Orientation_rms, _x.MeasState, _x.ProbOfExist, _x.ArelX, _x.ArelY, _x.Class, _x.OrientationAngel, _x.Length, _x.Width))
+      buff.write(_struct_BI5f4B2fB3f.pack(_x.ID, _x.timestamp, _x.DistX, _x.DistY, _x.VrelX, _x.VrelY, _x.RCS, _x.DynProp, _x.Orientation_rms, _x.MeasState, _x.ProbOfExist, _x.ArelX, _x.ArelY, _x.Class, _x.OrientationAngel, _x.Length, _x.Width))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -152,11 +156,11 @@ float32 Width
       end = 0
       _x = self
       start = end
-      end += 46
-      (_x.ID, _x.DistX, _x.DistY, _x.VrelX, _x.VrelY, _x.RCS, _x.DynProp, _x.Orientation_rms, _x.MeasState, _x.ProbOfExist, _x.ArelX, _x.ArelY, _x.Class, _x.OrientationAngel, _x.Length, _x.Width,) = _struct_B5f4B2fB3f.unpack(str[start:end])
+      end += 50
+      (_x.ID, _x.timestamp, _x.DistX, _x.DistY, _x.VrelX, _x.VrelY, _x.RCS, _x.DynProp, _x.Orientation_rms, _x.MeasState, _x.ProbOfExist, _x.ArelX, _x.ArelY, _x.Class, _x.OrientationAngel, _x.Length, _x.Width,) = _struct_BI5f4B2fB3f.unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
 
 _struct_I = genpy.struct_I
-_struct_B5f4B2fB3f = struct.Struct("<B5f4B2fB3f")
+_struct_BI5f4B2fB3f = struct.Struct("<BI5f4B2fB3f")

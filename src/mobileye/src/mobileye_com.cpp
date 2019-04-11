@@ -29,7 +29,7 @@ int16_t uint_int(uint16_t num,uint8_t len){
 void Coordinate_Exc_mobileye(float delta_x, float delta_y, float angle) {
     float px, py, vx, vy,ax,ay;
     for(uint8_t i=0;i<Obstacle_Total;i++){
-        px = Obstacle[i].PosX;
+        px = Obstacle[i].PosX+Carinfo.Speed;//plus distance of the reference points which is 1s headway
         py = Obstacle[i].PosY;
         vx = Obstacle[i].VrelX;
         ax = Obstacle[i].ArelX;
@@ -142,6 +142,7 @@ void mobileye_extract(const canbus::candata_multi::ConstPtr& CanData) {
       for(uint16_t j=0;j<Obstacle_Total;j++){
         if (CanData->frame[i].id==(uint16_t)(0x739+0x03*j)){
           Obstacle[j].ID=Data[0];
+          Obstacle[j].timestamp=CanData->frame[i].timestamp;
           if(((uint16_t)(Data[2]%16)*256+Data[1])!=0xFFF)Obstacle[j].PosX=((uint16_t)(Data[2]%16)*256+Data[1])*0.0625;//0:250[m];invalid value:FFFh
           else Obstacle[j].PosX=0;
           if(((uint16_t)(Data[4]%4)*256+Data[3])!=0x200)Obstacle[j].PosY=uint_int((uint16_t)(Data[4]%4)*256+Data[3],10)*0.0625;//-31.93:31.93[m];invalid value:200h
@@ -178,7 +179,7 @@ void mobileye_extract(const canbus::candata_multi::ConstPtr& CanData) {
       break;
     }
   }
-  Coordinate_Exc_mobileye(0.45,-0.1,0);
+  Coordinate_Exc_mobileye(-0.4,-0.06,0);
 }
 
 int main(int argc, char **argv)
@@ -215,6 +216,5 @@ int main(int argc, char **argv)
     ros::spinOnce();
     loop_rate.sleep();
   }
-
   return 0;
 }

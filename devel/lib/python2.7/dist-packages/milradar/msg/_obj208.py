@@ -7,10 +7,11 @@ import struct
 
 
 class obj208(genpy.Message):
-  _md5sum = "877e2a00fa1ceb509828c3b1f5ccd38a"
+  _md5sum = "5da0d1fed9b5cee755bd51d6eb5ea908"
   _type = "milradar/obj208"
   _has_header = False #flag to mark the presence of a Header object
   _full_text = """uint16 ID
+uint32 timestamp
 float32 DistX
 float32 DistY
 uint8 index
@@ -19,8 +20,8 @@ float32 VrelY
 float32 RCS
 float32 Lifetime
 """
-  __slots__ = ['ID','DistX','DistY','index','VrelX','VrelY','RCS','Lifetime']
-  _slot_types = ['uint16','float32','float32','uint8','float32','float32','float32','float32']
+  __slots__ = ['ID','timestamp','DistX','DistY','index','VrelX','VrelY','RCS','Lifetime']
+  _slot_types = ['uint16','uint32','float32','float32','uint8','float32','float32','float32','float32']
 
   def __init__(self, *args, **kwds):
     """
@@ -30,7 +31,7 @@ float32 Lifetime
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       ID,DistX,DistY,index,VrelX,VrelY,RCS,Lifetime
+       ID,timestamp,DistX,DistY,index,VrelX,VrelY,RCS,Lifetime
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -41,6 +42,8 @@ float32 Lifetime
       #message fields cannot be None, assign default values for those that are
       if self.ID is None:
         self.ID = 0
+      if self.timestamp is None:
+        self.timestamp = 0
       if self.DistX is None:
         self.DistX = 0.
       if self.DistY is None:
@@ -57,6 +60,7 @@ float32 Lifetime
         self.Lifetime = 0.
     else:
       self.ID = 0
+      self.timestamp = 0
       self.DistX = 0.
       self.DistY = 0.
       self.index = 0
@@ -78,7 +82,7 @@ float32 Lifetime
     """
     try:
       _x = self
-      buff.write(_struct_H2fB4f.pack(_x.ID, _x.DistX, _x.DistY, _x.index, _x.VrelX, _x.VrelY, _x.RCS, _x.Lifetime))
+      buff.write(_struct_HI2fB4f.pack(_x.ID, _x.timestamp, _x.DistX, _x.DistY, _x.index, _x.VrelX, _x.VrelY, _x.RCS, _x.Lifetime))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -91,8 +95,8 @@ float32 Lifetime
       end = 0
       _x = self
       start = end
-      end += 27
-      (_x.ID, _x.DistX, _x.DistY, _x.index, _x.VrelX, _x.VrelY, _x.RCS, _x.Lifetime,) = _struct_H2fB4f.unpack(str[start:end])
+      end += 31
+      (_x.ID, _x.timestamp, _x.DistX, _x.DistY, _x.index, _x.VrelX, _x.VrelY, _x.RCS, _x.Lifetime,) = _struct_HI2fB4f.unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -106,7 +110,7 @@ float32 Lifetime
     """
     try:
       _x = self
-      buff.write(_struct_H2fB4f.pack(_x.ID, _x.DistX, _x.DistY, _x.index, _x.VrelX, _x.VrelY, _x.RCS, _x.Lifetime))
+      buff.write(_struct_HI2fB4f.pack(_x.ID, _x.timestamp, _x.DistX, _x.DistY, _x.index, _x.VrelX, _x.VrelY, _x.RCS, _x.Lifetime))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -120,11 +124,11 @@ float32 Lifetime
       end = 0
       _x = self
       start = end
-      end += 27
-      (_x.ID, _x.DistX, _x.DistY, _x.index, _x.VrelX, _x.VrelY, _x.RCS, _x.Lifetime,) = _struct_H2fB4f.unpack(str[start:end])
+      end += 31
+      (_x.ID, _x.timestamp, _x.DistX, _x.DistY, _x.index, _x.VrelX, _x.VrelY, _x.RCS, _x.Lifetime,) = _struct_HI2fB4f.unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
 
 _struct_I = genpy.struct_I
-_struct_H2fB4f = struct.Struct("<H2fB4f")
+_struct_HI2fB4f = struct.Struct("<HI2fB4f")

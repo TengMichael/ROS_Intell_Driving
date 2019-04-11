@@ -12,6 +12,11 @@
     :initarg :ID
     :type cl:fixnum
     :initform 0)
+   (timestamp
+    :reader timestamp
+    :initarg :timestamp
+    :type cl:integer
+    :initform 0)
    (DistX
     :reader DistX
     :initarg :DistX
@@ -102,6 +107,11 @@
   (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader milradar-msg:ID-val is deprecated.  Use milradar-msg:ID instead.")
   (ID m))
 
+(cl:ensure-generic-function 'timestamp-val :lambda-list '(m))
+(cl:defmethod timestamp-val ((m <obj408>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader milradar-msg:timestamp-val is deprecated.  Use milradar-msg:timestamp instead.")
+  (timestamp m))
+
 (cl:ensure-generic-function 'DistX-val :lambda-list '(m))
 (cl:defmethod DistX-val ((m <obj408>))
   (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader milradar-msg:DistX-val is deprecated.  Use milradar-msg:DistX instead.")
@@ -179,6 +189,10 @@
 (cl:defmethod roslisp-msg-protocol:serialize ((msg <obj408>) ostream)
   "Serializes a message object of type '<obj408>"
   (cl:write-byte (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'ID)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'timestamp)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 8) (cl:slot-value msg 'timestamp)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 16) (cl:slot-value msg 'timestamp)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 24) (cl:slot-value msg 'timestamp)) ostream)
   (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'DistX))))
     (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
@@ -238,6 +252,10 @@
 (cl:defmethod roslisp-msg-protocol:deserialize ((msg <obj408>) istream)
   "Deserializes a message object of type '<obj408>"
     (cl:setf (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'ID)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'timestamp)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 8) (cl:slot-value msg 'timestamp)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 16) (cl:slot-value msg 'timestamp)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 24) (cl:slot-value msg 'timestamp)) (cl:read-byte istream))
     (cl:let ((bits 0))
       (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
       (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
@@ -313,19 +331,20 @@
   "milradar/obj408")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<obj408>)))
   "Returns md5sum for a message object of type '<obj408>"
-  "1abcb56f3f65e8d71e8aabff6ec3e1af")
+  "6746331b89c775f9d4d284533d0ef80d")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'obj408)))
   "Returns md5sum for a message object of type 'obj408"
-  "1abcb56f3f65e8d71e8aabff6ec3e1af")
+  "6746331b89c775f9d4d284533d0ef80d")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<obj408>)))
   "Returns full string definition for message of type '<obj408>"
-  (cl:format cl:nil "uint8 ID~%float32 DistX~%float32 DistY~%float32 VrelX~%float32 VrelY~%float32 RCS~%uint8 DynProp~%uint8 Orientation_rms~%uint8 MeasState~%uint8 ProbOfExist~%float32 ArelX~%float32 ArelY~%uint8 Class~%float32 OrientationAngel~%float32 Length~%float32 Width~%~%~%"))
+  (cl:format cl:nil "uint8 ID~%uint32 timestamp~%float32 DistX~%float32 DistY~%float32 VrelX~%float32 VrelY~%float32 RCS~%uint8 DynProp~%uint8 Orientation_rms~%uint8 MeasState~%uint8 ProbOfExist~%float32 ArelX~%float32 ArelY~%uint8 Class~%float32 OrientationAngel~%float32 Length~%float32 Width~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'obj408)))
   "Returns full string definition for message of type 'obj408"
-  (cl:format cl:nil "uint8 ID~%float32 DistX~%float32 DistY~%float32 VrelX~%float32 VrelY~%float32 RCS~%uint8 DynProp~%uint8 Orientation_rms~%uint8 MeasState~%uint8 ProbOfExist~%float32 ArelX~%float32 ArelY~%uint8 Class~%float32 OrientationAngel~%float32 Length~%float32 Width~%~%~%"))
+  (cl:format cl:nil "uint8 ID~%uint32 timestamp~%float32 DistX~%float32 DistY~%float32 VrelX~%float32 VrelY~%float32 RCS~%uint8 DynProp~%uint8 Orientation_rms~%uint8 MeasState~%uint8 ProbOfExist~%float32 ArelX~%float32 ArelY~%uint8 Class~%float32 OrientationAngel~%float32 Length~%float32 Width~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <obj408>))
   (cl:+ 0
      1
+     4
      4
      4
      4
@@ -346,6 +365,7 @@
   "Converts a ROS message object to a list"
   (cl:list 'obj408
     (cl:cons ':ID (ID msg))
+    (cl:cons ':timestamp (timestamp msg))
     (cl:cons ':DistX (DistX msg))
     (cl:cons ':DistY (DistY msg))
     (cl:cons ':VrelX (VrelX msg))

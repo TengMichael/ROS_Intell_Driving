@@ -2,7 +2,6 @@
 #include <serial/serial.h>
 #include <std_msgs/String.h>
 #include "std_msgs/UInt16MultiArray.h"
-
 //回调函数
 /*void callback(const std_msgs::String::ConstPtr& msg){
      ROS_INFO_STREAM("Write to serial port" << msg->data);

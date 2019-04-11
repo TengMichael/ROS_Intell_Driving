@@ -1,4 +1,5 @@
 uint8 ID
+uint32 timestamp
 float32 PosX
 float32 PosY
 uint8 Blinker

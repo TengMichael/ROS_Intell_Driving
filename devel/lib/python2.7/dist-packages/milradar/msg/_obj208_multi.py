@@ -8,7 +8,7 @@ import struct
 import milradar.msg
 
 class obj208_multi(genpy.Message):
-  _md5sum = "bf20fd900541a4e89dd3ee15b64125d6"
+  _md5sum = "f98d0ef87b339f5337f23f3835cf534b"
   _type = "milradar/obj208_multi"
   _has_header = False #flag to mark the presence of a Header object
   _full_text = """obj208[] objs
@@ -16,6 +16,7 @@ class obj208_multi(genpy.Message):
 ================================================================================
 MSG: milradar/obj208
 uint16 ID
+uint32 timestamp
 float32 DistX
 float32 DistY
 uint8 index
@@ -65,7 +66,7 @@ float32 Lifetime
       buff.write(_struct_I.pack(length))
       for val1 in self.objs:
         _x = val1
-        buff.write(_struct_H2fB4f.pack(_x.ID, _x.DistX, _x.DistY, _x.index, _x.VrelX, _x.VrelY, _x.RCS, _x.Lifetime))
+        buff.write(_struct_HI2fB4f.pack(_x.ID, _x.timestamp, _x.DistX, _x.DistY, _x.index, _x.VrelX, _x.VrelY, _x.RCS, _x.Lifetime))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -86,8 +87,8 @@ float32 Lifetime
         val1 = milradar.msg.obj208()
         _x = val1
         start = end
-        end += 27
-        (_x.ID, _x.DistX, _x.DistY, _x.index, _x.VrelX, _x.VrelY, _x.RCS, _x.Lifetime,) = _struct_H2fB4f.unpack(str[start:end])
+        end += 31
+        (_x.ID, _x.timestamp, _x.DistX, _x.DistY, _x.index, _x.VrelX, _x.VrelY, _x.RCS, _x.Lifetime,) = _struct_HI2fB4f.unpack(str[start:end])
         self.objs.append(val1)
       return self
     except struct.error as e:
@@ -105,7 +106,7 @@ float32 Lifetime
       buff.write(_struct_I.pack(length))
       for val1 in self.objs:
         _x = val1
-        buff.write(_struct_H2fB4f.pack(_x.ID, _x.DistX, _x.DistY, _x.index, _x.VrelX, _x.VrelY, _x.RCS, _x.Lifetime))
+        buff.write(_struct_HI2fB4f.pack(_x.ID, _x.timestamp, _x.DistX, _x.DistY, _x.index, _x.VrelX, _x.VrelY, _x.RCS, _x.Lifetime))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -127,12 +128,12 @@ float32 Lifetime
         val1 = milradar.msg.obj208()
         _x = val1
         start = end
-        end += 27
-        (_x.ID, _x.DistX, _x.DistY, _x.index, _x.VrelX, _x.VrelY, _x.RCS, _x.Lifetime,) = _struct_H2fB4f.unpack(str[start:end])
+        end += 31
+        (_x.ID, _x.timestamp, _x.DistX, _x.DistY, _x.index, _x.VrelX, _x.VrelY, _x.RCS, _x.Lifetime,) = _struct_HI2fB4f.unpack(str[start:end])
         self.objs.append(val1)
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
 
 _struct_I = genpy.struct_I
-_struct_H2fB4f = struct.Struct("<H2fB4f")
+_struct_HI2fB4f = struct.Struct("<HI2fB4f")

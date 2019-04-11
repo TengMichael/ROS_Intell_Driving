@@ -1,11 +1,7 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include <canbus/candata_multi.h>
-#include <milradar/milradar.h>
-#include <milradar/obj208.h>
-#include <milradar/obj208_multi.h>
-#include <milradar/obj408.h>
-#include <milradar/obj408_multi.h>
+#include <milradar.h>
 
 namespace Radar {
 milradar::obj208 objs208[Sensors_208Num][Object_208Num]={};

@@ -105,6 +105,7 @@ void Radar408_extract(const canbus::candata_multi CanData){
             objs408_mask[Obj_index]=Obj_ID;
             Obj_index++;
             objs408_temp[Obj_ID].ID = Obj_ID;
+            objs408_temp[Obj_ID].timestamp = CanData.frame[i].timestamp;
             objs408_temp[Obj_ID].DistX = ((float)Data[1] * 32 + Data[2] / 8)*0.2 - 500;
             objs408_temp[Obj_ID].DistY = ((float)(Data[2] % 8) * 256 + Data[3])*0.2 - 204.6;
             objs408_temp[Obj_ID].VrelX = ((float)Data[4] * 4 + Data[5] / 64)*0.25 - 128;
@@ -230,6 +231,7 @@ void Radar208_extract(const canbus::candata_multi::ConstPtr& CanData,uint8_t s1,
                 Obj_index =Data[3]%32;
                 //ROS_INFO("Obj_index: %d",Obj_index);
                 objs208[s][Obj_index].index=Obj_index;
+                objs208[s][Obj_index].timestamp = CanData->frame[i].timestamp;
                 objs208[s][Obj_index].ID = (uint16_t)Data[0]*256+Data[1];
                 objs208[s][Obj_index].DistX = ((float)(Data[2] % 64) *8 + Data[3]/32)*0.1;
                 objs208[s][Obj_index].DistY = ((float)Data[4] * 4 + Data[5] / 64)*0.1-51.1;

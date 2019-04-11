@@ -114,12 +114,12 @@ struct MD5Sum< ::mobileye::mobileye_Obstacle_multi_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "93cc6615c74e649a9b044fa25cd8f15e";
+    return "c479281d4bb2f90247873463e2b6b9d8";
   }
 
   static const char* value(const ::mobileye::mobileye_Obstacle_multi_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x93cc6615c74e649aULL;
-  static const uint64_t static_value2 = 0x9b044fa25cd8f15eULL;
+  static const uint64_t static_value1 = 0xc479281d4bb2f902ULL;
+  static const uint64_t static_value2 = 0x47873463e2b6b9d8ULL;
 };
 
 template<class ContainerAllocator>
@@ -143,6 +143,7 @@ struct Definition< ::mobileye::mobileye_Obstacle_multi_<ContainerAllocator> >
 ================================================================================\n\
 MSG: mobileye/mobileye_Obstacle\n\
 uint8 ID\n\
+uint32 timestamp\n\
 float32 PosX\n\
 float32 PosY\n\
 uint8 Blinker\n\
