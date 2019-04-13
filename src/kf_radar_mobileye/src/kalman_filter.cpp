@@ -1,13 +1,16 @@
 #include <ros/ros.h>
 #include <kalman_filter.h>
 #include <kf_radar_mobileye/radar_mobileye_data.h>
+#include <kf_radar_mobileye/radar_mobileye_data_multi.h>
 
+#define Obstacle_Num 64
+uint8_t fusion_ID_Total=0;
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
 KalmanFilter kf;
-kf_radar_mobileye::radar_mobileye_data fusion_data;
+kf_radar_mobileye::radar_mobileye_data fusion_data[Obstacle_Num];
 
 KalmanFilter::KalmanFilter() {}
 KalmanFilter::~KalmanFilter() {}
@@ -58,10 +61,10 @@ void KalmanFilter::Update_mobileye() {
   P_mobileye = (I - K * H_mobileye) * P_;
 }
 
-void kf_calc(const kf_radar_mobileye::radar_mobileye_data measure_value){
+void kf_calc(kf_radar_mobileye::radar_mobileye_data *measure_value){
   ROS_INFO_STREAM("Start ProcessMeasurement.. ");
   /*Initialization*/
-  kf.id_ = measure_value.ID;
+  kf.id_ = measure_value->ID;
   // Push kalman vector
   if (kalman_vector.size() == 0)
   {
@@ -78,11 +81,11 @@ void kf_calc(const kf_radar_mobileye::radar_mobileye_data measure_value){
     kf.x_ = VectorXd(4);
     kf.x_ << 1, 1, 1, 1;
     /*Initialize state*/
-    kf.x_(0) = measure_value.radar_DistX;
-    kf.x_(1) = measure_value.radar_DistY;
-    kf.x_(2) = measure_value.radar_VrelX;
-    kf.x_(3) = measure_value.radar_VrelY;
-    kf.previous_timestamp_ = measure_value.timestamp;
+    kf.x_(0) = measure_value->radar_DistX;
+    kf.x_(1) = measure_value->radar_DistY;
+    kf.x_(2) = measure_value->radar_VrelX;
+    kf.x_(3) = measure_value->radar_VrelY;
+    kf.previous_timestamp_ = measure_value->timestamp;
     //state covariance matrix P
     kf.P_ = MatrixXd(4, 4);
     kf.P_ << 1000, 0, 0, 0,
@@ -104,8 +107,8 @@ void kf_calc(const kf_radar_mobileye::radar_mobileye_data measure_value){
       0, 0, 1, 0,
       0, 0, 0, 1;
   //compute the time elapsed between the current and previous measurements
-  float dt = (measure_value.timestamp - kf.previous_timestamp_)/1000.0;	//dt - expressed in seconds
-  kf.previous_timestamp_ = measure_value.timestamp;
+  float dt = (measure_value->timestamp - kf.previous_timestamp_)/1000.0;	//dt - expressed in seconds
+  kf.previous_timestamp_ = measure_value->timestamp;
   float dt_2 = dt   * dt;
   float dt_3 = dt_2 * dt;
   float dt_4 = dt_3 * dt;
@@ -144,15 +147,15 @@ void kf_calc(const kf_radar_mobileye::radar_mobileye_data measure_value){
       0, 0, 0.0009;
   ROS_INFO_STREAM("Calling update KF");
   kf.z_radar=VectorXd(4);
-  kf.z_radar(0) = measure_value.radar_DistX;
-  kf.z_radar(1) = measure_value.radar_DistY;
-  kf.z_radar(2) = measure_value.radar_VrelX;
-  kf.z_radar(3) = measure_value.radar_VrelY;
+  kf.z_radar(0) = measure_value->radar_DistX;
+  kf.z_radar(1) = measure_value->radar_DistY;
+  kf.z_radar(2) = measure_value->radar_VrelX;
+  kf.z_radar(3) = measure_value->radar_VrelY;
   kf.Update_radar();
   kf.z_mobileye=VectorXd(3);
-  kf.z_mobileye(0) = measure_value.mobileye_DistX;
-  kf.z_mobileye(1) = measure_value.mobileye_DistY;
-  kf.z_mobileye(2) = measure_value.mobileye_VrelX;
+  kf.z_mobileye(0) = measure_value->mobileye_DistX;
+  kf.z_mobileye(1) = measure_value->mobileye_DistY;
+  kf.z_mobileye(2) = measure_value->mobileye_VrelX;
   kf.Update_mobileye();
   // Fusion the estimation
   MatrixXd S =kf.P_radar.inverse()+kf.P_mobileye.inverse();
@@ -170,15 +173,19 @@ void kf_calc(const kf_radar_mobileye::radar_mobileye_data measure_value){
   kalman_vector[kf.id_].x_ = kf.x_;
   kalman_vector[kf.id_].P_ = kf.P_;
   kalman_vector[kf.id_].previous_timestamp_ = kf.previous_timestamp_;
-
-  memcpy(&(fusion_data),&(measure_value),sizeof(measure_value));
-  fusion_data.fusion_DistX=kf.x_(0);
-  fusion_data.fusion_DistY=kf.x_(1);
-  fusion_data.fusion_VrelX=kf.x_(2);
-  fusion_data.fusion_VrelY=kf.x_(3);
+  measure_value->fusion_DistX=kf.x_(0);
+  measure_value->fusion_DistY=kf.x_(1);
+  measure_value->fusion_VrelX=kf.x_(2);
+  measure_value->fusion_VrelY=kf.x_(3);
 }
 
-
+void kf_calc_multi(kf_radar_mobileye::radar_mobileye_data_multi msg){
+  fusion_ID_Total=msg.objs.size();
+  for(uint8_t i=0;i<fusion_ID_Total;i++){
+    kf_calc(&(msg.objs[i]));
+    memcpy(&(fusion_data[i]),&(msg.objs[i]),sizeof(msg.objs[i]));
+  }
+}
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "kalman_filter");
@@ -186,15 +193,20 @@ int main(int argc, char **argv)
 
   memset(&kalman_vector,0,sizeof(&kalman_vector));
 
-  ros::Subscriber sub = nh.subscribe ("radar_mobileye_data", 1000,kf_calc);
-  ros::Publisher pub= nh.advertise<kf_radar_mobileye::radar_mobileye_data>("radar_mobileye_kf", 1000);
+  ros::Subscriber sub = nh.subscribe ("radar_mobileye_data_multi", 1000,kf_calc_multi);
+
+  //ros::Subscriber sub = nh.subscribe ("radar_mobileye_data", 1000,kf_calc);
+  ros::Publisher pub= nh.advertise<kf_radar_mobileye::radar_mobileye_data_multi>("radar_mobileye_kf", 1000);
 
   ros::Rate loop_rate(10);
   while (ros::ok())
   {
-  pub.publish(fusion_data);
-  ros::spinOnce();
-  loop_rate.sleep();
+    kf_radar_mobileye::radar_mobileye_data_multi msg;
+    for(uint8_t i=0;i<fusion_ID_Total;i++)
+      msg.objs.push_back(fusion_data[i]);
+    pub.publish(msg);
+    ros::spinOnce();
+    loop_rate.sleep();
   }
-return 0;
+  return 0;
 }

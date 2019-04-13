@@ -1,0 +1,11 @@
+uint16 ID
+uint32 timestamp
+float32 DistX
+float32 DistY
+float32 VrelX
+float32 VrelY
+float32 ArelX
+float32 ArelY
+uint8 Class
+float32 Length
+float32 Width

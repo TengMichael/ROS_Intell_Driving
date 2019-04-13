@@ -25,13 +25,11 @@ struct candata_
 
   candata_()
     : id(0)
-    , timestamp(0)
     , data()  {
       data.assign(0);
   }
   candata_(const ContainerAllocator& _alloc)
     : id(0)
-    , timestamp(0)
     , data()  {
   (void)_alloc;
       data.assign(0);
@@ -41,9 +39,6 @@ struct candata_
 
    typedef uint32_t _id_type;
   _id_type id;
-
-   typedef uint32_t _timestamp_type;
-  _timestamp_type timestamp;
 
    typedef boost::array<uint8_t, 8>  _data_type;
   _data_type data;
@@ -125,12 +120,12 @@ struct MD5Sum< ::canbus::candata_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "bc682d06ccc5b51f8683eea2bd2ab80d";
+    return "2f636bf314749eeb00e7f85696286658";
   }
 
   static const char* value(const ::canbus::candata_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xbc682d06ccc5b51fULL;
-  static const uint64_t static_value2 = 0x8683eea2bd2ab80dULL;
+  static const uint64_t static_value1 = 0x2f636bf314749eebULL;
+  static const uint64_t static_value2 = 0x00e7f85696286658ULL;
 };
 
 template<class ContainerAllocator>
@@ -150,7 +145,7 @@ struct Definition< ::canbus::candata_<ContainerAllocator> >
   static const char* value()
   {
     return "uint32 id\n\
-uint32 timestamp\n\
+#uint32 timestamp\n\
 uint8[8] data\n\
 ";
   }
@@ -171,7 +166,6 @@ namespace serialization
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
       stream.next(m.id);
-      stream.next(m.timestamp);
       stream.next(m.data);
     }
 
@@ -193,8 +187,6 @@ struct Printer< ::canbus::candata_<ContainerAllocator> >
   {
     s << indent << "id: ";
     Printer<uint32_t>::stream(s, indent + "  ", v.id);
-    s << indent << "timestamp: ";
-    Printer<uint32_t>::stream(s, indent + "  ", v.timestamp);
     s << indent << "data[]" << std::endl;
     for (size_t i = 0; i < v.data.size(); ++i)
     {
