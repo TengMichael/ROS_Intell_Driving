@@ -114,12 +114,12 @@ struct MD5Sum< ::milradar::obj208_multi_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "bf20fd900541a4e89dd3ee15b64125d6";
+    return "f98d0ef87b339f5337f23f3835cf534b";
   }
 
   static const char* value(const ::milradar::obj208_multi_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xbf20fd900541a4e8ULL;
-  static const uint64_t static_value2 = 0x9dd3ee15b64125d6ULL;
+  static const uint64_t static_value1 = 0xf98d0ef87b339f53ULL;
+  static const uint64_t static_value2 = 0x37f23f3835cf534bULL;
 };
 
 template<class ContainerAllocator>
@@ -143,6 +143,7 @@ struct Definition< ::milradar::obj208_multi_<ContainerAllocator> >
 ================================================================================\n\
 MSG: milradar/obj208\n\
 uint16 ID\n\
+uint32 timestamp\n\
 float32 DistX\n\
 float32 DistY\n\
 uint8 index\n\

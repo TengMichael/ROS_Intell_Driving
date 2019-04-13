@@ -1,4 +1,5 @@
 uint16 ID
+uint32 timestamp
 float32 DistX
 float32 DistY
 uint8 index

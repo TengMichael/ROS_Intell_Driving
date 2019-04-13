@@ -7,10 +7,11 @@ import struct
 
 
 class mobileye_Obstacle(genpy.Message):
-  _md5sum = "5d3c8bbb55939d00b6248790b776a82f"
+  _md5sum = "dbb37beacc85ec616b931c7ceeb03eff"
   _type = "mobileye/mobileye_Obstacle"
   _has_header = False #flag to mark the presence of a Header object
   _full_text = """uint8 ID
+uint32 timestamp
 float32 PosX
 float32 PosY
 uint8 Blinker
@@ -31,8 +32,8 @@ float32 ArelX
 float32 Angle
 uint8 Replaced
 """
-  __slots__ = ['ID','PosX','PosY','Blinker','CutState','VrelX','MType','Status','Brake','Valid','Length','Width','Age','ObsLane','CIPV','AngleRate','ScaleChange','ArelX','Angle','Replaced']
-  _slot_types = ['uint8','float32','float32','uint8','uint8','float32','uint8','uint8','uint8','uint8','float32','float32','uint8','uint8','uint8','float32','float32','float32','float32','uint8']
+  __slots__ = ['ID','timestamp','PosX','PosY','Blinker','CutState','VrelX','MType','Status','Brake','Valid','Length','Width','Age','ObsLane','CIPV','AngleRate','ScaleChange','ArelX','Angle','Replaced']
+  _slot_types = ['uint8','uint32','float32','float32','uint8','uint8','float32','uint8','uint8','uint8','uint8','float32','float32','uint8','uint8','uint8','float32','float32','float32','float32','uint8']
 
   def __init__(self, *args, **kwds):
     """
@@ -42,7 +43,7 @@ uint8 Replaced
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       ID,PosX,PosY,Blinker,CutState,VrelX,MType,Status,Brake,Valid,Length,Width,Age,ObsLane,CIPV,AngleRate,ScaleChange,ArelX,Angle,Replaced
+       ID,timestamp,PosX,PosY,Blinker,CutState,VrelX,MType,Status,Brake,Valid,Length,Width,Age,ObsLane,CIPV,AngleRate,ScaleChange,ArelX,Angle,Replaced
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -53,6 +54,8 @@ uint8 Replaced
       #message fields cannot be None, assign default values for those that are
       if self.ID is None:
         self.ID = 0
+      if self.timestamp is None:
+        self.timestamp = 0
       if self.PosX is None:
         self.PosX = 0.
       if self.PosY is None:
@@ -93,6 +96,7 @@ uint8 Replaced
         self.Replaced = 0
     else:
       self.ID = 0
+      self.timestamp = 0
       self.PosX = 0.
       self.PosY = 0.
       self.Blinker = 0
@@ -126,7 +130,7 @@ uint8 Replaced
     """
     try:
       _x = self
-      buff.write(_struct_B2f2Bf4B2f3B4fB.pack(_x.ID, _x.PosX, _x.PosY, _x.Blinker, _x.CutState, _x.VrelX, _x.MType, _x.Status, _x.Brake, _x.Valid, _x.Length, _x.Width, _x.Age, _x.ObsLane, _x.CIPV, _x.AngleRate, _x.ScaleChange, _x.ArelX, _x.Angle, _x.Replaced))
+      buff.write(_struct_BI2f2Bf4B2f3B4fB.pack(_x.ID, _x.timestamp, _x.PosX, _x.PosY, _x.Blinker, _x.CutState, _x.VrelX, _x.MType, _x.Status, _x.Brake, _x.Valid, _x.Length, _x.Width, _x.Age, _x.ObsLane, _x.CIPV, _x.AngleRate, _x.ScaleChange, _x.ArelX, _x.Angle, _x.Replaced))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -139,8 +143,8 @@ uint8 Replaced
       end = 0
       _x = self
       start = end
-      end += 47
-      (_x.ID, _x.PosX, _x.PosY, _x.Blinker, _x.CutState, _x.VrelX, _x.MType, _x.Status, _x.Brake, _x.Valid, _x.Length, _x.Width, _x.Age, _x.ObsLane, _x.CIPV, _x.AngleRate, _x.ScaleChange, _x.ArelX, _x.Angle, _x.Replaced,) = _struct_B2f2Bf4B2f3B4fB.unpack(str[start:end])
+      end += 51
+      (_x.ID, _x.timestamp, _x.PosX, _x.PosY, _x.Blinker, _x.CutState, _x.VrelX, _x.MType, _x.Status, _x.Brake, _x.Valid, _x.Length, _x.Width, _x.Age, _x.ObsLane, _x.CIPV, _x.AngleRate, _x.ScaleChange, _x.ArelX, _x.Angle, _x.Replaced,) = _struct_BI2f2Bf4B2f3B4fB.unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -154,7 +158,7 @@ uint8 Replaced
     """
     try:
       _x = self
-      buff.write(_struct_B2f2Bf4B2f3B4fB.pack(_x.ID, _x.PosX, _x.PosY, _x.Blinker, _x.CutState, _x.VrelX, _x.MType, _x.Status, _x.Brake, _x.Valid, _x.Length, _x.Width, _x.Age, _x.ObsLane, _x.CIPV, _x.AngleRate, _x.ScaleChange, _x.ArelX, _x.Angle, _x.Replaced))
+      buff.write(_struct_BI2f2Bf4B2f3B4fB.pack(_x.ID, _x.timestamp, _x.PosX, _x.PosY, _x.Blinker, _x.CutState, _x.VrelX, _x.MType, _x.Status, _x.Brake, _x.Valid, _x.Length, _x.Width, _x.Age, _x.ObsLane, _x.CIPV, _x.AngleRate, _x.ScaleChange, _x.ArelX, _x.Angle, _x.Replaced))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -168,11 +172,11 @@ uint8 Replaced
       end = 0
       _x = self
       start = end
-      end += 47
-      (_x.ID, _x.PosX, _x.PosY, _x.Blinker, _x.CutState, _x.VrelX, _x.MType, _x.Status, _x.Brake, _x.Valid, _x.Length, _x.Width, _x.Age, _x.ObsLane, _x.CIPV, _x.AngleRate, _x.ScaleChange, _x.ArelX, _x.Angle, _x.Replaced,) = _struct_B2f2Bf4B2f3B4fB.unpack(str[start:end])
+      end += 51
+      (_x.ID, _x.timestamp, _x.PosX, _x.PosY, _x.Blinker, _x.CutState, _x.VrelX, _x.MType, _x.Status, _x.Brake, _x.Valid, _x.Length, _x.Width, _x.Age, _x.ObsLane, _x.CIPV, _x.AngleRate, _x.ScaleChange, _x.ArelX, _x.Angle, _x.Replaced,) = _struct_BI2f2Bf4B2f3B4fB.unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
 
 _struct_I = genpy.struct_I
-_struct_B2f2Bf4B2f3B4fB = struct.Struct("<B2f2Bf4B2f3B4fB")
+_struct_BI2f2Bf4B2f3B4fB = struct.Struct("<BI2f2Bf4B2f3B4fB")

@@ -25,6 +25,7 @@ struct mobileye_Obstacle_
 
   mobileye_Obstacle_()
     : ID(0)
+    , timestamp(0)
     , PosX(0.0)
     , PosY(0.0)
     , Blinker(0)
@@ -47,6 +48,7 @@ struct mobileye_Obstacle_
     }
   mobileye_Obstacle_(const ContainerAllocator& _alloc)
     : ID(0)
+    , timestamp(0)
     , PosX(0.0)
     , PosY(0.0)
     , Blinker(0)
@@ -73,6 +75,9 @@ struct mobileye_Obstacle_
 
    typedef uint8_t _ID_type;
   _ID_type ID;
+
+   typedef uint32_t _timestamp_type;
+  _timestamp_type timestamp;
 
    typedef float _PosX_type;
   _PosX_type PosX;
@@ -208,12 +213,12 @@ struct MD5Sum< ::mobileye::mobileye_Obstacle_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "5d3c8bbb55939d00b6248790b776a82f";
+    return "dbb37beacc85ec616b931c7ceeb03eff";
   }
 
   static const char* value(const ::mobileye::mobileye_Obstacle_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x5d3c8bbb55939d00ULL;
-  static const uint64_t static_value2 = 0xb6248790b776a82fULL;
+  static const uint64_t static_value1 = 0xdbb37beacc85ec61ULL;
+  static const uint64_t static_value2 = 0x6b931c7ceeb03effULL;
 };
 
 template<class ContainerAllocator>
@@ -233,6 +238,7 @@ struct Definition< ::mobileye::mobileye_Obstacle_<ContainerAllocator> >
   static const char* value()
   {
     return "uint8 ID\n\
+uint32 timestamp\n\
 float32 PosX\n\
 float32 PosY\n\
 uint8 Blinker\n\
@@ -271,6 +277,7 @@ namespace serialization
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
       stream.next(m.ID);
+      stream.next(m.timestamp);
       stream.next(m.PosX);
       stream.next(m.PosY);
       stream.next(m.Blinker);
@@ -310,6 +317,8 @@ struct Printer< ::mobileye::mobileye_Obstacle_<ContainerAllocator> >
   {
     s << indent << "ID: ";
     Printer<uint8_t>::stream(s, indent + "  ", v.ID);
+    s << indent << "timestamp: ";
+    Printer<uint32_t>::stream(s, indent + "  ", v.timestamp);
     s << indent << "PosX: ";
     Printer<float>::stream(s, indent + "  ", v.PosX);
     s << indent << "PosY: ";

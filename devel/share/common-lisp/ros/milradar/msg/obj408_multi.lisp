@@ -58,16 +58,16 @@
   "milradar/obj408_multi")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<obj408_multi>)))
   "Returns md5sum for a message object of type '<obj408_multi>"
-  "ce84e7d845ee0f5049aa877fc739f096")
+  "41afe7aab141886e80ba0038e83429b1")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'obj408_multi)))
   "Returns md5sum for a message object of type 'obj408_multi"
-  "ce84e7d845ee0f5049aa877fc739f096")
+  "41afe7aab141886e80ba0038e83429b1")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<obj408_multi>)))
   "Returns full string definition for message of type '<obj408_multi>"
-  (cl:format cl:nil "obj408[] objs~%~%================================================================================~%MSG: milradar/obj408~%uint8 ID~%float32 DistX~%float32 DistY~%float32 VrelX~%float32 VrelY~%float32 RCS~%uint8 DynProp~%uint8 Orientation_rms~%uint8 MeasState~%uint8 ProbOfExist~%float32 ArelX~%float32 ArelY~%uint8 Class~%float32 OrientationAngel~%float32 Length~%float32 Width~%~%~%"))
+  (cl:format cl:nil "obj408[] objs~%~%================================================================================~%MSG: milradar/obj408~%uint8 ID~%uint32 timestamp~%float32 DistX~%float32 DistY~%float32 VrelX~%float32 VrelY~%float32 RCS~%uint8 DynProp~%uint8 Orientation_rms~%uint8 MeasState~%uint8 ProbOfExist~%float32 ArelX~%float32 ArelY~%uint8 Class~%float32 OrientationAngel~%float32 Length~%float32 Width~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'obj408_multi)))
   "Returns full string definition for message of type 'obj408_multi"
-  (cl:format cl:nil "obj408[] objs~%~%================================================================================~%MSG: milradar/obj408~%uint8 ID~%float32 DistX~%float32 DistY~%float32 VrelX~%float32 VrelY~%float32 RCS~%uint8 DynProp~%uint8 Orientation_rms~%uint8 MeasState~%uint8 ProbOfExist~%float32 ArelX~%float32 ArelY~%uint8 Class~%float32 OrientationAngel~%float32 Length~%float32 Width~%~%~%"))
+  (cl:format cl:nil "obj408[] objs~%~%================================================================================~%MSG: milradar/obj408~%uint8 ID~%uint32 timestamp~%float32 DistX~%float32 DistY~%float32 VrelX~%float32 VrelY~%float32 RCS~%uint8 DynProp~%uint8 Orientation_rms~%uint8 MeasState~%uint8 ProbOfExist~%float32 ArelX~%float32 ArelY~%uint8 Class~%float32 OrientationAngel~%float32 Length~%float32 Width~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <obj408_multi>))
   (cl:+ 0
      4 (cl:reduce #'cl:+ (cl:slot-value msg 'objs) :key #'(cl:lambda (ele) (cl:declare (cl:ignorable ele)) (cl:+ (roslisp-msg-protocol:serialization-length ele))))

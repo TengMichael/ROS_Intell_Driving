@@ -58,16 +58,16 @@
   "milradar/obj208_multi")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<obj208_multi>)))
   "Returns md5sum for a message object of type '<obj208_multi>"
-  "bf20fd900541a4e89dd3ee15b64125d6")
+  "f98d0ef87b339f5337f23f3835cf534b")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'obj208_multi)))
   "Returns md5sum for a message object of type 'obj208_multi"
-  "bf20fd900541a4e89dd3ee15b64125d6")
+  "f98d0ef87b339f5337f23f3835cf534b")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<obj208_multi>)))
   "Returns full string definition for message of type '<obj208_multi>"
-  (cl:format cl:nil "obj208[] objs~%~%================================================================================~%MSG: milradar/obj208~%uint16 ID~%float32 DistX~%float32 DistY~%uint8 index~%float32 VrelX~%float32 VrelY~%float32 RCS~%float32 Lifetime~%~%~%"))
+  (cl:format cl:nil "obj208[] objs~%~%================================================================================~%MSG: milradar/obj208~%uint16 ID~%uint32 timestamp~%float32 DistX~%float32 DistY~%uint8 index~%float32 VrelX~%float32 VrelY~%float32 RCS~%float32 Lifetime~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'obj208_multi)))
   "Returns full string definition for message of type 'obj208_multi"
-  (cl:format cl:nil "obj208[] objs~%~%================================================================================~%MSG: milradar/obj208~%uint16 ID~%float32 DistX~%float32 DistY~%uint8 index~%float32 VrelX~%float32 VrelY~%float32 RCS~%float32 Lifetime~%~%~%"))
+  (cl:format cl:nil "obj208[] objs~%~%================================================================================~%MSG: milradar/obj208~%uint16 ID~%uint32 timestamp~%float32 DistX~%float32 DistY~%uint8 index~%float32 VrelX~%float32 VrelY~%float32 RCS~%float32 Lifetime~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <obj208_multi>))
   (cl:+ 0
      4 (cl:reduce #'cl:+ (cl:slot-value msg 'objs) :key #'(cl:lambda (ele) (cl:declare (cl:ignorable ele)) (cl:+ (roslisp-msg-protocol:serialization-length ele))))

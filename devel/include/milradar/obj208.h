@@ -25,6 +25,7 @@ struct obj208_
 
   obj208_()
     : ID(0)
+    , timestamp(0)
     , DistX(0.0)
     , DistY(0.0)
     , index(0)
@@ -35,6 +36,7 @@ struct obj208_
     }
   obj208_(const ContainerAllocator& _alloc)
     : ID(0)
+    , timestamp(0)
     , DistX(0.0)
     , DistY(0.0)
     , index(0)
@@ -49,6 +51,9 @@ struct obj208_
 
    typedef uint16_t _ID_type;
   _ID_type ID;
+
+   typedef uint32_t _timestamp_type;
+  _timestamp_type timestamp;
 
    typedef float _DistX_type;
   _DistX_type DistX;
@@ -148,12 +153,12 @@ struct MD5Sum< ::milradar::obj208_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "877e2a00fa1ceb509828c3b1f5ccd38a";
+    return "5da0d1fed9b5cee755bd51d6eb5ea908";
   }
 
   static const char* value(const ::milradar::obj208_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x877e2a00fa1ceb50ULL;
-  static const uint64_t static_value2 = 0x9828c3b1f5ccd38aULL;
+  static const uint64_t static_value1 = 0x5da0d1fed9b5cee7ULL;
+  static const uint64_t static_value2 = 0x55bd51d6eb5ea908ULL;
 };
 
 template<class ContainerAllocator>
@@ -173,6 +178,7 @@ struct Definition< ::milradar::obj208_<ContainerAllocator> >
   static const char* value()
   {
     return "uint16 ID\n\
+uint32 timestamp\n\
 float32 DistX\n\
 float32 DistY\n\
 uint8 index\n\
@@ -199,6 +205,7 @@ namespace serialization
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
       stream.next(m.ID);
+      stream.next(m.timestamp);
       stream.next(m.DistX);
       stream.next(m.DistY);
       stream.next(m.index);
@@ -226,6 +233,8 @@ struct Printer< ::milradar::obj208_<ContainerAllocator> >
   {
     s << indent << "ID: ";
     Printer<uint16_t>::stream(s, indent + "  ", v.ID);
+    s << indent << "timestamp: ";
+    Printer<uint32_t>::stream(s, indent + "  ", v.timestamp);
     s << indent << "DistX: ";
     Printer<float>::stream(s, indent + "  ", v.DistX);
     s << indent << "DistY: ";

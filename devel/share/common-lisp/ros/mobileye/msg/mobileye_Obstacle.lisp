@@ -12,6 +12,11 @@
     :initarg :ID
     :type cl:fixnum
     :initform 0)
+   (timestamp
+    :reader timestamp
+    :initarg :timestamp
+    :type cl:integer
+    :initform 0)
    (PosX
     :reader PosX
     :initarg :PosX
@@ -122,6 +127,11 @@
   (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader mobileye-msg:ID-val is deprecated.  Use mobileye-msg:ID instead.")
   (ID m))
 
+(cl:ensure-generic-function 'timestamp-val :lambda-list '(m))
+(cl:defmethod timestamp-val ((m <mobileye_Obstacle>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader mobileye-msg:timestamp-val is deprecated.  Use mobileye-msg:timestamp instead.")
+  (timestamp m))
+
 (cl:ensure-generic-function 'PosX-val :lambda-list '(m))
 (cl:defmethod PosX-val ((m <mobileye_Obstacle>))
   (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader mobileye-msg:PosX-val is deprecated.  Use mobileye-msg:PosX instead.")
@@ -219,6 +229,10 @@
 (cl:defmethod roslisp-msg-protocol:serialize ((msg <mobileye_Obstacle>) ostream)
   "Serializes a message object of type '<mobileye_Obstacle>"
   (cl:write-byte (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'ID)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'timestamp)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 8) (cl:slot-value msg 'timestamp)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 16) (cl:slot-value msg 'timestamp)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 24) (cl:slot-value msg 'timestamp)) ostream)
   (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'PosX))))
     (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
@@ -278,6 +292,10 @@
 (cl:defmethod roslisp-msg-protocol:deserialize ((msg <mobileye_Obstacle>) istream)
   "Deserializes a message object of type '<mobileye_Obstacle>"
     (cl:setf (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'ID)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'timestamp)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 8) (cl:slot-value msg 'timestamp)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 16) (cl:slot-value msg 'timestamp)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 24) (cl:slot-value msg 'timestamp)) (cl:read-byte istream))
     (cl:let ((bits 0))
       (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
       (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
@@ -352,19 +370,20 @@
   "mobileye/mobileye_Obstacle")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<mobileye_Obstacle>)))
   "Returns md5sum for a message object of type '<mobileye_Obstacle>"
-  "5d3c8bbb55939d00b6248790b776a82f")
+  "dbb37beacc85ec616b931c7ceeb03eff")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'mobileye_Obstacle)))
   "Returns md5sum for a message object of type 'mobileye_Obstacle"
-  "5d3c8bbb55939d00b6248790b776a82f")
+  "dbb37beacc85ec616b931c7ceeb03eff")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<mobileye_Obstacle>)))
   "Returns full string definition for message of type '<mobileye_Obstacle>"
-  (cl:format cl:nil "uint8 ID~%float32 PosX~%float32 PosY~%uint8 Blinker~%uint8 CutState~%float32 VrelX~%uint8 MType~%uint8 Status~%uint8 Brake~%uint8 Valid~%float32 Length~%float32 Width~%uint8 Age~%uint8 ObsLane~%uint8 CIPV~%float32 AngleRate~%float32 ScaleChange~%float32 ArelX~%float32 Angle~%uint8 Replaced~%~%~%"))
+  (cl:format cl:nil "uint8 ID~%uint32 timestamp~%float32 PosX~%float32 PosY~%uint8 Blinker~%uint8 CutState~%float32 VrelX~%uint8 MType~%uint8 Status~%uint8 Brake~%uint8 Valid~%float32 Length~%float32 Width~%uint8 Age~%uint8 ObsLane~%uint8 CIPV~%float32 AngleRate~%float32 ScaleChange~%float32 ArelX~%float32 Angle~%uint8 Replaced~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'mobileye_Obstacle)))
   "Returns full string definition for message of type 'mobileye_Obstacle"
-  (cl:format cl:nil "uint8 ID~%float32 PosX~%float32 PosY~%uint8 Blinker~%uint8 CutState~%float32 VrelX~%uint8 MType~%uint8 Status~%uint8 Brake~%uint8 Valid~%float32 Length~%float32 Width~%uint8 Age~%uint8 ObsLane~%uint8 CIPV~%float32 AngleRate~%float32 ScaleChange~%float32 ArelX~%float32 Angle~%uint8 Replaced~%~%~%"))
+  (cl:format cl:nil "uint8 ID~%uint32 timestamp~%float32 PosX~%float32 PosY~%uint8 Blinker~%uint8 CutState~%float32 VrelX~%uint8 MType~%uint8 Status~%uint8 Brake~%uint8 Valid~%float32 Length~%float32 Width~%uint8 Age~%uint8 ObsLane~%uint8 CIPV~%float32 AngleRate~%float32 ScaleChange~%float32 ArelX~%float32 Angle~%uint8 Replaced~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <mobileye_Obstacle>))
   (cl:+ 0
      1
+     4
      4
      4
      1
@@ -389,6 +408,7 @@
   "Converts a ROS message object to a list"
   (cl:list 'mobileye_Obstacle
     (cl:cons ':ID (ID msg))
+    (cl:cons ':timestamp (timestamp msg))
     (cl:cons ':PosX (PosX msg))
     (cl:cons ':PosY (PosY msg))
     (cl:cons ':Blinker (Blinker msg))

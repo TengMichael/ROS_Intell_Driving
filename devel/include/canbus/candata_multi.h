@@ -114,12 +114,12 @@ struct MD5Sum< ::canbus::candata_multi_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "455b5e5bddd0320c3f62ff0c2a30417d";
+    return "7b71a82993b1f36499df06dc83eac42a";
   }
 
   static const char* value(const ::canbus::candata_multi_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x455b5e5bddd0320cULL;
-  static const uint64_t static_value2 = 0x3f62ff0c2a30417dULL;
+  static const uint64_t static_value1 = 0x7b71a82993b1f364ULL;
+  static const uint64_t static_value2 = 0x99df06dc83eac42aULL;
 };
 
 template<class ContainerAllocator>
@@ -143,6 +143,7 @@ struct Definition< ::canbus::candata_multi_<ContainerAllocator> >
 ================================================================================\n\
 MSG: canbus/candata\n\
 uint32 id\n\
+uint32 timestamp\n\
 uint8[8] data\n\
 ";
   }

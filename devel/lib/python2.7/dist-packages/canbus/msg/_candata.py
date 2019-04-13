@@ -7,14 +7,15 @@ import struct
 
 
 class candata(genpy.Message):
-  _md5sum = "2f636bf314749eeb00e7f85696286658"
+  _md5sum = "bc682d06ccc5b51f8683eea2bd2ab80d"
   _type = "canbus/candata"
   _has_header = False #flag to mark the presence of a Header object
   _full_text = """uint32 id
+uint32 timestamp
 uint8[8] data
 """
-  __slots__ = ['id','data']
-  _slot_types = ['uint32','uint8[8]']
+  __slots__ = ['id','timestamp','data']
+  _slot_types = ['uint32','uint32','uint8[8]']
 
   def __init__(self, *args, **kwds):
     """
@@ -24,7 +25,7 @@ uint8[8] data
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       id,data
+       id,timestamp,data
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -35,10 +36,13 @@ uint8[8] data
       #message fields cannot be None, assign default values for those that are
       if self.id is None:
         self.id = 0
+      if self.timestamp is None:
+        self.timestamp = 0
       if self.data is None:
         self.data = chr(0)*8
     else:
       self.id = 0
+      self.timestamp = 0
       self.data = chr(0)*8
 
   def _get_types(self):
@@ -53,7 +57,8 @@ uint8[8] data
     :param buff: buffer, ``StringIO``
     """
     try:
-      buff.write(_struct_I.pack(self.id))
+      _x = self
+      buff.write(_struct_2I.pack(_x.id, _x.timestamp))
       _x = self.data
       # - if encoded as a list instead, serialize as bytes instead of string
       if type(_x) in [list, tuple]:
@@ -70,9 +75,10 @@ uint8[8] data
     """
     try:
       end = 0
+      _x = self
       start = end
-      end += 4
-      (self.id,) = _struct_I.unpack(str[start:end])
+      end += 8
+      (_x.id, _x.timestamp,) = _struct_2I.unpack(str[start:end])
       start = end
       end += 8
       self.data = str[start:end]
@@ -88,7 +94,8 @@ uint8[8] data
     :param numpy: numpy python module
     """
     try:
-      buff.write(_struct_I.pack(self.id))
+      _x = self
+      buff.write(_struct_2I.pack(_x.id, _x.timestamp))
       _x = self.data
       # - if encoded as a list instead, serialize as bytes instead of string
       if type(_x) in [list, tuple]:
@@ -106,9 +113,10 @@ uint8[8] data
     """
     try:
       end = 0
+      _x = self
       start = end
-      end += 4
-      (self.id,) = _struct_I.unpack(str[start:end])
+      end += 8
+      (_x.id, _x.timestamp,) = _struct_2I.unpack(str[start:end])
       start = end
       end += 8
       self.data = str[start:end]
@@ -119,3 +127,4 @@ uint8[8] data
 _struct_I = genpy.struct_I
 _struct_8B = struct.Struct("<8B")
 _struct_8s = struct.Struct("<8s")
+_struct_2I = struct.Struct("<2I")

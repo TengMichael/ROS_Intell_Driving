@@ -8,7 +8,7 @@ import struct
 import milradar.msg
 
 class obj408_multi(genpy.Message):
-  _md5sum = "ce84e7d845ee0f5049aa877fc739f096"
+  _md5sum = "41afe7aab141886e80ba0038e83429b1"
   _type = "milradar/obj408_multi"
   _has_header = False #flag to mark the presence of a Header object
   _full_text = """obj408[] objs
@@ -16,6 +16,7 @@ class obj408_multi(genpy.Message):
 ================================================================================
 MSG: milradar/obj408
 uint8 ID
+uint32 timestamp
 float32 DistX
 float32 DistY
 float32 VrelX
@@ -73,7 +74,7 @@ float32 Width
       buff.write(_struct_I.pack(length))
       for val1 in self.objs:
         _x = val1
-        buff.write(_struct_B5f4B2fB3f.pack(_x.ID, _x.DistX, _x.DistY, _x.VrelX, _x.VrelY, _x.RCS, _x.DynProp, _x.Orientation_rms, _x.MeasState, _x.ProbOfExist, _x.ArelX, _x.ArelY, _x.Class, _x.OrientationAngel, _x.Length, _x.Width))
+        buff.write(_struct_BI5f4B2fB3f.pack(_x.ID, _x.timestamp, _x.DistX, _x.DistY, _x.VrelX, _x.VrelY, _x.RCS, _x.DynProp, _x.Orientation_rms, _x.MeasState, _x.ProbOfExist, _x.ArelX, _x.ArelY, _x.Class, _x.OrientationAngel, _x.Length, _x.Width))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -94,8 +95,8 @@ float32 Width
         val1 = milradar.msg.obj408()
         _x = val1
         start = end
-        end += 46
-        (_x.ID, _x.DistX, _x.DistY, _x.VrelX, _x.VrelY, _x.RCS, _x.DynProp, _x.Orientation_rms, _x.MeasState, _x.ProbOfExist, _x.ArelX, _x.ArelY, _x.Class, _x.OrientationAngel, _x.Length, _x.Width,) = _struct_B5f4B2fB3f.unpack(str[start:end])
+        end += 50
+        (_x.ID, _x.timestamp, _x.DistX, _x.DistY, _x.VrelX, _x.VrelY, _x.RCS, _x.DynProp, _x.Orientation_rms, _x.MeasState, _x.ProbOfExist, _x.ArelX, _x.ArelY, _x.Class, _x.OrientationAngel, _x.Length, _x.Width,) = _struct_BI5f4B2fB3f.unpack(str[start:end])
         self.objs.append(val1)
       return self
     except struct.error as e:
@@ -113,7 +114,7 @@ float32 Width
       buff.write(_struct_I.pack(length))
       for val1 in self.objs:
         _x = val1
-        buff.write(_struct_B5f4B2fB3f.pack(_x.ID, _x.DistX, _x.DistY, _x.VrelX, _x.VrelY, _x.RCS, _x.DynProp, _x.Orientation_rms, _x.MeasState, _x.ProbOfExist, _x.ArelX, _x.ArelY, _x.Class, _x.OrientationAngel, _x.Length, _x.Width))
+        buff.write(_struct_BI5f4B2fB3f.pack(_x.ID, _x.timestamp, _x.DistX, _x.DistY, _x.VrelX, _x.VrelY, _x.RCS, _x.DynProp, _x.Orientation_rms, _x.MeasState, _x.ProbOfExist, _x.ArelX, _x.ArelY, _x.Class, _x.OrientationAngel, _x.Length, _x.Width))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -135,12 +136,12 @@ float32 Width
         val1 = milradar.msg.obj408()
         _x = val1
         start = end
-        end += 46
-        (_x.ID, _x.DistX, _x.DistY, _x.VrelX, _x.VrelY, _x.RCS, _x.DynProp, _x.Orientation_rms, _x.MeasState, _x.ProbOfExist, _x.ArelX, _x.ArelY, _x.Class, _x.OrientationAngel, _x.Length, _x.Width,) = _struct_B5f4B2fB3f.unpack(str[start:end])
+        end += 50
+        (_x.ID, _x.timestamp, _x.DistX, _x.DistY, _x.VrelX, _x.VrelY, _x.RCS, _x.DynProp, _x.Orientation_rms, _x.MeasState, _x.ProbOfExist, _x.ArelX, _x.ArelY, _x.Class, _x.OrientationAngel, _x.Length, _x.Width,) = _struct_BI5f4B2fB3f.unpack(str[start:end])
         self.objs.append(val1)
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
 
 _struct_I = genpy.struct_I
-_struct_B5f4B2fB3f = struct.Struct("<B5f4B2fB3f")
+_struct_BI5f4B2fB3f = struct.Struct("<BI5f4B2fB3f")

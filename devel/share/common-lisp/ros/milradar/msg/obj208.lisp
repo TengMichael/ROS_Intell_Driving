@@ -12,6 +12,11 @@
     :initarg :ID
     :type cl:fixnum
     :initform 0)
+   (timestamp
+    :reader timestamp
+    :initarg :timestamp
+    :type cl:integer
+    :initform 0)
    (DistX
     :reader DistX
     :initarg :DistX
@@ -62,6 +67,11 @@
   (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader milradar-msg:ID-val is deprecated.  Use milradar-msg:ID instead.")
   (ID m))
 
+(cl:ensure-generic-function 'timestamp-val :lambda-list '(m))
+(cl:defmethod timestamp-val ((m <obj208>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader milradar-msg:timestamp-val is deprecated.  Use milradar-msg:timestamp instead.")
+  (timestamp m))
+
 (cl:ensure-generic-function 'DistX-val :lambda-list '(m))
 (cl:defmethod DistX-val ((m <obj208>))
   (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader milradar-msg:DistX-val is deprecated.  Use milradar-msg:DistX instead.")
@@ -100,6 +110,10 @@
   "Serializes a message object of type '<obj208>"
   (cl:write-byte (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'ID)) ostream)
   (cl:write-byte (cl:ldb (cl:byte 8 8) (cl:slot-value msg 'ID)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'timestamp)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 8) (cl:slot-value msg 'timestamp)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 16) (cl:slot-value msg 'timestamp)) ostream)
+  (cl:write-byte (cl:ldb (cl:byte 8 24) (cl:slot-value msg 'timestamp)) ostream)
   (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'DistX))))
     (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
@@ -136,6 +150,10 @@
   "Deserializes a message object of type '<obj208>"
     (cl:setf (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'ID)) (cl:read-byte istream))
     (cl:setf (cl:ldb (cl:byte 8 8) (cl:slot-value msg 'ID)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'timestamp)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 8) (cl:slot-value msg 'timestamp)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 16) (cl:slot-value msg 'timestamp)) (cl:read-byte istream))
+    (cl:setf (cl:ldb (cl:byte 8 24) (cl:slot-value msg 'timestamp)) (cl:read-byte istream))
     (cl:let ((bits 0))
       (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
       (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
@@ -183,19 +201,20 @@
   "milradar/obj208")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<obj208>)))
   "Returns md5sum for a message object of type '<obj208>"
-  "877e2a00fa1ceb509828c3b1f5ccd38a")
+  "5da0d1fed9b5cee755bd51d6eb5ea908")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'obj208)))
   "Returns md5sum for a message object of type 'obj208"
-  "877e2a00fa1ceb509828c3b1f5ccd38a")
+  "5da0d1fed9b5cee755bd51d6eb5ea908")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<obj208>)))
   "Returns full string definition for message of type '<obj208>"
-  (cl:format cl:nil "uint16 ID~%float32 DistX~%float32 DistY~%uint8 index~%float32 VrelX~%float32 VrelY~%float32 RCS~%float32 Lifetime~%~%~%"))
+  (cl:format cl:nil "uint16 ID~%uint32 timestamp~%float32 DistX~%float32 DistY~%uint8 index~%float32 VrelX~%float32 VrelY~%float32 RCS~%float32 Lifetime~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'obj208)))
   "Returns full string definition for message of type 'obj208"
-  (cl:format cl:nil "uint16 ID~%float32 DistX~%float32 DistY~%uint8 index~%float32 VrelX~%float32 VrelY~%float32 RCS~%float32 Lifetime~%~%~%"))
+  (cl:format cl:nil "uint16 ID~%uint32 timestamp~%float32 DistX~%float32 DistY~%uint8 index~%float32 VrelX~%float32 VrelY~%float32 RCS~%float32 Lifetime~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <obj208>))
   (cl:+ 0
      2
+     4
      4
      4
      1
@@ -208,6 +227,7 @@
   "Converts a ROS message object to a list"
   (cl:list 'obj208
     (cl:cons ':ID (ID msg))
+    (cl:cons ':timestamp (timestamp msg))
     (cl:cons ':DistX (DistX msg))
     (cl:cons ':DistY (DistY msg))
     (cl:cons ':index (index msg))

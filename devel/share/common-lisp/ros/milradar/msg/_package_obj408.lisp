@@ -1,6 +1,8 @@
 (cl:in-package milradar-msg)
 (cl:export '(ID-VAL
           ID
+          TIMESTAMP-VAL
+          TIMESTAMP
           DISTX-VAL
           DISTX
           DISTY-VAL
