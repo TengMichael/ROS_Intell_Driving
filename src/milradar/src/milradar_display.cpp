@@ -12,7 +12,7 @@ using namespace cv;
 #define load_length 60*10
 #define car_length 2*10
 #define car_width 1*10
-#define speed_threshold 3
+#define speed_threshold 2
 mobileye::vehicle_info Carinfo;
 
 void car_information(const mobileye::vehicle_info msg){
@@ -23,19 +23,19 @@ void display208(const milradar::obj208_multi::ConstPtr& msg,uint8_t ch)
   uint8_t i=0;
   std::stringstream window;
   window<<"Objs208_sensor"<<(ch+10);
-  Mat radar_image = Mat(load_length,load_width,CV_8UC3, Scalar(205, 205, 205));
-  rectangle(radar_image, Rect(load_width/2-car_width/2,load_length/2,car_width, car_length), Scalar(0,255,0),2,LINE_8,0);
-  line(radar_image, Point(load_width/4,0), Point(load_width/4,load_length),Scalar(0, 255, 255), 2, LINE_8);//left lane
-  line(radar_image, Point(load_width/4*3,0), Point(load_width/4*3,load_length),Scalar(0, 255, 255), 2, LINE_8);//right lane
+  Mat image = Mat(load_length,load_width,CV_8UC3, Scalar(205, 205, 205));
+  rectangle(image, Rect(load_width/2-car_width/2,load_length/2,car_width, car_length), Scalar(0,255,0),2,LINE_8,0);
+  line(image, Point(load_width/4,0), Point(load_width/4,load_length),Scalar(0, 255, 255), 2, LINE_8);//left lane
+  line(image, Point(load_width/4*3,0), Point(load_width/4*3,load_length),Scalar(0, 255, 255), 2, LINE_8);//right lane
   for (i = 0; i < msg->objs.size(); i++) {
     if(fabs(msg->objs[i].VrelX+Carinfo.Speed)<=speed_threshold)
-    rectangle(radar_image, Rect(load_width/2-msg->objs[i].DistY,load_length/2-msg->objs[i].DistX*2,4,4),
-              Scalar(255,0,0),-1, LINE_8);//B G R
+    rectangle(image, Rect(load_width/2-msg->objs[i].DistY,load_length/2-msg->objs[i].DistX*2,4,4),
+              Scalar(0,0,0),-1, LINE_8);//B G R
     else
-    rectangle(radar_image, Rect(load_width/2-msg->objs[i].DistY,load_length/2-msg->objs[i].DistX*2,4,4),
+    rectangle(image, Rect(load_width/2-msg->objs[i].DistY,load_length/2-msg->objs[i].DistX*2,4,4),
               Scalar(0,0,255),-1, LINE_8);
   }
-  imshow(window.str(), radar_image);
+  imshow(window.str(), image);
   moveWindow(window.str(),50+load_width*(ch-1),0);
   waitKey(10);
 }
@@ -44,19 +44,19 @@ void display408(const milradar::obj408_multi::ConstPtr& msg)
 {
   uint8_t i=0;
   char window[] = "Objs408";
-  Mat radar_image = Mat(load_length,load_width,CV_8UC3, Scalar(205, 205, 205));
-  rectangle(radar_image, Rect(load_width/2-car_width/2,load_length/2,car_width, car_length), Scalar(0,255,0),2,LINE_8,0);
-  line(radar_image, Point(load_width/4,0), Point(load_width/4,load_length),Scalar(0, 255, 255), 2, LINE_8);//left lane
-  line(radar_image, Point(load_width/4*3,0), Point(load_width/4*3,load_length),Scalar(0, 255, 255), 2, LINE_8);//right lane
+  Mat image = Mat(load_length,load_width,CV_8UC3, Scalar(205, 205, 205));
+  rectangle(image, Rect(load_width/2-car_width/2,load_length/2,car_width, car_length), Scalar(0,255,0),2,LINE_8,0);
+  line(image, Point(load_width/4,0), Point(load_width/4,load_length),Scalar(0, 255, 255), 2, LINE_8);//left lane
+  line(image, Point(load_width/4*3,0), Point(load_width/4*3,load_length),Scalar(0, 255, 255), 2, LINE_8);//right lane
   for (i = 0; i < msg->objs.size(); i++) {
     if(fabs(msg->objs[i].VrelX+Carinfo.Speed)<=speed_threshold)
-    rectangle(radar_image, Rect(load_width/2-msg->objs[i].DistY,load_length/2-msg->objs[i].DistX*2,4,4),
-              Scalar(255,0,0),-1, LINE_8);//B G R
+    rectangle(image, Rect(load_width/2-msg->objs[i].DistY,load_length/2-msg->objs[i].DistX*2,4,4),
+              Scalar(0,0,0),-1, LINE_8);//B G R
     else
-    rectangle(radar_image, Rect(load_width/2-msg->objs[i].DistY,load_length/2-msg->objs[i].DistX*2,4,4),
+    rectangle(image, Rect(load_width/2-msg->objs[i].DistY,load_length/2-msg->objs[i].DistX*2,4,4),
               Scalar(0,0,255),-1, LINE_8);
   }
-  imshow(window, radar_image);
+  imshow(window, image);
   //moveWindow(window,load_width*(ch-1),0);
   waitKey(10);
 }

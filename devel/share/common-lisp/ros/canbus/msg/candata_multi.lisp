@@ -58,16 +58,16 @@
   "canbus/candata_multi")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<candata_multi>)))
   "Returns md5sum for a message object of type '<candata_multi>"
-  "7b71a82993b1f36499df06dc83eac42a")
+  "455b5e5bddd0320c3f62ff0c2a30417d")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'candata_multi)))
   "Returns md5sum for a message object of type 'candata_multi"
-  "7b71a82993b1f36499df06dc83eac42a")
+  "455b5e5bddd0320c3f62ff0c2a30417d")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<candata_multi>)))
   "Returns full string definition for message of type '<candata_multi>"
-  (cl:format cl:nil "candata[] frame~%~%================================================================================~%MSG: canbus/candata~%uint32 id~%uint32 timestamp~%uint8[8] data~%~%~%"))
+  (cl:format cl:nil "candata[] frame~%~%================================================================================~%MSG: canbus/candata~%uint32 id~%#uint32 timestamp~%uint8[8] data~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'candata_multi)))
   "Returns full string definition for message of type 'candata_multi"
-  (cl:format cl:nil "candata[] frame~%~%================================================================================~%MSG: canbus/candata~%uint32 id~%uint32 timestamp~%uint8[8] data~%~%~%"))
+  (cl:format cl:nil "candata[] frame~%~%================================================================================~%MSG: canbus/candata~%uint32 id~%#uint32 timestamp~%uint8[8] data~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <candata_multi>))
   (cl:+ 0
      4 (cl:reduce #'cl:+ (cl:slot-value msg 'frame) :key #'(cl:lambda (ele) (cl:declare (cl:ignorable ele)) (cl:+ (roslisp-msg-protocol:serialization-length ele))))

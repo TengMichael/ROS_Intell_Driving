@@ -8,7 +8,7 @@ import struct
 import canbus.msg
 
 class candata_multi(genpy.Message):
-  _md5sum = "7b71a82993b1f36499df06dc83eac42a"
+  _md5sum = "455b5e5bddd0320c3f62ff0c2a30417d"
   _type = "canbus/candata_multi"
   _has_header = False #flag to mark the presence of a Header object
   _full_text = """candata[] frame
@@ -16,7 +16,7 @@ class candata_multi(genpy.Message):
 ================================================================================
 MSG: canbus/candata
 uint32 id
-uint32 timestamp
+#uint32 timestamp
 uint8[8] data
 """
   __slots__ = ['frame']
@@ -59,8 +59,7 @@ uint8[8] data
       length = len(self.frame)
       buff.write(_struct_I.pack(length))
       for val1 in self.frame:
-        _x = val1
-        buff.write(_struct_2I.pack(_x.id, _x.timestamp))
+        buff.write(_struct_I.pack(val1.id))
         _x = val1.data
         # - if encoded as a list instead, serialize as bytes instead of string
         if type(_x) in [list, tuple]:
@@ -85,10 +84,9 @@ uint8[8] data
       self.frame = []
       for i in range(0, length):
         val1 = canbus.msg.candata()
-        _x = val1
         start = end
-        end += 8
-        (_x.id, _x.timestamp,) = _struct_2I.unpack(str[start:end])
+        end += 4
+        (val1.id,) = _struct_I.unpack(str[start:end])
         start = end
         end += 8
         val1.data = str[start:end]
@@ -108,8 +106,7 @@ uint8[8] data
       length = len(self.frame)
       buff.write(_struct_I.pack(length))
       for val1 in self.frame:
-        _x = val1
-        buff.write(_struct_2I.pack(_x.id, _x.timestamp))
+        buff.write(_struct_I.pack(val1.id))
         _x = val1.data
         # - if encoded as a list instead, serialize as bytes instead of string
         if type(_x) in [list, tuple]:
@@ -135,10 +132,9 @@ uint8[8] data
       self.frame = []
       for i in range(0, length):
         val1 = canbus.msg.candata()
-        _x = val1
         start = end
-        end += 8
-        (_x.id, _x.timestamp,) = _struct_2I.unpack(str[start:end])
+        end += 4
+        (val1.id,) = _struct_I.unpack(str[start:end])
         start = end
         end += 8
         val1.data = str[start:end]
@@ -150,4 +146,3 @@ uint8[8] data
 _struct_I = genpy.struct_I
 _struct_8B = struct.Struct("<8B")
 _struct_8s = struct.Struct("<8s")
-_struct_2I = struct.Struct("<2I")

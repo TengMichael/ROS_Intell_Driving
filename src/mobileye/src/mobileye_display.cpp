@@ -32,13 +32,13 @@ void mobileye_display_lane(const mobileye::mobileye_Lane msg)
       Right_Points.push_back(Point((int16_t)y2+load_width/2,load_length-x*10));
     }
   }
-  Mat mobileye_image = Mat(load_length,load_width,CV_8UC3, Scalar(205, 205, 205));
-  rectangle(mobileye_image, Rect(load_width/2-car_width/2,load_length-car_length,car_width, car_length), Scalar(0,255,0),2,LINE_8,0);
-  line(mobileye_image,Point(load_width/2,load_length),Point(load_width/2,0),Scalar(255, 0, 0),1,LINE_8,0);
-  polylines(mobileye_image,Left_Points,false,Scalar(0,0,255),2,LINE_8,0);
-  polylines(mobileye_image,Right_Points,false,Scalar(0,0,255),2,LINE_8,0);
+  Mat image = Mat(load_length,load_width,CV_8UC3, Scalar(205, 205, 205));
+  rectangle(image, Rect(load_width/2-car_width/2,load_length-car_length,car_width, car_length), Scalar(0,255,0),2,LINE_8,0);
+  line(image,Point(load_width/2,load_length),Point(load_width/2,0),Scalar(255, 0, 0),1,LINE_8,0);
+  polylines(image,Left_Points,false,Scalar(0,0,255),2,LINE_8,0);
+  polylines(image,Right_Points,false,Scalar(0,0,255),2,LINE_8,0);
 
-  imshow(window, mobileye_image);
+  imshow(window, image);
   //moveWindow(window, 100,200);
   waitKey(10);
 }
@@ -68,13 +68,13 @@ void mobileye_display_LKA(const mobileye::mobileye_LKA_Lane_multi msg)
       Right_Points.push_back(Point((int16_t)y2+load_width/2,load_length-x*10));
     }
   }
-  Mat mobileye_image = Mat(load_length,load_width,CV_8UC3, Scalar(205, 205, 205));
-  rectangle(mobileye_image, Rect(load_width/2-car_width/2,load_length-car_length,car_width, car_length), Scalar(0,255,0),2,LINE_8,0);
-  line(mobileye_image,Point(load_width/2,load_length),Point(load_width/2,0),Scalar(255, 0, 0),1,LINE_8,0);
-  polylines(mobileye_image,Left_Points,false,Scalar(0,0,255),2,LINE_8,0);
-  polylines(mobileye_image,Right_Points,false,Scalar(0,0,255),2,LINE_8,0);
+  Mat image = Mat(load_length,load_width,CV_8UC3, Scalar(205, 205, 205));
+  rectangle(image, Rect(load_width/2-car_width/2,load_length-car_length,car_width, car_length), Scalar(0,255,0),2,LINE_8,0);
+  line(image,Point(load_width/2,load_length),Point(load_width/2,0),Scalar(255, 0, 0),1,LINE_8,0);
+  polylines(image,Left_Points,false,Scalar(0,0,255),2,LINE_8,0);
+  polylines(image,Right_Points,false,Scalar(0,0,255),2,LINE_8,0);
 
-  imshow(window, mobileye_image);
+  imshow(window, image);
   //moveWindow(window, 100,200);
   waitKey(10);
 }
@@ -82,26 +82,26 @@ void mobileye_display_obstacles(const mobileye::mobileye_Obstacle_multi msg)
 {
   char window[] = "Mobileye_Obstacles";
 
-  Mat mobileye_image = Mat(load_length,load_width,CV_8UC3, Scalar(205, 205, 205));
-  rectangle(mobileye_image, Rect(load_width/2-car_width/2,load_length/2,car_width, car_length), Scalar(0,255,0),2,LINE_8,0);
-  line(mobileye_image, Point(load_width/4,0), Point(load_width/4,load_length),Scalar(0, 255, 255), 2, LINE_8);//left lane
-  line(mobileye_image, Point(load_width/4*3,0), Point(load_width/4*3,load_length),Scalar(0, 255, 255), 2, LINE_8);//right lane
+  Mat image = Mat(load_length,load_width,CV_8UC3, Scalar(205, 205, 205));
+  rectangle(image, Rect(load_width/2-car_width/2,load_length/2,car_width, car_length), Scalar(0,255,0),2,LINE_8,0);
+  line(image, Point(load_width/4,0), Point(load_width/4,load_length),Scalar(0, 255, 255), 2, LINE_8);//left lane
+  line(image, Point(load_width/4*3,0), Point(load_width/4*3,load_length),Scalar(0, 255, 255), 2, LINE_8);//right lane
   for (uint8_t i = 0; i < msg.Obstacles.size(); i++) {
     //0 vehicle;1 truck;2 bike;3 ped;4 bicyle;5-7 unused
     if(msg.Obstacles[i].MType==3)
-      rectangle(mobileye_image, Rect(load_width/2-msg.Obstacles[i].PosY,load_length/2-msg.Obstacles[i].PosX*2,msg.Obstacles[i].Width*5, msg.Obstacles[i].Length*5),
+      rectangle(image, Rect(load_width/2-msg.Obstacles[i].PosY,load_length/2-msg.Obstacles[i].PosX*2,msg.Obstacles[i].Width*5, msg.Obstacles[i].Length*5),
                 Scalar(0,0,255),-1, LINE_8);//B G R
     else if(msg.Obstacles[i].MType<=1)
-      rectangle(mobileye_image, Rect(load_width/2-msg.Obstacles[i].PosY,load_length/2-msg.Obstacles[i].PosX*2,msg.Obstacles[i].Width*5, msg.Obstacles[i].Length*5),
+      rectangle(image, Rect(load_width/2-msg.Obstacles[i].PosY,load_length/2-msg.Obstacles[i].PosX*2,msg.Obstacles[i].Width*5, msg.Obstacles[i].Length*5),
                 Scalar(255,0,0),-1, LINE_8);
     else if((msg.Obstacles[i].MType==2)||(msg.Obstacles[i].MType==4))
-      rectangle(mobileye_image, Rect(load_width/2-msg.Obstacles[i].PosY,load_length/2-msg.Obstacles[i].PosX*2,msg.Obstacles[i].Width*5, msg.Obstacles[i].Length*5),
+      rectangle(image, Rect(load_width/2-msg.Obstacles[i].PosY,load_length/2-msg.Obstacles[i].PosX*2,msg.Obstacles[i].Width*5, msg.Obstacles[i].Length*5),
                 Scalar(255,0,255),-1, LINE_8);
     else
-      rectangle(mobileye_image, Rect(load_width/2-msg.Obstacles[i].PosY,load_length/2-msg.Obstacles[i].PosX*2,msg.Obstacles[i].Width*5, msg.Obstacles[i].Length*5),
+      rectangle(image, Rect(load_width/2-msg.Obstacles[i].PosY,load_length/2-msg.Obstacles[i].PosX*2,msg.Obstacles[i].Width*5, msg.Obstacles[i].Length*5),
                 Scalar(0,0,0),-1, LINE_8);
   }
-  imshow(window, mobileye_image);
+  imshow(window, image);
   //moveWindow(window, 100,200);
   waitKey(10);
 }

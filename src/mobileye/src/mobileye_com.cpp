@@ -29,7 +29,7 @@ int16_t uint_int(uint16_t num,uint8_t len){
 void Coordinate_Exc_mobileye(float delta_x, float delta_y, float angle) {
     float px, py, vx, vy,ax,ay;
     for(uint8_t i=0;i<Obstacle_Total;i++){
-        px = Obstacle[i].PosX+Carinfo.Speed;//plus distance of the reference points which is 1s headway
+        px = Obstacle[i].PosX+Carinfo.Speed/3.6;//plus distance of the reference points which is 1s headway
         py = Obstacle[i].PosY;
         vx = Obstacle[i].VrelX;
         ax = Obstacle[i].ArelX;
@@ -52,10 +52,10 @@ void mobileye_extract(const canbus::candata_multi::ConstPtr& CanData) {
       Carinfo.PitchAngle=Lane.PitchAngle;
       break;
     case 0x737:
-      if(((uint16_t)Data[1]*256+Data[0])!=0x8000)Lane.Curvature=(int16_t)((uint16_t)Data[1]*256+Data[0])*3.81*0.000001;//-0.12:0.12[1/m];invalid value:8000h
-      else Lane.Curvature=0;
-      if(((uint16_t)Data[3]%16*256+Data[2])!=0x800)Lane.Heading=uint_int((uint16_t)Data[3]%16*256+Data[2],12)*0.0005;//-1:1;invalid value:800h
-      else Lane.Heading=0;
+      if(((uint16_t)Data[1]*256+Data[0])!=0x8000)Lane.Curvature=(int16_t)((uint16_t)Data[1]*256+Data[0])*3.81*0.000001*(-1);//-0.12:0.12[1/m];invalid value:8000h
+      //else Lane.Curvature=0;//only update when receiving effective data
+      if(((uint16_t)Data[3]%16*256+Data[2])!=0x800)Lane.Heading=uint_int((uint16_t)Data[3]%16*256+Data[2],12)*0.0005*(-1);//-1:1;invalid value:800h
+      //else Lane.Heading=0;
       Lane.Constr_Area=(Data[3]%32)/16;
       //Lane.Right_LDW_avai=(Data[3]%64)/32;
       //Lane.Left_LDW_avai=(Data[3]%128)/64;
@@ -66,7 +66,7 @@ void mobileye_extract(const canbus::candata_multi::ConstPtr& CanData) {
       Lane.Left_Conf=Data[0]%4;//0 lowest;3 highest
       Lane.Left_Type=Data[0]/16;//0 dashed;1 solid;2 none;3 rode edge;4 double lane mark;5 bott's dots;6 invalid
       if(((uint16_t)Data[2]*16+Data[1]/16)!=0x800)Lane.Left_Dist=uint_int((uint16_t)Data[2]*16+Data[1]/16,12)*0.02;// -40:40[m];invalid value:800h
-      else Lane.Left_Dist=0;
+      //else Lane.Left_Dist=0;
       Lane.Right_Conf=Data[5]%4;
       Lane.Right_Type=Data[5]/16;
       Lane.Right_Dist=uint_int((uint16_t)Data[7]*16+Data[6]/16,12)*0.02;
@@ -142,15 +142,15 @@ void mobileye_extract(const canbus::candata_multi::ConstPtr& CanData) {
       for(uint16_t j=0;j<Obstacle_Total;j++){
         if (CanData->frame[i].id==(uint16_t)(0x739+0x03*j)){
           Obstacle[j].ID=Data[0];
-          Obstacle[j].timestamp=CanData->frame[i].timestamp;
+          //Obstacle[j].timestamp=CanData->frame[i].timestamp;
           if(((uint16_t)(Data[2]%16)*256+Data[1])!=0xFFF)Obstacle[j].PosX=((uint16_t)(Data[2]%16)*256+Data[1])*0.0625;//0:250[m];invalid value:FFFh
-          else Obstacle[j].PosX=0;
+          //else Obstacle[j].PosX=0;
           if(((uint16_t)(Data[4]%4)*256+Data[3])!=0x200)Obstacle[j].PosY=uint_int((uint16_t)(Data[4]%4)*256+Data[3],10)*0.0625;//-31.93:31.93[m];invalid value:200h
-          else Obstacle[j].PosY=0;
+          //else Obstacle[j].PosY=0;
           Obstacle[j].Blinker=Data[4]%32/4;//0 unavailabe;1 off;2 left;3 right;4 both
           Obstacle[j].CutState=Data[4]/32;//0 undefined;1 in host lane;2 out host lane;3 cut in;4 cut out
           if(((uint16_t)(Data[6]%16)*256+Data[5])!=0x800)Obstacle[j].VrelX=uint_int((uint16_t)(Data[6]%16)*256+Data[5],12)*0.0625;//-127.93:127.93[m/s];invalid value:800h
-          else Obstacle[j].VrelX=0;
+          //else Obstacle[j].VrelX=0;
           Obstacle[j].MType=Data[6]%128/16;//0 vehicle;1 truck;2 bike;3 ped;4 bicyle;5-7 unused
           Obstacle[j].Status=Data[7]%8;//0 undefined;1 standing;2 stopped;3 moving;4 oncoming;5 parked;6 unused
           Obstacle[j].Brake=Data[7]%16/8;//0 off;1 on
@@ -168,9 +168,9 @@ void mobileye_extract(const canbus::candata_multi::ConstPtr& CanData) {
         else if (CanData->frame[i].id==(uint16_t)(0x73B+0x03*j)){
           Obstacle[j].AngleRate=(int16_t)((uint16_t)Data[1]*256+Data[0])*0.01;//-327.68:327.68[degree/sec]
           if(((uint16_t)Data[3]*256+Data[2])!=0x7FF)Obstacle[j].ScaleChange=(int16_t)((uint16_t)Data[3]*256+Data[2])*0.0002;//-6.5532:6.5532[pix/sec];invalid value:7FFh
-          else Obstacle[j].ScaleChange=0;
+          //else Obstacle[j].ScaleChange=0;
           if(((uint16_t)(Data[5]%4)*256+Data[4])!=0x200)Obstacle[j].ArelX=uint_int((uint16_t)(Data[5]%4)*256+Data[4],10)*0.03;//-14.97:14.97[m/s^2];invalid value:200h
-          else Obstacle[j].ArelX=0;
+          //else Obstacle[j].ArelX=0;
           Obstacle[j].Replaced=Data[5]%32/16;
           Obstacle[j].Angle=(int16_t)((uint16_t)Data[7]*256+Data[6])*0.01;//-327.68:327.68[degree]
         }
