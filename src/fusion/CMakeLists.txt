@@ -37,3 +37,4 @@ add_dependencies(fusion_data
 target_link_libraries(fusion_data ${catkin_LIBRARIES})
 #target_link_libraries(fusion_display ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
+target_link_libraries(fusion_data ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})

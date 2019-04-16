@@ -15,8 +15,8 @@
 #define RCS_threshold 1 //dBm^2
 #define ProbOfExist_threshold 2 //0x01:<25%;0x02:<50%;
 #define Lifetime_threshold 1 //s
-#define DistX_threshold 5//2.5m for 20hz, 5m for 10hz
-#define DistY_threshold 5
+#define DistX_threshold 4//2.5m for 20hz, 5m for 10hz
+#define DistY_threshold 2
 #define VrelX_threshold 2//1m/s for 20hz, 2m/s for 10hz
 #define VrelY_threshold 2
 #define pi 3.1415926

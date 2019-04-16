@@ -129,6 +129,16 @@ void mobileye_extract(const canbus::candata_multi::ConstPtr& CanData) {
       Obstacle_Total=Data[0];
       break;
     default:
+      if (CanData->frame[i].id==(uint16_t)(0x727)){
+        TSR[0].MType=Data[0];
+        TSR[0].SupType=Data[1];
+        TSR[1].MType=Data[2];
+        TSR[1].SupType=Data[3];
+        TSR[2].MType=Data[4];
+        TSR[2].SupType=Data[5];
+        TSR[3].MType=Data[6];
+        TSR[3].SupType=Data[7];
+      }
       for(uint16_t j=0;j<TSR_Num;j++){
         if (CanData->frame[i].id==(uint16_t)(0x720+0x01*j)){
           TSR[j].MType=Data[0];
