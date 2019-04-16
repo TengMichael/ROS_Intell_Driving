@@ -1,8 +1,8 @@
 <launch>
  <node pkg="milradar" name="milradar408" type="milradar408" output="screen" respawn="true"/>
- #<node pkg="milradar" name="milradar208_12" type="milradar208_12" output="screen" respawn="true"/>
- #<node pkg="milradar" name="milradar208_35" type="milradar208_35" output="screen" respawn="true"/>
- #<node pkg="milradar" name="milradar208_46" type="milradar208_46" output="screen" respawn="true"/>
+ <node pkg="milradar" name="milradar208_12" type="milradar208_12" output="screen" respawn="true"/>
+ <node pkg="milradar" name="milradar208_35" type="milradar208_35" output="screen" respawn="true"/>
+ <node pkg="milradar" name="milradar208_46" type="milradar208_46" output="screen" respawn="true"/>
  <node pkg="milradar" name="milradar_display" type="milradar_display" output="screen" respawn="true"/>
  <node pkg="mobileye" name="mobileye_com" type="mobileye_com" output="screen" respawn="true"/>
  <node pkg="mobileye" name="mobileye_display" type="mobileye_display" output="screen" respawn="true"/>

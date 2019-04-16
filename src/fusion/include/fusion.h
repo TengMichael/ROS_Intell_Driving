@@ -6,6 +6,8 @@
 #include <milradar/obj408_multi.h>
 #include <mobileye/mobileye_Obstacle_multi.h>
 #include <mobileye/vehicle_info.h>
+#include <mobileye/mobileye_Lane.h>
+
 #include <fusion/fusion_obj.h>
 #include <kf_radar_mobileye/radar_mobileye_data.h>
 #include <kf_radar_mobileye/radar_mobileye_data_multi.h>
@@ -21,5 +23,7 @@ using Eigen::VectorXd;
 #define Object_208Num 25
 #define Sensors_208Num 6
 #define Obstacle_Num 64
+#define gate_X 8
+#define gate_Y 4
 
 #endif // FUSION_H

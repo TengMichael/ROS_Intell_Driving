@@ -1,0 +1,8 @@
+prefix=/home/michael/Desktop/Intell_driving/ROS_Intell_Driving/devel
+
+Name: fusion
+Description: Description of fusion
+Version: 0.1.0
+Cflags: -I/home/michael/Desktop/Intell_driving/ROS_Intell_Driving/devel/include
+Libs: -L/home/michael/Desktop/Intell_driving/ROS_Intell_Driving/devel/lib 
+Requires: 
