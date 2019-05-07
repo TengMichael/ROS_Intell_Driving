@@ -83,4 +83,3 @@ LINK_DIRECTORIES(${catkin_LIB_DIRS} lib)
 target_link_libraries(can_device0 ${catkin_LIBRARIES} controlcan)
 target_link_libraries(can_device1 ${catkin_LIBRARIES} controlcan)
 target_link_libraries(can_device2 ${catkin_LIBRARIES} controlcan)
-
