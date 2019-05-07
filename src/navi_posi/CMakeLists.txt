@@ -1,10 +1,11 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(ultradar)
+project(navi_posi)
+
+add_compile_options(-std=c++11)
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp std_msgs message_generation serial
 )
-find_package(OpenCV REQUIRED)
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
    DEPENDENCIES
@@ -20,8 +21,11 @@ include_directories(
  include
  ${catkin_INCLUDE_DIRS}
 )
-add_executable(ultradar_com src/ultradar_com.cpp)
-add_dependencies(ultradar_com
+add_executable(navi_position src/navi_position.cpp)
+add_dependencies(navi_position
     ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(ultradar_com ${catkin_LIBRARIES})
-target_link_libraries(ultradar_com ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+target_link_libraries(navi_position ${catkin_LIBRARIES})
+#INCLUDE_DIRECTORIES(/usr/include/)
+#LINK_DIRECTORIES(/usr/local/lib)
+#target_link_libraries(${PROJECT_NAME} curl)
+target_link_libraries(navi_position ${catkin_LIBRARIES} curl)
