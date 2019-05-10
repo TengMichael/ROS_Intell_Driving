@@ -43,6 +43,9 @@ void ultradar_display(std_msgs::UInt16MultiArray serial_data){
   sprintf(ch,"%d",serial_data.data[7]);str=ch;str+="mm";
   putText(image,str.c_str(),Point(load_width/2+car_width/4,load_length/2-car_length/2-10),FONT_HERSHEY_COMPLEX,font,Scalar(0,0,255),1,8);
 
+  sprintf(ch,"%d",serial_data.data[11]);str=ch;str+="mm";
+  putText(image,str.c_str(),Point(load_width/2,load_length/2-car_length/2-40),FONT_HERSHEY_COMPLEX,font,Scalar(0,0,255),1,8);
+
   imshow(window, image);
   //moveWindow(window, 100,200);
   waitKey(10);
@@ -71,7 +74,7 @@ int main (int argc, char** argv){
   }else{
     return -1;
   }
-  ros::Rate loop_rate(10);
+  ros::Rate loop_rate(1);
   while(ros::ok()){
     ros::spinOnce();
     //ROS_INFO("Reading from serial port");
@@ -81,10 +84,10 @@ int main (int argc, char** argv){
     for(uint8_t i=0;i<12;i++){
       command[2]=0x16+i*0x08;
       ros_ser.write(command,3);
-      usleep(15);
+      usleep(100);
       ros_ser.read(arr,2);
       serial_data.data.push_back((uint16_t)arr[0]*256+arr[1]);
-      //ROS_INFO("Read ch%d: %d",i,serial_data.data[i]);
+      ROS_INFO("Read ch%d: %d",i,serial_data.data[i]);
     }
     ultradar_display(serial_data);
     sensor_pub.publish(serial_data);

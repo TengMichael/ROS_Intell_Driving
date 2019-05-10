@@ -30,7 +30,7 @@ void Radar408_dataprocess1(void){
     milradar::obj408 objs408_temp[Object_408Num]={};
     for(uint8_t i=0;i<Obj408_ID_Total;i++){
         if((objs408[i].RCS<=RCS_threshold)||(objs408[i].ProbOfExist<=ProbOfExist_threshold)||
-                (objs408[i].DistX<=0)||(objs408[i].DistY==0))
+                (objs408[i].DistX>20))
             continue;
         else
         {
@@ -38,6 +38,7 @@ void Radar408_dataprocess1(void){
             k++;
         }
     }
+    Obj408_ID_Total=k;
     memcpy(&(objs408),&(objs408_temp),sizeof(objs408_temp));
 }
 /**********data preprocessing for the radar 408 by comparing two times sampling values************/
@@ -152,7 +153,7 @@ void Radar208_dataprocess1(void){
         k=0;
         for(uint8_t i=0;i<Obj208_ID_Total[j];i++){
             if((objs208[j][i].RCS<=RCS_threshold)||(objs208[j][i].Lifetime<=Lifetime_threshold)||
-                    (objs208[j][i].DistX<=0)||(objs208[j][i].DistY==0))
+                    (objs208[j][i].DistX<=0))
                 continue;
             else
             {
