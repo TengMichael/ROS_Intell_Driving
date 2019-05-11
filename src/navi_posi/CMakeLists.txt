@@ -6,6 +6,13 @@ add_compile_options(-std=c++11)
 find_package(catkin REQUIRED COMPONENTS
   roscpp std_msgs message_generation serial
 )
+## Generate messages in the 'msg' folder
+ add_message_files(
+   FILES
+   vehicle_posture.msg
+   navi_step.msg
+   navi_route.msg
+ )
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
    DEPENDENCIES

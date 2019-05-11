@@ -7,6 +7,9 @@
 #include <boost/regex.hpp>
 #include <serial/serial.h>
 #include <math.h>
+#include <navi_posi/vehicle_posture.h>
+#include <navi_posi/navi_step.h>
+#include <navi_posi/navi_route.h>
 using namespace std;
 
 static size_t downloadCallback(void *buffer, size_t sz, size_t nmemb, void *writer)
@@ -17,7 +20,7 @@ static size_t downloadCallback(void *buffer, size_t sz, size_t nmemb, void *writ
 
   return sz * nmemb;
 }
-string degsec2deg(string degsec){
+string degmin2deg(string degsec){
   string deg;
   float tem;
   char ch[20];
@@ -29,13 +32,15 @@ string degsec2deg(string degsec){
   return deg;
 
 }
-void extract_GPSdata(string str,string *gps_coordinate){
+void extract_GPSdata(string strTmpStr,string *gps_coordinate,navi_posi::vehicle_posture *veh_pos){
   uint8_t i=0;
-  boost::regex r1(R"(GNGGA,\d*.\d*,\d*.\d*,N,\d*.\d*,E)");
-  boost::regex r2(R"(\d*.\d*,N,\d*.\d*,E)");
-  boost::regex r3(R"(\d+.\d+)");
+  /*************************gps**********************************/
+  string str=strTmpStr;
+  boost::regex r1(R"(GNRMC,\d+.\d+,A,-?\d+.\d+,N,-?\d+.\d+,E,-?\d+.\d+,-?\d+.\d+)");
+  boost::regex r2(R"(-?\d+.\d+,N,-?\d+.\d+,E,-?\d+.\d+,-?\d+.\d+)");
+  boost::regex r3(R"(-?\d+.\d+)");
   boost::smatch sm;
-  string gps_str[2];
+  string gps_str[4];
   if(boost::regex_search(str,sm,r1))
   {
     str=sm.str();
@@ -53,7 +58,37 @@ void extract_GPSdata(string str,string *gps_coordinate){
       }
     }
   }
-  *gps_coordinate=degsec2deg(gps_str[1])+","+degsec2deg(gps_str[0]);
+  /************************vehicle posture************************************/
+  i=0;
+  str=strTmpStr;
+  r1=(R"(GPATT,-?\d+.\d+,p,-?\d+.\d+,r,-?\d+.\d+,y)");
+  r2=(R"(-?\d+.\d+)");
+  string pos_str[3];
+  char ch[20];
+  if(boost::regex_search(str,sm,r1))
+  {
+    str=sm.str();
+    //printf("%s\n", str.c_str());
+    while(boost::regex_search(str, sm, r2))
+    {
+      pos_str[i]=sm.str();
+      //printf("%s\n", pos_str[i].c_str());
+      i++;
+      str=sm.suffix();
+    }
+  }
+  /************************vehicle posture************************************/
+  *gps_coordinate=degmin2deg(gps_str[1])+","+degmin2deg(gps_str[0]);
+  strncpy(ch,gps_str[2].c_str(),gps_str[2].length()+1);
+  sscanf(ch,"%f",&(veh_pos->Speed));
+  strncpy(ch,gps_str[3].c_str(),gps_str[3].length()+1);
+  sscanf(ch,"%f",&(veh_pos->SpeedDirection));
+  strncpy(ch,pos_str[0].c_str(),pos_str[0].length()+1);
+  sscanf(ch,"%f",&(veh_pos->PitchAngle));
+  strncpy(ch,pos_str[1].c_str(),pos_str[1].length()+1);
+  sscanf(ch,"%f",&(veh_pos->RollAngle));
+  strncpy(ch,pos_str[2].c_str(),pos_str[2].length()+1);
+  sscanf(ch,"%f",&(veh_pos->YawAngle));
 }
 void extract_BDdata(string str,string *BD_coordinate){
   uint8_t i=0;
@@ -82,46 +117,60 @@ void get_urldata(string strUrl,string *strTmpStr){
     *strTmpStr = "error";
   }
   //printf("strRsp is |%s|\n", (*strTmpStr).c_str());
-
-
 }
 
-void extract_mapdata(string strTmpStr,string distance[],string direction[],string turn[],string path[]){
+uint8_t extract_mapdata(string strTmpStr,uint32_t distance[],uint32_t direction[],uint32_t turn[],string path[]){
   uint8_t i=0;
   string str=strTmpStr;
   /*********************distance*****************************/
-  boost::regex r(R"("distance":\d*)");
+  boost::regex r(R"("distance":\d+)");
+  boost::regex r1(R"(\d+)");
   boost::smatch sm;
+  boost::smatch sm1;
+  char ch[10];
+
   while(boost::regex_search(str, sm, r))
   {
-    distance[i]=sm.str();
-    printf("%s\n", distance[i].c_str());
+    if(boost::regex_search(sm.str(), sm1, r1))
+    {
+      strncpy(ch,sm1.str().c_str(),sm1.str().length()+1);
+      sscanf(ch,"%d",&(distance[i]));
+    }
+    printf("distance %d\n", distance[i]);
     i++;
     str=sm.suffix();
   }
   /*********************direction*****************************/
   str=strTmpStr;i=0;
-  r=R"("direction":\d*)";
+  r=R"("direction":\d+)";
   while(boost::regex_search(str, sm, r))
   {
-    direction[i]=sm.str();
-    printf("%s\n", direction[i].c_str());
+    if(boost::regex_search(sm.str(), sm1, r1))
+    {
+      strncpy(ch,sm1.str().c_str(),sm1.str().length()+1);
+      sscanf(ch,"%d",&(direction[i]));
+    }
+    printf("direction %d\n", direction[i]);
     i++;
     str=sm.suffix();
   }
   /*********************turn*****************************/
   str=strTmpStr;i=0;
-  r=R"("turn":\d*)";
+  r=R"("turn":\d+)";
   while(boost::regex_search(str, sm, r))
   {
-    turn[i]=sm.str();
-    printf("%s\n", turn[i].c_str());
+    if(boost::regex_search(sm.str(), sm1, r1))
+    {
+      strncpy(ch,sm1.str().c_str(),sm1.str().length()+1);
+      sscanf(ch,"%d",&(turn[i]));
+    }
+    printf("turn %d\n", turn[i]);
     i++;
     str=sm.suffix();
   }
   /**********************path****************************/
   str=strTmpStr;i=0;
-  r=R"("path":"(\d*.\d*,\d*.\d*(;)?)*")";
+  r=R"("path":"(\d+.\d+,\d+.\d+(;)?)*")";
   while(boost::regex_search(str, sm, r))
   {
     path[i]=sm.str();
@@ -129,13 +178,14 @@ void extract_mapdata(string strTmpStr,string distance[],string direction[],strin
     i++;
     str=sm.suffix();
   }
+  return i;
 }
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "navi_position");
   ros::NodeHandle nh;
-  ros::Publisher chatter_pub = nh.advertise<std_msgs::String>("chatter", 1000);
-
+  ros::Publisher pub_veh_pos = nh.advertise<navi_posi::vehicle_posture>("vehicle_posture", 1000);
+  ros::Publisher pub_navi_posi = nh.advertise<navi_posi::navi_route>("navi_route", 1000);
   /*serial::Serial ros_ser;
   try
   {
@@ -156,10 +206,10 @@ int main(int argc, char **argv)
     return -1;
   }*/
 
-  ros::Rate loop_rate(5);
+  ros::Rate loop_rate(1);
   while (ros::ok())
   {
-   /**************************get gps cooridinate and change to baidu cooridinate***************************************/
+    /**************************get gps cooridinate and change to baidu cooridinate***************************************/
     string position_data=R"($GNRMC,072124.80,A,3101.75505,N,12126.52014,E,0.03,0.000,100519,0.0,0,D*6B
                          $GNGGA,072124.80,3101.75505,N,12126.52014,E,2,10,0.88,8.600,M,9.900,M,3.80,0019*6C
                          $GNZDA,072124.80,10,05,2019,00,00*7C
@@ -169,30 +219,38 @@ int main(int argc, char **argv)
                          $GNRMC,072125.00,A,3101.75505,N,12126.52014,E,0.01,0.000,100519,0.0,0,D*60)";
     //ros_ser.read(position_data,1);//read data from combined position module
     string gps_coordinate;
-    extract_GPSdata(position_data,&gps_coordinate);
-    printf("%s\n", gps_coordinate.c_str());
+    navi_posi::vehicle_posture veh_pos;
+    extract_GPSdata(position_data,&gps_coordinate,&veh_pos);
+    printf("gps_coordinate %s\n", gps_coordinate.c_str());
+    printf("veh_pos %f %f %f %f %f\n",veh_pos.Speed,veh_pos.SpeedDirection,veh_pos.PitchAngle,veh_pos.RollAngle,veh_pos.YawAngle);
     string strUrl = "http://api.map.baidu.com/geoconv/v1/?coords="+gps_coordinate+"&from=1&to=5&ak=uU2bUqdqkaGO8CAosvNhyOPLgGBn1wdM";
     string strTmpStr;
     get_urldata(strUrl,&strTmpStr);
-    printf("strRsp is |%s|\n", strTmpStr.c_str());
+    //printf("strRsp is |%s|\n", strTmpStr.c_str());
     string BD_coordinate;
     extract_BDdata(strTmpStr,&BD_coordinate);
-    printf("%s\n", BD_coordinate.c_str());
-/*****************************get route planning information***********************************/
+    printf("BD_coordinate %s\n", BD_coordinate.c_str());
+    /*****************************get route planning information***********************************/
     strUrl = "http://api.map.baidu.com/directionlite/v1/driving?origin="+BD_coordinate+"&destination=31.029497,121.451617&ak=uU2bUqdqkaGO8CAosvNhyOPLgGBn1wdM";
     strTmpStr;
     get_urldata(strUrl,&strTmpStr);
-    printf("strRsp is |%s|\n", strTmpStr.c_str());
-    string distance[10],direction[10],turn[10],path[10];
-    extract_mapdata(strTmpStr,distance,direction,turn,path);
-    //printf("%s\n", path[0].c_str());
-
-    //chatter_pub.publish(msg);
-
+    //printf("strRsp is |%s|\n", strTmpStr.c_str());
+    uint32_t distance[20],direction[20],turn[20];
+    string path[20];
+    navi_posi::navi_step step;
+    navi_posi::navi_route route;
+    uint8_t step_num= extract_mapdata(strTmpStr,distance,direction,turn,path);
+    for(uint8_t i=0;i<step_num;i++){
+      step.distance=distance[i+1];//the first one is total distance
+      step.direction=direction[i];
+      step.turn=turn[i];
+      step.path=path[i];
+      route.steps.push_back(step);
+    }
+    pub_veh_pos.publish(veh_pos);
+    pub_navi_posi.publish(route);
     ros::spinOnce();
-
     loop_rate.sleep();
   }
-
   return 0;
 }
