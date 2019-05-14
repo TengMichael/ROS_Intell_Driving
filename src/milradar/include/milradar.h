@@ -30,7 +30,7 @@ void Radar408_dataprocess1(void){
     milradar::obj408 objs408_temp[Object_408Num]={};
     for(uint8_t i=0;i<Obj408_ID_Total;i++){
         if((objs408[i].RCS<=RCS_threshold)||(objs408[i].ProbOfExist<=ProbOfExist_threshold)||
-                (objs408[i].DistX>20))
+                (objs408[i].DistX<0))
             continue;
         else
         {
@@ -137,7 +137,7 @@ void Radar408_extract(const canbus::candata_multi CanData){
         memcpy(&(objs408[i]),&(objs408_temp[objs408_mask[i]]),sizeof(objs408[i]));
     Radar408_dataprocess1();
     Radar408_dataprocess2();
-    Coordinate_Exc_408(0.52,0.02,0);//(x,y,angle)
+    Coordinate_Exc_408(0.52+2.7,0.02,0);//(x,y,angle)
 }
 }
 /****************************************************************************/
@@ -250,16 +250,16 @@ void Radar208_extract(const canbus::candata_multi::ConstPtr& CanData,uint8_t s1,
     Radar208_dataprocess1();
     Radar208_dataprocess2();
     if((s1==1)&&(s2==2)){
-        Coordinate_Exc_208(0,0.45,0.64,0.05);//(x,y,angle)
-        Coordinate_Exc_208(1,0.45,-0.62,-0.0878);
+        Coordinate_Exc_208(0,0.45+2.7,0.64,0.05);//(x,y,angle)
+        Coordinate_Exc_208(1,0.45+2.7,-0.62,-0.0878);
     }
     else if((s1==3)&&(s2==5)){
-        Coordinate_Exc_208(0,-1.79,0.842,pi/2);
-        Coordinate_Exc_208(1,-3.52,0.7,pi-0.3047);
+        Coordinate_Exc_208(0,0.91,0.842,pi/2);
+        Coordinate_Exc_208(1,-0.82,0.7,pi-0.3047);
     }
     else if((s1==4)&&(s2==6)){
-        Coordinate_Exc_208(0,-1.84,-0.842,-pi/2);
-        Coordinate_Exc_208(1,-3.51,-0.695,-(pi-0.2014));
+        Coordinate_Exc_208(0,0.896,-0.842,-pi/2);
+        Coordinate_Exc_208(1,-0.81,-0.695,-(pi-0.2014));
     }
     else{}
 }

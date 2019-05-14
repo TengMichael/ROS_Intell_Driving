@@ -6,4 +6,7 @@
  <node pkg="milradar" name="milradar_display" type="milradar_display" output="screen" respawn="true"/>
  <node pkg="mobileye" name="mobileye_com" type="mobileye_com" output="screen" respawn="true"/>
  <node pkg="mobileye" name="mobileye_display" type="mobileye_display" output="screen" respawn="true"/>
+ <node pkg="fusion" name="fusion_data" type="fusion_data" output="screen" respawn="true"/>
+ <node pkg="kalman" name="kalman_filter" type="kalman_filter" output="screen" respawn="true"/>
+ <node pkg="kalman" name="kalman_display" type="kalman_display" output="screen" respawn="true"/>
 </launch>
