@@ -41,7 +41,9 @@ struct radar_mobileye_data_
     , fusion_VrelX(0.0)
     , fusion_VrelY(0.0)
     , fusion_ArelX(0.0)
-    , fusion_ArelY(0.0)  {
+    , fusion_ArelY(0.0)
+    , mobileye_Width(0.0)
+    , mobileye_Length(0.0)  {
     }
   radar_mobileye_data_(const ContainerAllocator& _alloc)
     : timestamp(0)
@@ -61,7 +63,9 @@ struct radar_mobileye_data_
     , fusion_VrelX(0.0)
     , fusion_VrelY(0.0)
     , fusion_ArelX(0.0)
-    , fusion_ArelY(0.0)  {
+    , fusion_ArelY(0.0)
+    , mobileye_Width(0.0)
+    , mobileye_Length(0.0)  {
   (void)_alloc;
     }
 
@@ -120,6 +124,12 @@ struct radar_mobileye_data_
 
    typedef float _fusion_ArelY_type;
   _fusion_ArelY_type fusion_ArelY;
+
+   typedef float _mobileye_Width_type;
+  _mobileye_Width_type mobileye_Width;
+
+   typedef float _mobileye_Length_type;
+  _mobileye_Length_type mobileye_Length;
 
 
 
@@ -198,12 +208,12 @@ struct MD5Sum< ::kalman::radar_mobileye_data_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "7321b64a7d3c42bfbb3b29cb3dbd37f1";
+    return "4975d13f61a0fd1bd7c6d84c5f81c19b";
   }
 
   static const char* value(const ::kalman::radar_mobileye_data_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x7321b64a7d3c42bfULL;
-  static const uint64_t static_value2 = 0xbb3b29cb3dbd37f1ULL;
+  static const uint64_t static_value1 = 0x4975d13f61a0fd1bULL;
+  static const uint64_t static_value2 = 0xd7c6d84c5f81c19bULL;
 };
 
 template<class ContainerAllocator>
@@ -240,6 +250,8 @@ float32 fusion_VrelX\n\
 float32 fusion_VrelY\n\
 float32 fusion_ArelX\n\
 float32 fusion_ArelY\n\
+float32 mobileye_Width\n\
+float32 mobileye_Length\n\
 ";
   }
 
@@ -276,6 +288,8 @@ namespace serialization
       stream.next(m.fusion_VrelY);
       stream.next(m.fusion_ArelX);
       stream.next(m.fusion_ArelY);
+      stream.next(m.mobileye_Width);
+      stream.next(m.mobileye_Length);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -330,6 +344,10 @@ struct Printer< ::kalman::radar_mobileye_data_<ContainerAllocator> >
     Printer<float>::stream(s, indent + "  ", v.fusion_ArelX);
     s << indent << "fusion_ArelY: ";
     Printer<float>::stream(s, indent + "  ", v.fusion_ArelY);
+    s << indent << "mobileye_Width: ";
+    Printer<float>::stream(s, indent + "  ", v.mobileye_Width);
+    s << indent << "mobileye_Length: ";
+    Printer<float>::stream(s, indent + "  ", v.mobileye_Length);
   }
 };
 

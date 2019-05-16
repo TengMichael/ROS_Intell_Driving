@@ -114,12 +114,12 @@ struct MD5Sum< ::kalman::radar_mobileye_data_multi_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "e8940caae5e81171640bb6644f3122dd";
+    return "d125692124264bb8d5228e34fd2a6d74";
   }
 
   static const char* value(const ::kalman::radar_mobileye_data_multi_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xe8940caae5e81171ULL;
-  static const uint64_t static_value2 = 0x640bb6644f3122ddULL;
+  static const uint64_t static_value1 = 0xd125692124264bb8ULL;
+  static const uint64_t static_value2 = 0xd5228e34fd2a6d74ULL;
 };
 
 template<class ContainerAllocator>
@@ -160,6 +160,8 @@ float32 fusion_VrelX\n\
 float32 fusion_VrelY\n\
 float32 fusion_ArelX\n\
 float32 fusion_ArelY\n\
+float32 mobileye_Width\n\
+float32 mobileye_Length\n\
 ";
   }
 

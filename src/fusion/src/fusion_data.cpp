@@ -135,6 +135,9 @@ void fusion_radar_mobileye(){
     rmobjs[i].mobileye_DistY=Obstacle[i].PosY;
     rmobjs[i].mobileye_VrelX=Obstacle[i].VrelX;
     rmobjs[i].mobileye_ArelX=Obstacle[i].ArelX;
+    rmobjs[i].mobileye_Width=Obstacle[i].Width;
+    rmobjs[i].mobileye_Length=Obstacle[i].Length;
+
     if(dist_max==100000)
     {
       rmobjs[i].radar_DistX=Obstacle[i].PosX;

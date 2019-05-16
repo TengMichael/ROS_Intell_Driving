@@ -74,7 +74,7 @@ int main (int argc, char** argv){
   }else{
     return -1;
   }
-  ros::Rate loop_rate(1);
+  ros::Rate loop_rate(10);
   while(ros::ok()){
     ros::spinOnce();
     //ROS_INFO("Reading from serial port");

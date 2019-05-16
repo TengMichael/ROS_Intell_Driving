@@ -107,9 +107,9 @@ int main(int argc, char **argv)
       //msg.timestamp=CanData1[i].TimeStamp;
       memcpy(&(msg.data),&(CanData1[i].Data),sizeof(CanData1[i].Data));
       msg_multi1.frame.push_back(msg);
-      ROS_INFO("CAN1_Rec ID: %x %d %d %d %d %d %d %d %d",msg.id,msg.data[0],msg.data[1]
-          ,msg.data[2],msg.data[3],msg.data[4],msg.data[5],msg.data[6],msg.data[7]);
     }
+    ROS_INFO("CAN1_Rec ID: %x %d %d %d %d %d %d %d %d",msg.id,msg.data[0],msg.data[1]
+        ,msg.data[2],msg.data[3],msg.data[4],msg.data[5],msg.data[6],msg.data[7]);
     if(CAN_RecNum>0)rec1_pub.publish(msg_multi1);
     /**************CAN2 received data publish***************************/
     CAN_RecNum=CAN_Receive(CanData2,DevInd,Can2,CAN_BuffMax);
@@ -119,9 +119,9 @@ int main(int argc, char **argv)
       //msg.timestamp=CanData1[i].TimeStamp;
       memcpy(&(msg.data),&(CanData2[i].Data),sizeof(CanData2[i].Data));
       msg_multi2.frame.push_back(msg);
-      ROS_INFO("CAN2_Rec ID: %x %d %d %d %d %d %d %d %d",msg.id,msg.data[0],msg.data[1]
-          ,msg.data[2],msg.data[3],msg.data[4],msg.data[5],msg.data[6],msg.data[7]);
     }
+    ROS_INFO("CAN2_Rec ID: %x %d %d %d %d %d %d %d %d",msg.id,msg.data[0],msg.data[1]
+        ,msg.data[2],msg.data[3],msg.data[4],msg.data[5],msg.data[6],msg.data[7]);
     if(CAN_RecNum>0)rec2_pub.publish(msg_multi2);
     ros::spinOnce();
     loop_rate.sleep();

@@ -203,21 +203,23 @@ int main(int argc, char **argv)
   while (ros::ok())
   {
     /**************************get gps cooridinate and change to baidu cooridinate***************************************/
-    string position_data=R"($GNRMC,072124.80,A,3101.75505,N,12126.52014,E,0.03,0.000,100519,0.0,0,D*6B
+    string position_data;
+      /*string position_data=R"($GNRMC,072124.80,A,3101.75505,N,12126.52014,E,0.03,0.000,100519,0.0,0,D*6B
                          $GNGGA,072124.80,3101.75505,N,12126.52014,E,2,10,0.88,8.600,M,9.900,M,3.80,0019*6C
                          $GNZDA,072124.80,10,05,2019,00,00*7C
                          $GPATT,-0.04,p,-0.06,r,0.000,y,20170425,s,002000425112333539343233,ID,1,INS,411,02,5,A,G,CAR,1,0.000*5E
                          $DEBUG,KIND,0,2,1,MEM,0,0,0.000,NEW,0,00,0.000*43
                          $GIRMC,072125.00,A,3101.75506,N,12126.52014,E,0.014,,100519,,,D*67
                          $GNRMC,072125.00,A,3101.75505,N,12126.52014,E,0.01,0.000,100519,0.0,0,D*60)";
-    ros_ser.read(position_data,1);//read data from combined position module
+    */
+    ros_ser.read(position_data,10000);//read data from combined position module
     printf("strRsp is |%s|\n", position_data.c_str());
     string gps_coordinate;
     navi_posi::vehicle_posture veh_pos;
     extract_GPSdata(position_data,&gps_coordinate,&veh_pos);
     printf("gps_coordinate %s\n", gps_coordinate.c_str());
     printf("veh_pos %f %f %f %f %f\n",veh_pos.Speed,veh_pos.SpeedDirection,veh_pos.PitchAngle,veh_pos.RollAngle,veh_pos.YawAngle);
-    string strUrl = "http://api.map.baidu.com/geoconv/v1/?coords="+gps_coordinate+"&from=1&to=5&ak=uU2bUqdqkaGO8CAosvNhyOPLgGBn1wdM";
+    string strUrl = "http://api.map.baidu.com/geoconv/v1/?coords="+gps_coordinate+"&from=1&to=5&ak=eVGImzwg4qM0OpeRTlGtxrBSzkqwSiMG";
     string strTmpStr;
     get_urldata(strUrl,&strTmpStr);
     //printf("strRsp is |%s|\n", strTmpStr.c_str());
@@ -225,7 +227,7 @@ int main(int argc, char **argv)
     extract_BDdata(strTmpStr,&BD_coordinate,&BD_coords);
     printf("BD_coordinate %s\n", BD_coordinate.c_str());
     /*****************************get route planning information***********************************/
-    strUrl = "http://api.map.baidu.com/directionlite/v1/driving?origin="+BD_coordinate+"&destination=31.029497,121.451617&ak=uU2bUqdqkaGO8CAosvNhyOPLgGBn1wdM";
+    strUrl = "http://api.map.baidu.com/directionlite/v1/driving?origin="+BD_coordinate+"&destination=31.025422,121.43787&ak=eVGImzwg4qM0OpeRTlGtxrBSzkqwSiMG";
     get_urldata(strUrl,&strTmpStr);
     //printf("strRsp is |%s|\n", strTmpStr.c_str());
     navi_posi::navi_info info;
@@ -237,8 +239,8 @@ int main(int argc, char **argv)
       obj_coords.lon=info.RelX[i];
       obj_coords.lat=info.RelY[i];
       obj_coords=GPS_to_local_coordinate(BD_coords,obj_coords,veh_pos.YawAngle);
-      info.RelX[i]=obj_coords.lat;
-      info.RelY[i]=obj_coords.lon;
+      info.RelX[i]=obj_coords.lon;
+      info.RelY[i]=obj_coords.lat;
       printf("info[] %f,%f\n",info.RelX[i],info.RelY[i]);
     }
     info.BD_lon=BD_coords.lon;
