@@ -3,6 +3,8 @@ float32 BD_lat
 uint32 distance
 uint8 direction
 uint8 turn
+uint8 newroad
 float32[] RelX
 float32[] RelY
-uint8 newroad
+float32[] Next_RelX
+float32[] Next_RelY

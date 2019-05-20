@@ -34,7 +34,8 @@ void Radar408_dataprocess1(void){
             continue;
         else
         {
-            memcpy(&(objs408_temp[k]),&(objs408[i]),sizeof(objs408[i]));
+            //memcpy(&(objs408_temp[k]),&(objs408[i]),sizeof(objs408[i]));
+            objs408_temp[k]=objs408[i];
             k++;
         }
     }

@@ -124,7 +124,7 @@ void get_urldata(string strUrl,string *strTmpStr){
   }
   //printf("strRsp is |%s|\n", (*strTmpStr).c_str());
 }
-uint8_t extract_navi_info(string str,navi_posi::navi_info *info){
+void extract_navi_info(string str,navi_posi::navi_info *info){
   /*********************distance*****************************/
   boost::regex r(R"("distance":\d+,"duration":\d+,"direction":\d+,"turn":\d+)");
   boost::regex r1(R"(\d+)");
@@ -168,9 +168,24 @@ uint8_t extract_navi_info(string str,navi_posi::navi_info *info){
         i++;
         temp=sm1.suffix();
       }
+      /*****************Next RelX/RelY**************************/
+      temp=sm.suffix();i=0;
+      if(boost::regex_search(temp, sm1, r2))
+      {
+        temp=sm1.str();
+        while(boost::regex_search(temp, sm1, r3))
+        {
+          strncpy(ch,sm1.str().c_str(),sm1.str().length()+1);
+          sscanf(ch,"%f",&(fdata[i]));
+          //printf("fdata %f\n", fdata[i]);
+          if(i%2==0)info->Next_RelX.push_back(fdata[i]);
+          else info->Next_RelY.push_back(fdata[i]);
+          i++;
+          temp=sm1.suffix();
+        }
+      }
     }
   }
-  return i/2;
 }
 
 int main(int argc, char **argv)
@@ -204,16 +219,16 @@ int main(int argc, char **argv)
   {
     /**************************get gps cooridinate and change to baidu cooridinate***************************************/
     string position_data;
-      /*string position_data=R"($GNRMC,072124.80,A,3101.75505,N,12126.52014,E,0.03,0.000,100519,0.0,0,D*6B
+    /*string position_data=R"($GNRMC,072124.80,A,3101.75505,N,12126.52014,E,0.03,0.000,100519,0.0,0,D*6B
                          $GNGGA,072124.80,3101.75505,N,12126.52014,E,2,10,0.88,8.600,M,9.900,M,3.80,0019*6C
                          $GNZDA,072124.80,10,05,2019,00,00*7C
                          $GPATT,-0.04,p,-0.06,r,0.000,y,20170425,s,002000425112333539343233,ID,1,INS,411,02,5,A,G,CAR,1,0.000*5E
                          $DEBUG,KIND,0,2,1,MEM,0,0,0.000,NEW,0,00,0.000*43
                          $GIRMC,072125.00,A,3101.75506,N,12126.52014,E,0.014,,100519,,,D*67
                          $GNRMC,072125.00,A,3101.75505,N,12126.52014,E,0.01,0.000,100519,0.0,0,D*60)";
-    */
-    ros_ser.read(position_data,10000);//read data from combined position module
-    printf("strRsp is |%s|\n", position_data.c_str());
+
+    */ros_ser.read(position_data,10000);//read data from combined position module
+    //printf("strRsp is |%s|\n", position_data.c_str());
     string gps_coordinate;
     navi_posi::vehicle_posture veh_pos;
     extract_GPSdata(position_data,&gps_coordinate,&veh_pos);
@@ -230,12 +245,11 @@ int main(int argc, char **argv)
     strUrl = "http://api.map.baidu.com/directionlite/v1/driving?origin="+BD_coordinate+"&destination=31.025422,121.43787&ak=eVGImzwg4qM0OpeRTlGtxrBSzkqwSiMG";
     get_urldata(strUrl,&strTmpStr);
     //printf("strRsp is |%s|\n", strTmpStr.c_str());
-    navi_posi::navi_info info;
-    uint8_t coords_num;
-    static uint8_t turn_last;
-    coords_num=extract_navi_info(strTmpStr,&info);
+    navi_posi::navi_info info,info_last;
+    static uint8_t turn_last,turn_cnt;
+    extract_navi_info(strTmpStr,&info);
     vec2d obj_coords;
-    for(uint8_t i=0;i<coords_num;i++){
+    for(uint8_t i=0;i<info.RelX.size();i++){
       obj_coords.lon=info.RelX[i];
       obj_coords.lat=info.RelY[i];
       obj_coords=GPS_to_local_coordinate(BD_coords,obj_coords,veh_pos.YawAngle);
@@ -243,11 +257,32 @@ int main(int argc, char **argv)
       info.RelY[i]=obj_coords.lat;
       printf("info[] %f,%f\n",info.RelX[i],info.RelY[i]);
     }
+    for(uint8_t i=0;i<info.Next_RelX.size();i++){
+      obj_coords.lon=info.Next_RelX[i];
+      obj_coords.lat=info.Next_RelY[i];
+      obj_coords=GPS_to_local_coordinate(BD_coords,obj_coords,veh_pos.YawAngle);
+      info.Next_RelX[i]=obj_coords.lon;
+      info.Next_RelY[i]=obj_coords.lat;
+      printf("info Next[] %f,%f\n",info.Next_RelX[i],info.Next_RelY[i]);
+    }
     info.BD_lon=BD_coords.lon;
     info.BD_lat=BD_coords.lat;
-    if(info.turn!=turn_last)info.newroad=1;
-    else info.newroad=0;
-    pub_navi_info.publish(info);
+    if((info.turn!=turn_last)||(turn_cnt>=0&&info.newroad==1))
+    {
+      info.newroad=1;
+      turn_cnt--;
+    }
+    else
+    {
+      info.newroad=0;
+      turn_cnt++;
+      if(turn_cnt>=5)turn_cnt=5;//send newroad state continuously at the approaching 5 periods
+     }
+    if(info.turn==0&&info.distance==0&&info.direction==0)
+      pub_navi_info.publish(info_last);//do not update when can not get navigation information from the Baidu API
+    else
+      pub_navi_info.publish(info);
+    info_last=info;//The ROS message can be valued directly
     turn_last=info.turn;
     pub_veh_pos.publish(veh_pos);
     ros::spinOnce();
