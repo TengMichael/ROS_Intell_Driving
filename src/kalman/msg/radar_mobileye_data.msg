@@ -18,3 +18,4 @@ float32 fusion_ArelX
 float32 fusion_ArelY
 float32 mobileye_Width
 float32 mobileye_Length
+uint8 fusion_flag

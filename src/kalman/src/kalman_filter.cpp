@@ -180,7 +180,15 @@ void kf_calc(kalman::radar_mobileye_data *measure_value){
 void kf_calc_multi(kalman::radar_mobileye_data_multi msg){
   fusion_ID_Total=msg.objs.size();
   for(uint8_t i=0;i<fusion_ID_Total;i++){
-    kf_calc(&(msg.objs[i]));
+    if (msg.objs[i].fusion_flag)
+      kf_calc(&(msg.objs[i]));
+    else
+    {
+      msg.objs[i].fusion_DistX= msg.objs[i].radar_DistX;
+      msg.objs[i].fusion_DistY= msg.objs[i].radar_DistY;
+      msg.objs[i].fusion_VrelX= msg.objs[i].radar_VrelX;
+      msg.objs[i].fusion_VrelY= msg.objs[i].radar_VrelY;
+    }
     memcpy(&(fusion_data[i]),&(msg.objs[i]),sizeof(msg.objs[i]));
   }
 }

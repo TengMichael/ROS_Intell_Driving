@@ -106,7 +106,12 @@
     :reader mobileye_Length
     :initarg :mobileye_Length
     :type cl:float
-    :initform 0.0))
+    :initform 0.0)
+   (fusion_flag
+    :reader fusion_flag
+    :initarg :fusion_flag
+    :type cl:fixnum
+    :initform 0))
 )
 
 (cl:defclass radar_mobileye_data (<radar_mobileye_data>)
@@ -216,6 +221,11 @@
 (cl:defmethod mobileye_Length-val ((m <radar_mobileye_data>))
   (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader kalman-msg:mobileye_Length-val is deprecated.  Use kalman-msg:mobileye_Length instead.")
   (mobileye_Length m))
+
+(cl:ensure-generic-function 'fusion_flag-val :lambda-list '(m))
+(cl:defmethod fusion_flag-val ((m <radar_mobileye_data>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader kalman-msg:fusion_flag-val is deprecated.  Use kalman-msg:fusion_flag instead.")
+  (fusion_flag m))
 (cl:defmethod roslisp-msg-protocol:serialize ((msg <radar_mobileye_data>) ostream)
   "Serializes a message object of type '<radar_mobileye_data>"
   (cl:write-byte (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'timestamp)) ostream)
@@ -313,6 +323,7 @@
     (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+  (cl:write-byte (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'fusion_flag)) ostream)
 )
 (cl:defmethod roslisp-msg-protocol:deserialize ((msg <radar_mobileye_data>) istream)
   "Deserializes a message object of type '<radar_mobileye_data>"
@@ -429,6 +440,7 @@
       (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
       (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
     (cl:setf (cl:slot-value msg 'mobileye_Length) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:setf (cl:ldb (cl:byte 8 0) (cl:slot-value msg 'fusion_flag)) (cl:read-byte istream))
   msg
 )
 (cl:defmethod roslisp-msg-protocol:ros-datatype ((msg (cl:eql '<radar_mobileye_data>)))
@@ -439,16 +451,16 @@
   "kalman/radar_mobileye_data")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<radar_mobileye_data>)))
   "Returns md5sum for a message object of type '<radar_mobileye_data>"
-  "4975d13f61a0fd1bd7c6d84c5f81c19b")
+  "170274cd157027ece0f00aa32472bbdc")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'radar_mobileye_data)))
   "Returns md5sum for a message object of type 'radar_mobileye_data"
-  "4975d13f61a0fd1bd7c6d84c5f81c19b")
+  "170274cd157027ece0f00aa32472bbdc")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<radar_mobileye_data>)))
   "Returns full string definition for message of type '<radar_mobileye_data>"
-  (cl:format cl:nil "uint32 timestamp~%uint8 ID~%float32 radar_DistX~%float32 radar_DistY~%float32 radar_VrelX~%float32 radar_VrelY~%float32 radar_ArelX~%float32 radar_ArelY~%float32 mobileye_DistX~%float32 mobileye_DistY~%float32 mobileye_VrelX~%float32 mobileye_ArelX~%float32 fusion_DistX~%float32 fusion_DistY~%float32 fusion_VrelX~%float32 fusion_VrelY~%float32 fusion_ArelX~%float32 fusion_ArelY~%float32 mobileye_Width~%float32 mobileye_Length~%~%~%"))
+  (cl:format cl:nil "uint32 timestamp~%uint8 ID~%float32 radar_DistX~%float32 radar_DistY~%float32 radar_VrelX~%float32 radar_VrelY~%float32 radar_ArelX~%float32 radar_ArelY~%float32 mobileye_DistX~%float32 mobileye_DistY~%float32 mobileye_VrelX~%float32 mobileye_ArelX~%float32 fusion_DistX~%float32 fusion_DistY~%float32 fusion_VrelX~%float32 fusion_VrelY~%float32 fusion_ArelX~%float32 fusion_ArelY~%float32 mobileye_Width~%float32 mobileye_Length~%uint8 fusion_flag~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'radar_mobileye_data)))
   "Returns full string definition for message of type 'radar_mobileye_data"
-  (cl:format cl:nil "uint32 timestamp~%uint8 ID~%float32 radar_DistX~%float32 radar_DistY~%float32 radar_VrelX~%float32 radar_VrelY~%float32 radar_ArelX~%float32 radar_ArelY~%float32 mobileye_DistX~%float32 mobileye_DistY~%float32 mobileye_VrelX~%float32 mobileye_ArelX~%float32 fusion_DistX~%float32 fusion_DistY~%float32 fusion_VrelX~%float32 fusion_VrelY~%float32 fusion_ArelX~%float32 fusion_ArelY~%float32 mobileye_Width~%float32 mobileye_Length~%~%~%"))
+  (cl:format cl:nil "uint32 timestamp~%uint8 ID~%float32 radar_DistX~%float32 radar_DistY~%float32 radar_VrelX~%float32 radar_VrelY~%float32 radar_ArelX~%float32 radar_ArelY~%float32 mobileye_DistX~%float32 mobileye_DistY~%float32 mobileye_VrelX~%float32 mobileye_ArelX~%float32 fusion_DistX~%float32 fusion_DistY~%float32 fusion_VrelX~%float32 fusion_VrelY~%float32 fusion_ArelX~%float32 fusion_ArelY~%float32 mobileye_Width~%float32 mobileye_Length~%uint8 fusion_flag~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <radar_mobileye_data>))
   (cl:+ 0
      4
@@ -471,6 +483,7 @@
      4
      4
      4
+     1
 ))
 (cl:defmethod roslisp-msg-protocol:ros-message-to-list ((msg <radar_mobileye_data>))
   "Converts a ROS message object to a list"
@@ -495,4 +508,5 @@
     (cl:cons ':fusion_ArelY (fusion_ArelY msg))
     (cl:cons ':mobileye_Width (mobileye_Width msg))
     (cl:cons ':mobileye_Length (mobileye_Length msg))
+    (cl:cons ':fusion_flag (fusion_flag msg))
 ))

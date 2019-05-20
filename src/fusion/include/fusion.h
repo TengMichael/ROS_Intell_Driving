@@ -25,5 +25,6 @@ using Eigen::VectorXd;
 #define Obstacle_Num 64
 #define gate_X 8
 #define gate_Y 4
+#define Milradar_Object_Num 150
 
 #endif // FUSION_H

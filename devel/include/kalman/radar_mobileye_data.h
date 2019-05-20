@@ -43,7 +43,8 @@ struct radar_mobileye_data_
     , fusion_ArelX(0.0)
     , fusion_ArelY(0.0)
     , mobileye_Width(0.0)
-    , mobileye_Length(0.0)  {
+    , mobileye_Length(0.0)
+    , fusion_flag(0)  {
     }
   radar_mobileye_data_(const ContainerAllocator& _alloc)
     : timestamp(0)
@@ -65,7 +66,8 @@ struct radar_mobileye_data_
     , fusion_ArelX(0.0)
     , fusion_ArelY(0.0)
     , mobileye_Width(0.0)
-    , mobileye_Length(0.0)  {
+    , mobileye_Length(0.0)
+    , fusion_flag(0)  {
   (void)_alloc;
     }
 
@@ -130,6 +132,9 @@ struct radar_mobileye_data_
 
    typedef float _mobileye_Length_type;
   _mobileye_Length_type mobileye_Length;
+
+   typedef uint8_t _fusion_flag_type;
+  _fusion_flag_type fusion_flag;
 
 
 
@@ -208,12 +213,12 @@ struct MD5Sum< ::kalman::radar_mobileye_data_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "4975d13f61a0fd1bd7c6d84c5f81c19b";
+    return "170274cd157027ece0f00aa32472bbdc";
   }
 
   static const char* value(const ::kalman::radar_mobileye_data_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x4975d13f61a0fd1bULL;
-  static const uint64_t static_value2 = 0xd7c6d84c5f81c19bULL;
+  static const uint64_t static_value1 = 0x170274cd157027ecULL;
+  static const uint64_t static_value2 = 0xe0f00aa32472bbdcULL;
 };
 
 template<class ContainerAllocator>
@@ -252,6 +257,7 @@ float32 fusion_ArelX\n\
 float32 fusion_ArelY\n\
 float32 mobileye_Width\n\
 float32 mobileye_Length\n\
+uint8 fusion_flag\n\
 ";
   }
 
@@ -290,6 +296,7 @@ namespace serialization
       stream.next(m.fusion_ArelY);
       stream.next(m.mobileye_Width);
       stream.next(m.mobileye_Length);
+      stream.next(m.fusion_flag);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -348,6 +355,8 @@ struct Printer< ::kalman::radar_mobileye_data_<ContainerAllocator> >
     Printer<float>::stream(s, indent + "  ", v.mobileye_Width);
     s << indent << "mobileye_Length: ";
     Printer<float>::stream(s, indent + "  ", v.mobileye_Length);
+    s << indent << "fusion_flag: ";
+    Printer<uint8_t>::stream(s, indent + "  ", v.fusion_flag);
   }
 };
 

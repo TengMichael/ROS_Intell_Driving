@@ -39,4 +39,6 @@
           MOBILEYE_WIDTH
           MOBILEYE_LENGTH-VAL
           MOBILEYE_LENGTH
+          FUSION_FLAG-VAL
+          FUSION_FLAG
 ))

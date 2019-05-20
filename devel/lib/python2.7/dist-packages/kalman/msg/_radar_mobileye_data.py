@@ -7,7 +7,7 @@ import struct
 
 
 class radar_mobileye_data(genpy.Message):
-  _md5sum = "4975d13f61a0fd1bd7c6d84c5f81c19b"
+  _md5sum = "170274cd157027ece0f00aa32472bbdc"
   _type = "kalman/radar_mobileye_data"
   _has_header = False #flag to mark the presence of a Header object
   _full_text = """uint32 timestamp
@@ -30,9 +30,10 @@ float32 fusion_ArelX
 float32 fusion_ArelY
 float32 mobileye_Width
 float32 mobileye_Length
+uint8 fusion_flag
 """
-  __slots__ = ['timestamp','ID','radar_DistX','radar_DistY','radar_VrelX','radar_VrelY','radar_ArelX','radar_ArelY','mobileye_DistX','mobileye_DistY','mobileye_VrelX','mobileye_ArelX','fusion_DistX','fusion_DistY','fusion_VrelX','fusion_VrelY','fusion_ArelX','fusion_ArelY','mobileye_Width','mobileye_Length']
-  _slot_types = ['uint32','uint8','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32']
+  __slots__ = ['timestamp','ID','radar_DistX','radar_DistY','radar_VrelX','radar_VrelY','radar_ArelX','radar_ArelY','mobileye_DistX','mobileye_DistY','mobileye_VrelX','mobileye_ArelX','fusion_DistX','fusion_DistY','fusion_VrelX','fusion_VrelY','fusion_ArelX','fusion_ArelY','mobileye_Width','mobileye_Length','fusion_flag']
+  _slot_types = ['uint32','uint8','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32','float32','uint8']
 
   def __init__(self, *args, **kwds):
     """
@@ -42,7 +43,7 @@ float32 mobileye_Length
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       timestamp,ID,radar_DistX,radar_DistY,radar_VrelX,radar_VrelY,radar_ArelX,radar_ArelY,mobileye_DistX,mobileye_DistY,mobileye_VrelX,mobileye_ArelX,fusion_DistX,fusion_DistY,fusion_VrelX,fusion_VrelY,fusion_ArelX,fusion_ArelY,mobileye_Width,mobileye_Length
+       timestamp,ID,radar_DistX,radar_DistY,radar_VrelX,radar_VrelY,radar_ArelX,radar_ArelY,mobileye_DistX,mobileye_DistY,mobileye_VrelX,mobileye_ArelX,fusion_DistX,fusion_DistY,fusion_VrelX,fusion_VrelY,fusion_ArelX,fusion_ArelY,mobileye_Width,mobileye_Length,fusion_flag
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -91,6 +92,8 @@ float32 mobileye_Length
         self.mobileye_Width = 0.
       if self.mobileye_Length is None:
         self.mobileye_Length = 0.
+      if self.fusion_flag is None:
+        self.fusion_flag = 0
     else:
       self.timestamp = 0
       self.ID = 0
@@ -112,6 +115,7 @@ float32 mobileye_Length
       self.fusion_ArelY = 0.
       self.mobileye_Width = 0.
       self.mobileye_Length = 0.
+      self.fusion_flag = 0
 
   def _get_types(self):
     """
@@ -126,7 +130,7 @@ float32 mobileye_Length
     """
     try:
       _x = self
-      buff.write(_struct_IB18f.pack(_x.timestamp, _x.ID, _x.radar_DistX, _x.radar_DistY, _x.radar_VrelX, _x.radar_VrelY, _x.radar_ArelX, _x.radar_ArelY, _x.mobileye_DistX, _x.mobileye_DistY, _x.mobileye_VrelX, _x.mobileye_ArelX, _x.fusion_DistX, _x.fusion_DistY, _x.fusion_VrelX, _x.fusion_VrelY, _x.fusion_ArelX, _x.fusion_ArelY, _x.mobileye_Width, _x.mobileye_Length))
+      buff.write(_struct_IB18fB.pack(_x.timestamp, _x.ID, _x.radar_DistX, _x.radar_DistY, _x.radar_VrelX, _x.radar_VrelY, _x.radar_ArelX, _x.radar_ArelY, _x.mobileye_DistX, _x.mobileye_DistY, _x.mobileye_VrelX, _x.mobileye_ArelX, _x.fusion_DistX, _x.fusion_DistY, _x.fusion_VrelX, _x.fusion_VrelY, _x.fusion_ArelX, _x.fusion_ArelY, _x.mobileye_Width, _x.mobileye_Length, _x.fusion_flag))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -139,8 +143,8 @@ float32 mobileye_Length
       end = 0
       _x = self
       start = end
-      end += 77
-      (_x.timestamp, _x.ID, _x.radar_DistX, _x.radar_DistY, _x.radar_VrelX, _x.radar_VrelY, _x.radar_ArelX, _x.radar_ArelY, _x.mobileye_DistX, _x.mobileye_DistY, _x.mobileye_VrelX, _x.mobileye_ArelX, _x.fusion_DistX, _x.fusion_DistY, _x.fusion_VrelX, _x.fusion_VrelY, _x.fusion_ArelX, _x.fusion_ArelY, _x.mobileye_Width, _x.mobileye_Length,) = _struct_IB18f.unpack(str[start:end])
+      end += 78
+      (_x.timestamp, _x.ID, _x.radar_DistX, _x.radar_DistY, _x.radar_VrelX, _x.radar_VrelY, _x.radar_ArelX, _x.radar_ArelY, _x.mobileye_DistX, _x.mobileye_DistY, _x.mobileye_VrelX, _x.mobileye_ArelX, _x.fusion_DistX, _x.fusion_DistY, _x.fusion_VrelX, _x.fusion_VrelY, _x.fusion_ArelX, _x.fusion_ArelY, _x.mobileye_Width, _x.mobileye_Length, _x.fusion_flag,) = _struct_IB18fB.unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -154,7 +158,7 @@ float32 mobileye_Length
     """
     try:
       _x = self
-      buff.write(_struct_IB18f.pack(_x.timestamp, _x.ID, _x.radar_DistX, _x.radar_DistY, _x.radar_VrelX, _x.radar_VrelY, _x.radar_ArelX, _x.radar_ArelY, _x.mobileye_DistX, _x.mobileye_DistY, _x.mobileye_VrelX, _x.mobileye_ArelX, _x.fusion_DistX, _x.fusion_DistY, _x.fusion_VrelX, _x.fusion_VrelY, _x.fusion_ArelX, _x.fusion_ArelY, _x.mobileye_Width, _x.mobileye_Length))
+      buff.write(_struct_IB18fB.pack(_x.timestamp, _x.ID, _x.radar_DistX, _x.radar_DistY, _x.radar_VrelX, _x.radar_VrelY, _x.radar_ArelX, _x.radar_ArelY, _x.mobileye_DistX, _x.mobileye_DistY, _x.mobileye_VrelX, _x.mobileye_ArelX, _x.fusion_DistX, _x.fusion_DistY, _x.fusion_VrelX, _x.fusion_VrelY, _x.fusion_ArelX, _x.fusion_ArelY, _x.mobileye_Width, _x.mobileye_Length, _x.fusion_flag))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -168,11 +172,11 @@ float32 mobileye_Length
       end = 0
       _x = self
       start = end
-      end += 77
-      (_x.timestamp, _x.ID, _x.radar_DistX, _x.radar_DistY, _x.radar_VrelX, _x.radar_VrelY, _x.radar_ArelX, _x.radar_ArelY, _x.mobileye_DistX, _x.mobileye_DistY, _x.mobileye_VrelX, _x.mobileye_ArelX, _x.fusion_DistX, _x.fusion_DistY, _x.fusion_VrelX, _x.fusion_VrelY, _x.fusion_ArelX, _x.fusion_ArelY, _x.mobileye_Width, _x.mobileye_Length,) = _struct_IB18f.unpack(str[start:end])
+      end += 78
+      (_x.timestamp, _x.ID, _x.radar_DistX, _x.radar_DistY, _x.radar_VrelX, _x.radar_VrelY, _x.radar_ArelX, _x.radar_ArelY, _x.mobileye_DistX, _x.mobileye_DistY, _x.mobileye_VrelX, _x.mobileye_ArelX, _x.fusion_DistX, _x.fusion_DistY, _x.fusion_VrelX, _x.fusion_VrelY, _x.fusion_ArelX, _x.fusion_ArelY, _x.mobileye_Width, _x.mobileye_Length, _x.fusion_flag,) = _struct_IB18fB.unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
 
 _struct_I = genpy.struct_I
-_struct_IB18f = struct.Struct("<IB18f")
+_struct_IB18fB = struct.Struct("<IB18fB")

@@ -13,6 +13,7 @@ find_package(OpenCV REQUIRED)
    FILES
    fusion_obj.msg
    fusion_obj_multi.msg
+   fusion_milradar_obj.msg
  )
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
