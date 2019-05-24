@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.4.1, 2019-05-20T21:35:22. -->
+<!-- Written by QtCreator 4.5.1, 2019-05-22T10:34:16. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
-  <value type="QByteArray">{15045c04-c96e-4642-aa06-67423d6809bf}</value>
+  <value type="QByteArray">{ebd2e0f2-0e7b-468e-ae3e-6342bf3b1308}</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -61,7 +61,7 @@
   <valuemap type="QVariantMap">
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Desktop</value>
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Desktop</value>
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">{361f154c-8909-42ce-a846-e4e623971262}</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">{ac294b5f-4835-4c94-8865-1930c07787ac}</value>
    <value type="int" key="ProjectExplorer.Target.ActiveBuildConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveDeployConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveRunConfiguration">0</value>
@@ -105,7 +105,7 @@
      <value type="QString">CMAKE_PREFIX_PATH=/home/michael/Desktop/Intell_driving/ROS_Intell_Driving/devel:/opt/ros/indigo</value>
      <value type="QString">CPATH=/home/michael/Desktop/Intell_driving/ROS_Intell_Driving/devel/include:/opt/ros/indigo/include</value>
      <value type="QString">LD_LIBRARY_PATH=/home/michael/Desktop/Intell_driving/ROS_Intell_Driving/devel/lib:/opt/ros/indigo/lib</value>
-     <value type="QString">PATH=/opt/ros/indigo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin</value>
+     <value type="QString">PATH=/opt/ros/indigo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/home/michael/QtCreator/latest/bin</value>
      <value type="QString">PKG_CONFIG_PATH=/home/michael/Desktop/Intell_driving/ROS_Intell_Driving/devel/lib/pkgconfig:/opt/ros/indigo/lib/pkgconfig</value>
      <value type="QString">PWD=/home/michael/Desktop/Intell_driving/ROS_Intell_Driving</value>
      <value type="QString">PYTHONPATH=/home/michael/Desktop/Intell_driving/ROS_Intell_Driving/devel/lib/python2.7/dist-packages:/opt/ros/indigo/lib/python2.7/dist-packages</value>
@@ -114,7 +114,7 @@
      <value type="QString">ROS_DISTRO=indigo</value>
      <value type="QString">ROS_ETC_DIR=/opt/ros/indigo/etc/ros</value>
      <value type="QString">ROS_MASTER_URI=http://localhost:11311</value>
-     <value type="QString">ROS_PACKAGE_PATH=/home/michael/Desktop/Intell_driving/ROS_Intell_Driving/src:/opt/ros/indigo/share:/opt/ros/indigo/stacks</value>
+     <value type="QString">ROS_PACKAGE_PATH=/home/michael/Desktop/Intell_driving/ROS_Intell_Driving/src:/home/silentroar/Desktop/ROS_Intell_Driving/src:/opt/ros/indigo/share:/opt/ros/indigo/stacks</value>
      <value type="QString">ROS_ROOT=/opt/ros/indigo/share/ros</value>
      <value type="QString">SHLVL=2</value>
      <value type="QString">_=/usr/bin/env</value>

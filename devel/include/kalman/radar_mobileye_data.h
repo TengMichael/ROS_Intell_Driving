@@ -42,6 +42,8 @@ struct radar_mobileye_data_
     , fusion_VrelY(0.0)
     , fusion_ArelX(0.0)
     , fusion_ArelY(0.0)
+    , fusion_Length(0.0)
+    , fusion_Width(0.0)
     , mobileye_Width(0.0)
     , mobileye_Length(0.0)
     , fusion_flag(0)  {
@@ -65,6 +67,8 @@ struct radar_mobileye_data_
     , fusion_VrelY(0.0)
     , fusion_ArelX(0.0)
     , fusion_ArelY(0.0)
+    , fusion_Length(0.0)
+    , fusion_Width(0.0)
     , mobileye_Width(0.0)
     , mobileye_Length(0.0)
     , fusion_flag(0)  {
@@ -126,6 +130,12 @@ struct radar_mobileye_data_
 
    typedef float _fusion_ArelY_type;
   _fusion_ArelY_type fusion_ArelY;
+
+   typedef float _fusion_Length_type;
+  _fusion_Length_type fusion_Length;
+
+   typedef float _fusion_Width_type;
+  _fusion_Width_type fusion_Width;
 
    typedef float _mobileye_Width_type;
   _mobileye_Width_type mobileye_Width;
@@ -213,12 +223,12 @@ struct MD5Sum< ::kalman::radar_mobileye_data_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "170274cd157027ece0f00aa32472bbdc";
+    return "338d6de14083d2c26fc3a506ceca7563";
   }
 
   static const char* value(const ::kalman::radar_mobileye_data_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x170274cd157027ecULL;
-  static const uint64_t static_value2 = 0xe0f00aa32472bbdcULL;
+  static const uint64_t static_value1 = 0x338d6de14083d2c2ULL;
+  static const uint64_t static_value2 = 0x6fc3a506ceca7563ULL;
 };
 
 template<class ContainerAllocator>
@@ -255,6 +265,8 @@ float32 fusion_VrelX\n\
 float32 fusion_VrelY\n\
 float32 fusion_ArelX\n\
 float32 fusion_ArelY\n\
+float32 fusion_Length\n\
+float32 fusion_Width\n\
 float32 mobileye_Width\n\
 float32 mobileye_Length\n\
 uint8 fusion_flag\n\
@@ -294,6 +306,8 @@ namespace serialization
       stream.next(m.fusion_VrelY);
       stream.next(m.fusion_ArelX);
       stream.next(m.fusion_ArelY);
+      stream.next(m.fusion_Length);
+      stream.next(m.fusion_Width);
       stream.next(m.mobileye_Width);
       stream.next(m.mobileye_Length);
       stream.next(m.fusion_flag);
@@ -351,6 +365,10 @@ struct Printer< ::kalman::radar_mobileye_data_<ContainerAllocator> >
     Printer<float>::stream(s, indent + "  ", v.fusion_ArelX);
     s << indent << "fusion_ArelY: ";
     Printer<float>::stream(s, indent + "  ", v.fusion_ArelY);
+    s << indent << "fusion_Length: ";
+    Printer<float>::stream(s, indent + "  ", v.fusion_Length);
+    s << indent << "fusion_Width: ";
+    Printer<float>::stream(s, indent + "  ", v.fusion_Width);
     s << indent << "mobileye_Width: ";
     Printer<float>::stream(s, indent + "  ", v.mobileye_Width);
     s << indent << "mobileye_Length: ";

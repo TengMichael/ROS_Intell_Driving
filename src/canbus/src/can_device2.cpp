@@ -10,7 +10,7 @@ UINT8 CAN_Init(UINT8 DevInd) {
     initconfig.AccCode = 0x00000000;
     initconfig.AccMask = 0xffffffff;
     initconfig.Filter = 0;
-    initconfig.Timing0 = 0x01;//250kbps
+    initconfig.Timing0 = 0x00;//500kbps
     initconfig.Timing1 = 0x1c;
     initconfig.Mode = 0;
 
@@ -20,7 +20,7 @@ UINT8 CAN_Init(UINT8 DevInd) {
 
     if (VCI_InitCAN(DevType, DevInd, Can1, &initconfig)==1){
         if (VCI_StartCAN(DevType, DevInd, Can1)==1){
-            initconfig.Timing0 = 0x00;//500kbps
+           // initconfig.Timing0 = 0x00;//500kbps
             if (VCI_InitCAN(DevType, DevInd, Can2, &initconfig)==1){
                 if (VCI_StartCAN(DevType, DevInd, Can2)==1){
                     if(VCI_ClearBuffer(DevType, DevInd, Can1)&&VCI_ClearBuffer(DevType, DevInd, Can2)==1){

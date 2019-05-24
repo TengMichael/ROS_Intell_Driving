@@ -112,7 +112,7 @@ int main(int argc, char **argv)
 
   ros::Subscriber sub0 = nh.subscribe("mobileye_Lane", 1000, mobileye_display_lane);
   ros::Subscriber sub1 = nh.subscribe("mobileye_Obstacle", 1000, mobileye_display_obstacles);
-  ros::Subscriber sub2 = nh.subscribe("mobileye_LKA", 1000, mobileye_display_LKA);
+  //ros::Subscriber sub2 = nh.subscribe("mobileye_LKA", 1000, mobileye_display_LKA);
 
   ros::spin();
 

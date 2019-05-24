@@ -62,7 +62,7 @@ void KalmanFilter::Update_mobileye() {
 }
 
 void kf_calc(kalman::radar_mobileye_data *measure_value){
-  ROS_INFO_STREAM("Start ProcessMeasurement.. ");
+  //ROS_INFO_STREAM("Start ProcessMeasurement.. ");
   /*Initialization*/
   kf.id_ = measure_value->ID;
   // Push kalman vector
@@ -76,7 +76,7 @@ void kf_calc(kalman::radar_mobileye_data *measure_value){
   // First time computation
   if(kalman_vector[kf.id_].previous_timestamp_ == 0) {
     // Increase the size of the kalman_vector
-    ROS_INFO_STREAM("First computation. kf id: " << kf.id_ );
+    //ROS_INFO_STREAM("First computation. kf id: " << kf.id_ );
     // first measurement
     kf.x_ = VectorXd(4);
     kf.x_ << 1, 1, 1, 1;
@@ -98,7 +98,7 @@ void kf_calc(kalman::radar_mobileye_data *measure_value){
     kf.x_ = kalman_vector[kf.id_].x_;
     kf.P_ = kalman_vector[kf.id_].P_;
     kf.previous_timestamp_ = kalman_vector[kf.id_].previous_timestamp_;
-    ROS_INFO_STREAM("New data update after init.");
+    //ROS_INFO_STREAM("New data update after init.");
   }
   /*  Prediction*/
   kf.F_ = MatrixXd(4, 4);
@@ -124,7 +124,7 @@ void kf_calc(kalman::radar_mobileye_data *measure_value){
       0, dt_4 / 4 * noise_ay, 0, dt_3 / 2 * noise_ay,
       dt_3 / 2 * noise_ax, 0, dt_2*noise_ax, 0,
       0, dt_3 / 2 * noise_ay, 0, dt_2*noise_ay;
-  ROS_INFO_STREAM("Update KF Predict..");
+  //ROS_INFO_STREAM("Update KF Predict..");
   kf.Predict();
   /*Update*/
   kf.H_radar = MatrixXd(4, 4);
@@ -145,7 +145,7 @@ void kf_calc(kalman::radar_mobileye_data *measure_value){
   kf.R_mobileye<< 0.09, 0, 0,
       0, 0.09, 0,
       0, 0, 0.0009;
-  ROS_INFO_STREAM("Calling update KF");
+  //ROS_INFO_STREAM("Calling update KF");
   kf.z_radar=VectorXd(4);
   kf.z_radar(0) = measure_value->radar_DistX;
   kf.z_radar(1) = measure_value->radar_DistY;
@@ -161,12 +161,12 @@ void kf_calc(kalman::radar_mobileye_data *measure_value){
   MatrixXd S =kf.P_radar.inverse()+kf.P_mobileye.inverse();
   kf.P_=S.inverse();
   kf.x_=kf.P_*(kf.P_radar.inverse()*kf.x_radar+kf.P_mobileye.inverse()*kf.x_mobileye);
-  ROS_INFO("radar_DistX %f",kf.x_radar(0));
-  ROS_INFO("radar_DistY %f",kf.x_radar(1));
-  ROS_INFO("mobileye_DistX %f",kf.x_mobileye(0));
-  ROS_INFO("mobileye_DistY %f",kf.x_mobileye(1));
-  ROS_INFO("fusion_DistX %f",kf.x_(0));
-  ROS_INFO("fusion_DistY %f",kf.x_(1));
+  //ROS_INFO("radar_DistX %f",kf.x_radar(0));
+  //ROS_INFO("radar_DistY %f",kf.x_radar(1));
+  //ROS_INFO("mobileye_DistX %f",kf.x_mobileye(0));
+  //ROS_INFO("mobileye_DistY %f",kf.x_mobileye(1));
+  //ROS_INFO("fusion_DistX %f",kf.x_(0));
+  //ROS_INFO("fusion_DistY %f",kf.x_(1));
   // Store all the values for next measurement
   kalman_vector[kf.id_].x_ = kf.x_;
   kalman_vector[kf.id_].P_ = kf.P_;

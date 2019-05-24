@@ -97,6 +97,16 @@
     :initarg :fusion_ArelY
     :type cl:float
     :initform 0.0)
+   (fusion_Length
+    :reader fusion_Length
+    :initarg :fusion_Length
+    :type cl:float
+    :initform 0.0)
+   (fusion_Width
+    :reader fusion_Width
+    :initarg :fusion_Width
+    :type cl:float
+    :initform 0.0)
    (mobileye_Width
     :reader mobileye_Width
     :initarg :mobileye_Width
@@ -212,6 +222,16 @@
   (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader kalman-msg:fusion_ArelY-val is deprecated.  Use kalman-msg:fusion_ArelY instead.")
   (fusion_ArelY m))
 
+(cl:ensure-generic-function 'fusion_Length-val :lambda-list '(m))
+(cl:defmethod fusion_Length-val ((m <radar_mobileye_data>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader kalman-msg:fusion_Length-val is deprecated.  Use kalman-msg:fusion_Length instead.")
+  (fusion_Length m))
+
+(cl:ensure-generic-function 'fusion_Width-val :lambda-list '(m))
+(cl:defmethod fusion_Width-val ((m <radar_mobileye_data>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader kalman-msg:fusion_Width-val is deprecated.  Use kalman-msg:fusion_Width instead.")
+  (fusion_Width m))
+
 (cl:ensure-generic-function 'mobileye_Width-val :lambda-list '(m))
 (cl:defmethod mobileye_Width-val ((m <radar_mobileye_data>))
   (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader kalman-msg:mobileye_Width-val is deprecated.  Use kalman-msg:mobileye_Width instead.")
@@ -309,6 +329,16 @@
     (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
   (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'fusion_ArelY))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'fusion_Length))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream))
+  (cl:let ((bits (roslisp-utils:encode-single-float-bits (cl:slot-value msg 'fusion_Width))))
     (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
@@ -433,6 +463,18 @@
       (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
       (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
       (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'fusion_Length) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'fusion_Width) (roslisp-utils:decode-single-float-bits bits)))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
     (cl:setf (cl:slot-value msg 'mobileye_Width) (roslisp-utils:decode-single-float-bits bits)))
     (cl:let ((bits 0))
       (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
@@ -451,20 +493,22 @@
   "kalman/radar_mobileye_data")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<radar_mobileye_data>)))
   "Returns md5sum for a message object of type '<radar_mobileye_data>"
-  "170274cd157027ece0f00aa32472bbdc")
+  "338d6de14083d2c26fc3a506ceca7563")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'radar_mobileye_data)))
   "Returns md5sum for a message object of type 'radar_mobileye_data"
-  "170274cd157027ece0f00aa32472bbdc")
+  "338d6de14083d2c26fc3a506ceca7563")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<radar_mobileye_data>)))
   "Returns full string definition for message of type '<radar_mobileye_data>"
-  (cl:format cl:nil "uint32 timestamp~%uint8 ID~%float32 radar_DistX~%float32 radar_DistY~%float32 radar_VrelX~%float32 radar_VrelY~%float32 radar_ArelX~%float32 radar_ArelY~%float32 mobileye_DistX~%float32 mobileye_DistY~%float32 mobileye_VrelX~%float32 mobileye_ArelX~%float32 fusion_DistX~%float32 fusion_DistY~%float32 fusion_VrelX~%float32 fusion_VrelY~%float32 fusion_ArelX~%float32 fusion_ArelY~%float32 mobileye_Width~%float32 mobileye_Length~%uint8 fusion_flag~%~%~%"))
+  (cl:format cl:nil "uint32 timestamp~%uint8 ID~%float32 radar_DistX~%float32 radar_DistY~%float32 radar_VrelX~%float32 radar_VrelY~%float32 radar_ArelX~%float32 radar_ArelY~%float32 mobileye_DistX~%float32 mobileye_DistY~%float32 mobileye_VrelX~%float32 mobileye_ArelX~%float32 fusion_DistX~%float32 fusion_DistY~%float32 fusion_VrelX~%float32 fusion_VrelY~%float32 fusion_ArelX~%float32 fusion_ArelY~%float32 fusion_Length~%float32 fusion_Width~%float32 mobileye_Width~%float32 mobileye_Length~%uint8 fusion_flag~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'radar_mobileye_data)))
   "Returns full string definition for message of type 'radar_mobileye_data"
-  (cl:format cl:nil "uint32 timestamp~%uint8 ID~%float32 radar_DistX~%float32 radar_DistY~%float32 radar_VrelX~%float32 radar_VrelY~%float32 radar_ArelX~%float32 radar_ArelY~%float32 mobileye_DistX~%float32 mobileye_DistY~%float32 mobileye_VrelX~%float32 mobileye_ArelX~%float32 fusion_DistX~%float32 fusion_DistY~%float32 fusion_VrelX~%float32 fusion_VrelY~%float32 fusion_ArelX~%float32 fusion_ArelY~%float32 mobileye_Width~%float32 mobileye_Length~%uint8 fusion_flag~%~%~%"))
+  (cl:format cl:nil "uint32 timestamp~%uint8 ID~%float32 radar_DistX~%float32 radar_DistY~%float32 radar_VrelX~%float32 radar_VrelY~%float32 radar_ArelX~%float32 radar_ArelY~%float32 mobileye_DistX~%float32 mobileye_DistY~%float32 mobileye_VrelX~%float32 mobileye_ArelX~%float32 fusion_DistX~%float32 fusion_DistY~%float32 fusion_VrelX~%float32 fusion_VrelY~%float32 fusion_ArelX~%float32 fusion_ArelY~%float32 fusion_Length~%float32 fusion_Width~%float32 mobileye_Width~%float32 mobileye_Length~%uint8 fusion_flag~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <radar_mobileye_data>))
   (cl:+ 0
      4
      1
+     4
+     4
      4
      4
      4
@@ -506,6 +550,8 @@
     (cl:cons ':fusion_VrelY (fusion_VrelY msg))
     (cl:cons ':fusion_ArelX (fusion_ArelX msg))
     (cl:cons ':fusion_ArelY (fusion_ArelY msg))
+    (cl:cons ':fusion_Length (fusion_Length msg))
+    (cl:cons ':fusion_Width (fusion_Width msg))
     (cl:cons ':mobileye_Width (mobileye_Width msg))
     (cl:cons ':mobileye_Length (mobileye_Length msg))
     (cl:cons ':fusion_flag (fusion_flag msg))

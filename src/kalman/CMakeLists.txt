@@ -31,11 +31,9 @@ include_directories(
 )
 add_executable(kalman_filter src/kalman_filter.cpp)
 add_executable(kalman_display src/kalman_display.cpp)
-add_executable(kalman_send src/kalman_send.cpp)
-add_dependencies(kalman_filter kalman_display kalman_send
+add_dependencies(kalman_filter kalman_display
     ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 target_link_libraries(kalman_filter ${catkin_LIBRARIES})
 target_link_libraries(kalman_display ${catkin_LIBRARIES})
-target_link_libraries(kalman_send ${catkin_LIBRARIES})
 target_link_libraries(kalman_display ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})

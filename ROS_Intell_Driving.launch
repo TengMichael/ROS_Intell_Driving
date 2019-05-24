@@ -9,4 +9,5 @@
  <node pkg="fusion" name="fusion_data" type="fusion_data" output="screen" respawn="true"/>
  <node pkg="kalman" name="kalman_filter" type="kalman_filter" output="screen" respawn="true"/>
  <node pkg="kalman" name="kalman_display" type="kalman_display" output="screen" respawn="true"/>
+ <node pkg="decision_planning" name="decision_planning" type="decision_planning" output="screen" respawn="true"/>
 </launch>

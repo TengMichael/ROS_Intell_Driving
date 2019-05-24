@@ -234,15 +234,15 @@ int main(int argc, char **argv)
     extract_GPSdata(position_data,&gps_coordinate,&veh_pos);
     printf("gps_coordinate %s\n", gps_coordinate.c_str());
     printf("veh_pos %f %f %f %f %f\n",veh_pos.Speed,veh_pos.SpeedDirection,veh_pos.PitchAngle,veh_pos.RollAngle,veh_pos.YawAngle);
-    string strUrl = "http://api.map.baidu.com/geoconv/v1/?coords="+gps_coordinate+"&from=1&to=5&ak=eVGImzwg4qM0OpeRTlGtxrBSzkqwSiMG";
+    string strUrl = "http://api.map.baidu.com/geoconv/v1/?coords="+gps_coordinate+"&from=1&to=5&ak=uU2bUqdqkaGO8CAosvNhyOPLgGBn1wdM";//eVGImzwg4qM0OpeRTlGtxrBSzkqwSiMG
     string strTmpStr;
     get_urldata(strUrl,&strTmpStr);
     //printf("strRsp is |%s|\n", strTmpStr.c_str());
     string BD_coordinate;vec2d BD_coords;
     extract_BDdata(strTmpStr,&BD_coordinate,&BD_coords);
     printf("BD_coordinate %s\n", BD_coordinate.c_str());
-    /*****************************get route planning information***********************************/
-    strUrl = "http://api.map.baidu.com/directionlite/v1/driving?origin="+BD_coordinate+"&destination=31.025422,121.43787&ak=eVGImzwg4qM0OpeRTlGtxrBSzkqwSiMG";
+    /*****************************get route planning information***********************************///31.025422,121.43787
+    strUrl = "http://api.map.baidu.com/directionlite/v1/driving?origin="+BD_coordinate+"&destination=31.03471,121.453651&ak=uU2bUqdqkaGO8CAosvNhyOPLgGBn1wdM";
     get_urldata(strUrl,&strTmpStr);
     //printf("strRsp is |%s|\n", strTmpStr.c_str());
     navi_posi::navi_info info,info_last;

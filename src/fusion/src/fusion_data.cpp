@@ -25,6 +25,8 @@ using namespace cv;
 #define car_length 2*10
 #define car_width 1*10
 #define speed_threshold 2
+#define default_milradar208_Length 1
+#define default_milradar208_Width 1
 
 void fusion_display()
 {
@@ -168,6 +170,8 @@ void fusion_front_radar208_radar408(){
       milradar_objs[l].ArelX = objs408[i].ArelX;
       milradar_objs[l].ArelY = objs408[i].ArelY;
       milradar_objs[l].ID = objs408[i].ID;
+      milradar_objs[l].Length = objs408[i].Length;
+      milradar_objs[l].Width = objs408[i].Width;
       l++;
     }
 
@@ -181,6 +185,8 @@ void fusion_front_radar208_radar408(){
       milradar_objs[l].ArelX = objs408[i].ArelX;
       milradar_objs[l].ArelY = objs408[i].ArelY;
       milradar_objs[l].ID = objs408[i].ID;
+      milradar_objs[l].Length = objs408[i].Length;
+      milradar_objs[l].Width = objs408[i].Width;
       memset(&objs208[0][j_min], 0, sizeof(objs208[0][j_min]));
       l++;
     }
@@ -195,6 +201,8 @@ void fusion_front_radar208_radar408(){
       milradar_objs[l].ArelX = objs408[i].ArelX;
       milradar_objs[l].ArelY = objs408[i].ArelY;
       milradar_objs[l].ID = objs408[i].ID;
+      milradar_objs[l].Length = objs408[i].Length;
+      milradar_objs[l].Width = objs408[i].Width;
       memset(&objs208[1][k_min], 0, sizeof(objs208[1][k_min]));
       l++;
     }
@@ -206,12 +214,14 @@ void fusion_front_radar208_radar408(){
       milradar_objs[l].VrelX = 0.6 * objs408[i].VrelX + 0.2 * objs208[1][k_min].VrelX + 0.2 * objs208[0][j_min].VrelX;
       milradar_objs[l].VrelY = 0.6 * objs408[i].VrelY + 0.2 * objs208[1][k_min].VrelY + 0.2 * objs208[0][j_min].VrelY;
       milradar_objs[l].ID = objs408[i].ID;
+      milradar_objs[l].Length = objs408[i].Length;
+      milradar_objs[l].Width = objs408[i].Width;
       memset(&objs208[0][j_min], 0, sizeof(objs208[0][j_min]));
       memset(&objs208[1][k_min], 0, sizeof(objs208[1][k_min]));
       l++;
     }
   } // 1st for
-
+/*
   // collect independent radar208_1 and radar208_2 into radar_objs
   for (uint8_t j = 0; j < Obj208_ID_Total[0]; j++){
     if ((objs208[0][j].DistX != 0) && (objs208[0][j].DistY != 0)){
@@ -221,6 +231,8 @@ void fusion_front_radar208_radar408(){
       milradar_objs[l].VrelY = objs208[0][j].VrelY;
       milradar_objs[l].ArelX = Invalid_ArelX;
       milradar_objs[l].ArelY = Invalid_ArelY;
+      milradar_objs[l].Length = default_milradar208_Length;
+      milradar_objs[l].Width = default_milradar208_Width;
       milradar_objs[l].ID = objs208[0][j].ID%25+256;
       l++;
     }
@@ -233,12 +245,14 @@ void fusion_front_radar208_radar408(){
         milradar_objs[l].VrelY = objs208[1][k].VrelY;
         milradar_objs[l].ArelX = Invalid_ArelX;
         milradar_objs[l].ArelY = Invalid_ArelY;
+        milradar_objs[l].Length = default_milradar208_Length;
+        milradar_objs[l].Width = default_milradar208_Width;
         milradar_objs[l].ID = objs208[1][k].ID%25+256+25;
         l++;
       }
     }
 
-  }
+  }*/
   radar_ID_Total = l;
 }
 
@@ -322,6 +336,8 @@ void fusion_radar_mobileye(){
     rmobjs[k].mobileye_DistY=Obstacle[i].PosY;
     rmobjs[k].mobileye_VrelX=Obstacle[i].VrelX;
     rmobjs[k].mobileye_ArelX=Obstacle[i].ArelX;
+    rmobjs[k].fusion_Length = Obstacle[i].Length;
+    rmobjs[k].fusion_Width = Obstacle[i].Width;
     if (dist_max == 100000){
       rmobjs[k].radar_DistX=Obstacle[i].PosX;
       rmobjs[k].radar_DistY=Obstacle[i].PosY;
@@ -342,6 +358,8 @@ void fusion_radar_mobileye(){
       k++;
     }
   }  // 1st for
+
+  //  collect milradar_objs[] into rmobjs[]
   for (uint8_t l = 0; l < radar_ID_Total; l++){
     if ((milradar_objs[l].DistX != 0) && (milradar_objs[l].DistY != 0)){
       rmobjs[k].fusion_flag = 0;
@@ -356,6 +374,8 @@ void fusion_radar_mobileye(){
       rmobjs[k].mobileye_DistY = milradar_objs[l].DistY;
       rmobjs[k].mobileye_VrelX = milradar_objs[l].VrelX;
       rmobjs[k].mobileye_ArelX = milradar_objs[l].ArelX;
+      rmobjs[k].fusion_Length = milradar_objs[l].Length;
+      rmobjs[k].fusion_Width = milradar_objs[l].Width;
       k++;
     }
   }
@@ -388,14 +408,14 @@ int main(int argc, char **argv)
     fusion_front_radar208_radar408();
     fusion_radar_mobileye();
     for(uint16_t i=0;i<mobileye_ID_Total;i++){
-      ROS_INFO("fusion_Num %i",mobileye_ID_Total);
-      if ((rmobjs[i].radar_DistX < 20) && (rmobjs[i].mobileye_DistX < 20)){
+      //ROS_INFO("fusion_Num %i",mobileye_ID_Total);
+      if ((rmobjs[i].radar_DistX < 50) && (fabs(rmobjs[i].mobileye_DistY) < 20)){
       msg.objs.push_back(rmobjs[i]);
       rmobjs[i].timestamp=rmobjs[i].timestamp+100;
       }
     }
     chatter_pub.publish(msg);
-    fusion_display();
+    //fusion_display();
     ros::spinOnce();
     loop_rate.sleep();
   }

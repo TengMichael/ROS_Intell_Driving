@@ -17,10 +17,10 @@ void kf_fusion_display(const kalman::radar_mobileye_data_multi msg){
   line(image, Point(load_width/4,0), Point(load_width/4,load_length),Scalar(0, 255, 255), 2, LINE_8);//left lane
   line(image, Point(load_width/4*3,0), Point(load_width/4*3,load_length),Scalar(0, 255, 255), 2, LINE_8);//right lane
   for (uint8_t i = 0; i < msg.objs.size(); i++) {
-  rectangle(image, Rect(load_width/2-msg.objs[i].radar_DistY,load_length/2-msg.objs[i].radar_DistX*2,4,4),
-            Scalar(255,0,0),-1, LINE_8);//B G R
-  rectangle(image, Rect(load_width/2-msg.objs[i].mobileye_DistY,load_length/2-msg.objs[i].mobileye_DistX*2,4,4),
-            Scalar(0,255,0),-1, LINE_8);//B G R
+  //rectangle(image, Rect(load_width/2-msg.objs[i].radar_DistY,load_length/2-msg.objs[i].radar_DistX*2,4,4),
+  //          Scalar(255,0,0),-1, LINE_8);//B G R
+  //rectangle(image, Rect(load_width/2-msg.objs[i].mobileye_DistY,load_length/2-msg.objs[i].mobileye_DistX*2,4,4),
+  //          Scalar(0,255,0),-1, LINE_8);//B G R
   rectangle(image, Rect(load_width/2-msg.objs[i].fusion_DistY,load_length/2-msg.objs[i].fusion_DistX*2,4,4),
             Scalar(0,0,255),-1, LINE_8);//B G R
   }

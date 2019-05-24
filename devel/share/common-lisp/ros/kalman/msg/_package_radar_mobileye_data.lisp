@@ -35,6 +35,10 @@
           FUSION_ARELX
           FUSION_ARELY-VAL
           FUSION_ARELY
+          FUSION_LENGTH-VAL
+          FUSION_LENGTH
+          FUSION_WIDTH-VAL
+          FUSION_WIDTH
           MOBILEYE_WIDTH-VAL
           MOBILEYE_WIDTH
           MOBILEYE_LENGTH-VAL

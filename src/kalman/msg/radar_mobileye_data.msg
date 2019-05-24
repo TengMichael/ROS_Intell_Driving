@@ -16,6 +16,8 @@ float32 fusion_VrelX
 float32 fusion_VrelY
 float32 fusion_ArelX
 float32 fusion_ArelY
+float32 fusion_Length
+float32 fusion_Width
 float32 mobileye_Width
 float32 mobileye_Length
 uint8 fusion_flag
