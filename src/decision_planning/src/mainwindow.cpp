@@ -28,40 +28,7 @@ MainWindow::~MainWindow()
 void MainWindow::paintEvent(QPaintEvent *event)
 {
   //environment initialization
-    // //临时测试 数据赋值
-    //lane_line left = lane_line(0, 0, -0.005, 0, 1, true);
-    //lane_line right = lane_line(5, 0, -0.005, 0, 1, true);
-    //lane lane_test = lane(left, right, 10);
-    //lane_test = lane(left, right, 10);
-    //vehicle veh_test = vehicle(4, 2, 3, 5, 1, 1, PI / 4);
-    //veh_test = vehicle(4, 2, 3, 5, 1, 1, PI / 4);
-    //vector<obstacle> obs_info;
-
-  //vector数据清空
-    //obs_info.clear();
     out_path1.clear();
-//    int obs_num=1;
-//    for (int i = 0; i < obs_num; i++) {
-//        int type = randnum(5+i*5) % 2 + 1;//1 或 2
-//        int width = 2;
-//        int height = 2;
-//        obstacle obs_temp = obstacle(7.0, 2.0, 0.0, 0.0, width, height, type);
-//        obs_info.insert(obs_info.begin() + i, obs_temp);
-//    }
-//    int obs_num=10;
-//    for (int i = 0; i < obs_num; i++) {
-//      int z_temp = randnum(1+i*5) % 200 - 100;//±100m范围
-//      int x_temp = randnum(2+i*5) % 20 - 10;//±10m范围
-//      int vz_temp = randnum(3+i*5) % 10;//0-9m/s范围
-//      int vx_temp = randnum(4+i*5) % 2;//0-1m/s范围
-//      int type = randnum(5+i*5) % 2 + 1;//1 或 2
-//      int width = 2;
-//      int height = 2;
-//      obstacle obs_temp = obstacle((double)z_temp, (double)x_temp,
-//                                   (double)vz_temp, (double)vx_temp, width, height, type);
-//      obs_info.insert(obs_info.begin() + i, obs_temp);
-//    }
-    //数据接口
 
 
     cout <<"cal transfer condition... ";
@@ -134,15 +101,14 @@ void MainWindow::paintEvent(QPaintEvent *event)
     else if(upper_state==3){
         if(intersection_state==1){
             cout <<"upper_state=3,pass the intersection;";
-            //目前是给定的路段入口，先测试一下!!!!!
-            intersection b=intersection(lane_test,veh_test,obs_info,1,vec2d(veh_test.lat,veh_test.lon),veh_test.yaw_angle,navi_test.turn_for_intersection,vec2d(5,0),vec2d(20,20),1,60);
+            intersection b=intersection(lane_test,veh_test,obs_info,1,vec2d(veh_test.lat,veh_test.lon),veh_test.yaw_angle,navi_test.turn_for_intersection,vec2d(0,0),vec2d(navi_test.Next_RelX[1],navi_test.Next_RelY[1]),1,60);
+            cout<<"INTERSECTION_END_POINT:"<<navi_test.Next_RelX[1]<<","<<navi_test.Next_RelY[1]<<endl;
             out_path1=b.generate_path_rrt();
             cout <<"upper_state=3,pass the intersection"<<endl;
         }
         else if(intersection_state==2){
             cout <<"upper_state=3,intersection stop;";
-            //目前是给定的路段入口，先测试一下!!!!!
-            intersection b=intersection(lane_test,veh_test,obs_info,1,vec2d(veh_test.lat,veh_test.lon),veh_test.yaw_angle,navi_test.turn_for_intersection,vec2d(5,0),vec2d(20,20),1,60);
+            intersection b=intersection(lane_test,veh_test,obs_info,1,vec2d(veh_test.lat,veh_test.lon),veh_test.yaw_angle,navi_test.turn_for_intersection,vec2d(0,0),vec2d(navi_test.Next_RelX[1],navi_test.Next_RelY[1]),1,60);
             out_path1=b.generate_path_brake();
             cout <<"upper_state=3,intersection stop"<<endl;
         }
@@ -161,21 +127,33 @@ void MainWindow::paintEvent(QPaintEvent *event)
     //painting
     QPainter painter(this);
     painter.setWindow(-1000,1000,4000,-2000);//set the window coordinate system, unit: 0.1m !!!
-    //设定横向坐标的放大系数（车道宽一点比较容易看清）
-    int size=2;
+    //设定纵横向坐标的放大系数（车道宽一点比较容易看清）
+    int size_z=2;//纵向
+    int size_x=4;//横向
 
     //draw current vehicle
     painter.setPen(QPen(Qt::blue,2,Qt::SolidLine));
     painter.setBrush(QBrush(Qt::blue,Qt::SolidPattern));//设置画刷形式
-    painter.drawEllipse(QPoint(0,0),20,20);
+    painter.drawEllipse(QPoint(0,0),10*size_x,20*size_z);
     painter.drawPoint(0,0);
 
     //draw obstacle
     for (int i = 0; i < obs_info.size(); i++) {
-      painter.setPen(QPen(Qt::red,2,Qt::SolidLine));
-      painter.setBrush(QBrush(Qt::red,Qt::SolidPattern));//设置画刷形式
-      painter.drawEllipse(QPoint(obs_info[i].pos_x*10,obs_info[i].pos_z*10),obs_info[i].width*10,obs_info[i].width*10);
+      if (abs(obs_info[i].v_z)+abs(obs_info[i].v_x)<2)
+      {//static obstacle
+        painter.setPen(QPen(Qt::gray,2,Qt::SolidLine));
+        painter.setBrush(QBrush(Qt::gray,Qt::SolidPattern));//设置画刷形式
+      }
+      else{//dynamic obstacle
+        painter.setPen(QPen(Qt::red,2,Qt::SolidLine));
+        painter.setBrush(QBrush(Qt::red,Qt::SolidPattern));//设置画刷形式
+      }
+      painter.drawEllipse(QPoint(obs_info[i].pos_x*10*size_x,obs_info[i].pos_z*10*size_z),obs_info[i].width*10*size_x/2,obs_info[i].height*10*size_z/2);
     }
+    //painter.setPen(QPen(Qt::green,2,Qt::SolidLine));
+    //painter.setBrush(QBrush(Qt::green,Qt::SolidPattern));//设置画刷形式
+    //painter.drawEllipse(QPoint(1000.0,0.0),100.0,100.0);
+
     cout<<"painting lane,";
     //draw lane
     painter.setPen(QPen(Qt::gray,8,Qt::DashLine));//设置画笔形式
@@ -185,10 +163,10 @@ void MainWindow::paintEvent(QPaintEvent *event)
     QPainterPath path1;
     QPointF sp,ep,c1,c2;
     for (double z_len = range_down; z_len<range_above; z_len=z_len+0.1) {
-      sp=QPointF(size*10*(lane_test.left.C0+z_len*lane_test.left.C1+z_len*z_len*lane_test.left.C2
-                     +z_len*z_len*z_len*lane_test.left.C3),size*10*z_len);
-      ep=QPointF(size*10*(lane_test.left.C0+(z_len+1)*lane_test.left.C1+(z_len+1)*(z_len+1)*lane_test.left.C2
-                     +(z_len+1)*(z_len+1)*(z_len+1)*lane_test.left.C3),size*10*(z_len+1));
+      sp=QPointF(size_x*10*(lane_test.left.C0+z_len*lane_test.left.C1+z_len*z_len*lane_test.left.C2
+                     +z_len*z_len*z_len*lane_test.left.C3),size_z*10*z_len);
+      ep=QPointF(size_x*10*(lane_test.left.C0+(z_len+1)*lane_test.left.C1+(z_len+1)*(z_len+1)*lane_test.left.C2
+                     +(z_len+1)*(z_len+1)*(z_len+1)*lane_test.left.C3),size_z*10*(z_len+1));
       c1 = QPointF((sp.x() + ep.x()) / 2, sp.y());
       c2 = QPointF((sp.x() + ep.x()) / 2, ep.y());
       if(z_len==range_down){
@@ -198,10 +176,10 @@ void MainWindow::paintEvent(QPaintEvent *event)
     }
     painter.drawPath(path1);
     for (double z_len = range_down; z_len<range_above; z_len=z_len+0.1) {
-      sp=QPointF(size*10*(lane_test.right.C0+z_len*lane_test.right.C1+z_len*z_len*lane_test.right.C2
-                     +z_len*z_len*z_len*lane_test.right.C3),size*10*z_len);
-      ep=QPointF(size*10*(lane_test.right.C0+(z_len+1)*lane_test.right.C1+(z_len+1)*(z_len+1)*lane_test.right.C2
-                     +(z_len+1)*(z_len+1)*(z_len+1)*lane_test.right.C3),size*10*(z_len+1));
+      sp=QPointF(size_x*10*(lane_test.right.C0+z_len*lane_test.right.C1+z_len*z_len*lane_test.right.C2
+                     +z_len*z_len*z_len*lane_test.right.C3),size_z*10*z_len);
+      ep=QPointF(size_x*10*(lane_test.right.C0+(z_len+1)*lane_test.right.C1+(z_len+1)*(z_len+1)*lane_test.right.C2
+                     +(z_len+1)*(z_len+1)*(z_len+1)*lane_test.right.C3),size_z*10*(z_len+1));
       c1 = QPointF((sp.x() + ep.x()) / 2, sp.y());
       c2 = QPointF((sp.x() + ep.x()) / 2, ep.y());
       if(z_len==range_down){
@@ -215,8 +193,8 @@ void MainWindow::paintEvent(QPaintEvent *event)
     painter.setPen(QPen(Qt::blue,8,Qt::SolidLine));
     QPainterPath path2;
     for(int i=0;i<out_path1.size()-1;i++){
-          sp=QPointF(size*10*out_path1[i].x,size*out_path1[i].z*10);
-          ep=QPointF(size*10*out_path1[i+1].x,size*out_path1[i+1].z*10);
+          sp=QPointF(size_x*10*out_path1[i].x,size_z*out_path1[i].z*10);
+          ep=QPointF(size_x*10*out_path1[i+1].x,size_z*out_path1[i+1].z*10);
           c1 = QPointF((sp.x() + ep.x()) / 2, sp.y());
           c2 = QPointF((sp.x() + ep.x()) / 2, ep.y());
           if (i==0){
@@ -274,7 +252,7 @@ void MainWindow::paintEvent(QPaintEvent *event)
     else {
       painter.drawText(100,300,"Navigation Stop: Yes");
     }
-    if (navi_test.distance_from_road_seg_end>10){
+    if (navi_test.distance_from_road_seg_end>30){
       painter.drawText(100,400,"Near intersection: No");
     }
     else {
@@ -290,18 +268,22 @@ void MainWindow::paintEvent(QPaintEvent *event)
     else {
       painter.drawText(100,600,"Enter new road: Yes");
     }
-    if(C1==1 && navi_test.turn_for_intersection==0){
+    if(navi_test.distance_from_road_seg_end<100 && navi_test.turn_for_intersection==0){
       painter.drawText(100,700,"Intersection driving: straight");
     }
-    else if(C1==1 && navi_test.turn_for_intersection==1){
+    else if(navi_test.distance_from_road_seg_end<100 && navi_test.turn_for_intersection==1){
       painter.drawText(100,700,"Intersection driving: left turn");
     }
-    else if(C1==1 && navi_test.turn_for_intersection==2){
+    else if(navi_test.distance_from_road_seg_end<100 && navi_test.turn_for_intersection==2){
       painter.drawText(100,700,"Intersection driving: right turn");
     }
 
     painter.drawText(1100,100,"50m");
+    painter.drawText(1100,600,"20m");
+    painter.drawText(1100,800,"10m");
     painter.drawText(1100,1000,"0m");
+    painter.drawText(1100,1200,"-10m");
+    painter.drawText(1100,1400,"-20m");
     painter.drawText(1100,1900,"-50m");
     painter.drawText(2100,100,"Speed Trajectory");
     painter.drawText(2500,1750,"t");

@@ -253,10 +253,10 @@ void poly::printans(std::vector< std::vector<double> > mat)
     {
         for (unsigned int i=0; i<mat[k].size(); i++)
         {
-            cout<<mat[k][i];
-            cout<<" ";
+            //cout<<mat[k][i];
+            //cout<<" ";
         }
-        cout<<endl;
+        //cout<<endl;
     }
 }
 

@@ -84,8 +84,7 @@ void mobileye_display_obstacles(const mobileye::mobileye_Obstacle_multi msg)
 
   Mat image = Mat(load_length,load_width,CV_8UC3, Scalar(205, 205, 205));
   rectangle(image, Rect(load_width/2-car_width/2,load_length/2,car_width, car_length), Scalar(0,255,0),2,LINE_8,0);
-  line(image, Point(load_width/4,0), Point(load_width/4,load_length),Scalar(0, 255, 255), 2, LINE_8);//left lane
-  line(image, Point(load_width/4*3,0), Point(load_width/4*3,load_length),Scalar(0, 255, 255), 2, LINE_8);//right lane
+  line(image,Point(load_width/2,load_length),Point(load_width/2,0),Scalar(255, 0, 0),1,LINE_8,0);
   for (uint8_t i = 0; i < msg.Obstacles.size(); i++) {
     //0 vehicle;1 truck;2 bike;3 ped;4 bicyle;5-7 unused
     if(msg.Obstacles[i].MType==3)

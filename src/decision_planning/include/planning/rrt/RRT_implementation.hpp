@@ -49,6 +49,7 @@ namespace rrt
 		int count=0;
 		int check=0;
 		tree.push_back(std::pair< Utils::Point<T>, Utils::Point<T> > (startPoint,startPoint));
+                int count1=0;
 		while( check < maxIterations)
 		{
 			//std::cout<<"In Planning Loop"<<std::endl;
@@ -59,7 +60,7 @@ namespace rrt
 			{
 				std::cout<<"Tree complete!!"<<std::endl;
 				int start_time=clock();
-                growTree(endPoint,direction);
+                                growTree(endPoint,direction);
 				int end_time=clock();
 				std::cout<<"Time to generate path = "<<end_time-start_time<<std::endl;
 				generatePath(startPoint,endPoint);
@@ -69,21 +70,29 @@ namespace rrt
 			{
 				//std::cout<<"Adding Next Biased Point to tree!!"<<std::endl;
 				count=0;
+                                count1=0;
 				do{
-                    next= generateBiasedPoint(1,direction);
-                }while(checkPoint(next,obs_info)!=true);
+                                  count1=count1+1;
+                                  next= generateBiasedPoint(1,direction);
+                                }while(checkPoint(next,obs_info)!=true && count1<20);
 				//std::cout<<" : "<<next.x<<","<<next.y<<std::endl;
 			}
 			else
 			{
 				//std::cout<<"Adding next point to tree!!"<<std::endl;
-				do{
-                    next = generatePoint(direction);
-                }while(checkPoint(next,obs_info)!=true);
+                                count1=0;
+                                do{
+                                  count1=count1+1;
+                                  next = generatePoint(direction);
+                                }while(checkPoint(next,obs_info)!=true && count1<20);
 				//std::cout<<" : "<<next.x<<","<<next.y<<std::endl;
 			}
 			//std::cout<<" Growing Tree next : "<<next.x<<","<<next.y<<std::endl;
-            growTree(next,direction);
+                        if(count1==20){
+                          std::cout<<"Path Not Found"<<std::endl;
+                          return false;
+                        }
+                        growTree(next,direction);
 			count++;
 			check++;
 			//std::cout<<"check= "<<check<<", count= "<<count<<std::endl;

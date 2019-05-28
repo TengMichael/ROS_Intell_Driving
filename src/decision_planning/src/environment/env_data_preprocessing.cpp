@@ -167,14 +167,14 @@ void state_transfer_condition_cal(lane lane_data, vector<obstacle> obs_data, veh
     }
     //十字路口相关的变量
     intersection_C1=0;//表示路口障碍物情况，障碍物较多时置1，不知道怎么判断，先默认为0好了，RRT规划不出来的时候也会自动停车
-    if (navi_data.distance_from_road_seg_end<10){
+    if (navi_data.distance_from_road_seg_end<30){
       C1=1;//临近当前道路终点，通过接收的数据信息来判断
     }
     else{
       C1=0;
     }
-    C1=0;
-    if (navi_data.newroad==1){//这个信号没有延时，导致读取信息频率不够高时，读不到该信号置1的瞬间，有限状态机退不出路口状态
+    //C1=0;
+    if (navi_data.newroad==1 || navi_data.distance_from_road_seg_end>30){//这个信号没有延时，导致读取信息频率不够高时，读不到该信号置1的瞬间，有限状态机退不出路口状态
       E3=1;//已经进入了新的路段
     }
     else{

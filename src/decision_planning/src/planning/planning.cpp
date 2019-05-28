@@ -12,6 +12,8 @@ navi::navi() {
   turn_for_intersection=0;//用于路口的转向信息
   RelX.clear();//当前路段坐标点串x
   RelY.clear();//当前路段坐标点串y
+  Next_RelX.clear();//下一路段坐标点串x
+  Next_RelY.clear();//下一路段坐标点串y
   newroad=0;//是否进入新的道路，置1表示进入
 }
 
@@ -236,6 +238,9 @@ bool path::path_collision(obstacle obs) {
 }
 
 path straight::generate_path_free_driving(void) {
+  //for (int i=0;i<10000000000;i++){
+  //      int a=1000;
+  //}
     //如果车道线有效就更新规划点，无效就沿用之前的规划轨迹
     if (lane_info.left.valid == true && lane_info.right.valid == true) {
         //更新路径规划起始GPS和航向角
@@ -251,14 +256,11 @@ path straight::generate_path_free_driving(void) {
         //path_segment1  变速
         path_segment path_segment_temp;
         path_segment_temp.init_point.z = 0;
-        path_segment_temp.init_point.x = lane_info.lateral_position_centerline(0);
+        path_segment_temp.init_point.x = 0;
         path_segment_temp.end_point.z = z_temp1;
         path_segment_temp.end_point.x = lane_info.lateral_position_centerline(z_temp1);
-        path_segment_temp.is_lane_driving = 1;
-        path_segment_temp.C0 = lane_info.center_line_cal().C0;
-        path_segment_temp.C1 = lane_info.center_line_cal().C1;
-        path_segment_temp.C2 = lane_info.center_line_cal().C2;
-        path_segment_temp.C3 = lane_info.center_line_cal().C3;
+        path_segment_temp.is_lane_driving = 0;
+        path_segment_temp.kappa = 0;
         path_segment_temp.init_speed = veh_info.cur_speed;
         path_segment_temp.end_speed = min(lane_info.road_speed_limit, veh_info.veh_preferred_speed);
         straight_path.path_series.insert(straight_path.path_series.begin(), path_segment_temp);
@@ -318,14 +320,11 @@ path straight::generate_path_following(void) {
         //path_segment1  变速
         path_segment path_segment_temp;
         path_segment_temp.init_point.z = 0;
-        path_segment_temp.init_point.x = lane_info.lateral_position_centerline(0);
+        path_segment_temp.init_point.x = 0;
         path_segment_temp.end_point.z = z_temp1;
         path_segment_temp.end_point.x = lane_info.lateral_position_centerline(z_temp1);
-        path_segment_temp.is_lane_driving = 1;
-        path_segment_temp.C0 = lane_info.center_line_cal().C0;
-        path_segment_temp.C1 = lane_info.center_line_cal().C1;
-        path_segment_temp.C2 = lane_info.center_line_cal().C2;
-        path_segment_temp.C3 = lane_info.center_line_cal().C3;
+        path_segment_temp.is_lane_driving = 0;
+        path_segment_temp.kappa=0;
         path_segment_temp.init_speed = veh_info.cur_speed;
         path_segment_temp.end_speed = max(0.01,min(min(lane_info.road_speed_limit, veh_info.veh_preferred_speed),lead_veh_speed));
         straight_path.path_series.insert(straight_path.path_series.begin(), path_segment_temp);
@@ -561,7 +560,7 @@ path change_lane::generate_path(void) {
                     left_follow_veh_time_gap = min(left_follow_veh_time_gap, abs(z / v_s));
                 }
             }
-            cout<<"obstacle_vs="<<obstacle_info[i].v_s<<endl;
+            //cout<<"obstacle_vs="<<obstacle_info[i].v_s<<endl;
         }
         cout<<"lead_veh_time_gap="<<lead_veh_time_gap<<endl;
         cout<<"left_follow_veh_time_gap="<<left_follow_veh_time_gap<<endl;
@@ -643,24 +642,21 @@ path change_lane::generate_path(void) {
             else if (car_follow_gap<z_temp1 && lead_veh_speed<2){
               z_temp1=max(1.0,car_follow_gap-1);
             }
-            cout<<"z_temp1="<<z_temp1<<endl;
+            //cout<<"z_temp1="<<z_temp1<<endl;
             //沿车道线行驶，车道方程
             //path_segment1  变速
             path_segment path_segment_temp;
             path_segment_temp.init_point.z = 0;
-            path_segment_temp.init_point.x = lane_info.lateral_position_centerline(0);
+            path_segment_temp.init_point.x = 0;
             path_segment_temp.end_point.z = z_temp1;
             path_segment_temp.end_point.x = lane_info.lateral_position_centerline(z_temp1);
-            path_segment_temp.is_lane_driving = 1;
-            path_segment_temp.C0 = lane_info.center_line_cal().C0;
-            path_segment_temp.C1 = lane_info.center_line_cal().C1;
-            path_segment_temp.C2 = lane_info.center_line_cal().C2;
-            path_segment_temp.C3 = lane_info.center_line_cal().C3;
+            path_segment_temp.is_lane_driving = 0;
+            path_segment_temp.kappa = 0;
             path_segment_temp.init_speed = veh_info.cur_speed;
             path_segment_temp.end_speed = max(0.01,min(min(lane_info.road_speed_limit, veh_info.veh_preferred_speed),lead_veh_speed));
             straight_path.path_series.insert(straight_path.path_series.begin(), path_segment_temp);
-            cout<<"z_temp1="<<z_temp1<<endl;
-            cout<<"end_speed="<<path_segment_temp.end_speed<<endl;
+            //cout<<"z_temp1="<<z_temp1<<endl;
+            //cout<<"end_speed="<<path_segment_temp.end_speed<<endl;
             //path_segment2  匀速
             if (path_segment_temp.end_speed>0.3){
             path_segment_temp.init_point.z = z_temp1;
@@ -786,14 +782,11 @@ path change_lane::generate_path(void) {
             //path_segment1  变速
             path_segment path_segment_temp;
             path_segment_temp.init_point.z = 0;
-            path_segment_temp.init_point.x = lane_info.lateral_position_centerline(0);
+            path_segment_temp.init_point.x = 0;
             path_segment_temp.end_point.z = z_temp1;
             path_segment_temp.end_point.x = lane_info.lateral_position_centerline(z_temp1);
-            path_segment_temp.is_lane_driving = 1;
-            path_segment_temp.C0 = lane_info.center_line_cal().C0;
-            path_segment_temp.C1 = lane_info.center_line_cal().C1;
-            path_segment_temp.C2 = lane_info.center_line_cal().C2;
-            path_segment_temp.C3 = lane_info.center_line_cal().C3;
+            path_segment_temp.is_lane_driving = 0;
+            path_segment_temp.kappa = 0;
             path_segment_temp.init_speed = veh_info.cur_speed;
             path_segment_temp.end_speed = max(0.01,min(min(lane_info.road_speed_limit, veh_info.veh_preferred_speed),lead_veh_speed));
             straight_path.path_series.insert(straight_path.path_series.begin(), path_segment_temp);
@@ -1249,6 +1242,7 @@ vector<path_point> intersection::generate_path_rrt(void){
     point_temp2 = GPS_in_road_section;
     int direction=intersection_type;//路口转向方向，0-直行，1-左转，2-右转
 
+    //cout<<"step1"<<endl;
     //临时添加，测试用
     //point_temp2.z=10;
     //point_temp2.x=-10;
@@ -1267,15 +1261,23 @@ vector<path_point> intersection::generate_path_rrt(void){
     RRT<int> test;
     test.setEndPoints(start,finish);
    // test.setCheckPointFunction(**(check));
-    test.setStepLength(2);
+    test.setStepLength(3);
     test.setHalfDimensions(100.0,100.0);
     test.setBiasParameter(50);
     test.setOrigin(origin);
     test.setMaxIterations(1000);
-    test.plan(obstacle_info,direction);
+    //cout<<"step2"<<endl;
+    bool flag_findpath=false;
+    flag_findpath=test.plan(obstacle_info,direction);
+    if (flag_findpath==false){
+      finish.x=navi_test.Next_RelX[0];
+      finish.y=navi_test.Next_RelY[0];
+      test.setEndPoints(start,finish);
+      flag_findpath=test.plan(obstacle_info,direction);
+    }
     cout<<"#################################################"<<endl;
     deque<Utils::Point<int> > path=test.getPointsOnPath();
-
+    //cout<<"step3"<<endl;
     //不拟合直接输出
 //    double z_record=0,x_record=0,v_record=0,t_record=0;
 //    double dx,dt,dz;
@@ -1305,15 +1307,17 @@ vector<path_point> intersection::generate_path_rrt(void){
         for(int i=0;i<10;i++){
             x_rrt.push_back(i*0.5);
             y_rrt.push_back(0);
-        }
-//        for(int i=0;i<10;i++){
-//            x_rrt.push_back(finish.x);
-//            y_rrt.push_back(finish.y-i*0.5);
-//        }
+        }        
         for(int i=0;i<path.size();i++){
             cout<<path[i].x<<","<<path[i].y<<endl;
             x_rrt.push_back(path[i].x);
             y_rrt.push_back(path[i].y);
+        }
+        if(flag_findpath==true){
+            for(int i=1;i<3;i++){
+                x_rrt.push_back(navi_test.Next_RelX[i]);
+                y_rrt.push_back(navi_test.Next_RelY[i]);
+            }
         }
         p.inter(deg_in,x_rrt,y_rrt);
         double z_record,x_record,v_record=veh_info.veh_preferred_speed,t_record=0;

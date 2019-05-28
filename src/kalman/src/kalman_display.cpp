@@ -14,8 +14,7 @@ void kf_fusion_display(const kalman::radar_mobileye_data_multi msg){
   char window[] = "kalman_fusion";
   Mat image = Mat(load_length,load_width,CV_8UC3, Scalar(205, 205, 205));
   rectangle(image, Rect(load_width/2-car_width/2,load_length/2,car_width, car_length), Scalar(0,255,0),2,LINE_8,0);
-  line(image, Point(load_width/4,0), Point(load_width/4,load_length),Scalar(0, 255, 255), 2, LINE_8);//left lane
-  line(image, Point(load_width/4*3,0), Point(load_width/4*3,load_length),Scalar(0, 255, 255), 2, LINE_8);//right lane
+  line(image,Point(load_width/2,load_length),Point(load_width/2,0),Scalar(255, 0, 0),1,LINE_8,0);
   for (uint8_t i = 0; i < msg.objs.size(); i++) {
   //rectangle(image, Rect(load_width/2-msg.objs[i].radar_DistY,load_length/2-msg.objs[i].radar_DistX*2,4,4),
   //          Scalar(255,0,0),-1, LINE_8);//B G R

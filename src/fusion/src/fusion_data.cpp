@@ -221,7 +221,7 @@ void fusion_front_radar208_radar408(){
       l++;
     }
   } // 1st for
-/*
+  /*
   // collect independent radar208_1 and radar208_2 into radar_objs
   for (uint8_t j = 0; j < Obj208_ID_Total[0]; j++){
     if ((objs208[0][j].DistX != 0) && (objs208[0][j].DistY != 0)){
@@ -409,9 +409,11 @@ int main(int argc, char **argv)
     fusion_radar_mobileye();
     for(uint16_t i=0;i<mobileye_ID_Total;i++){
       //ROS_INFO("fusion_Num %i",mobileye_ID_Total);
-      if ((rmobjs[i].radar_DistX < 50) && (fabs(rmobjs[i].mobileye_DistY) < 20)){
-      msg.objs.push_back(rmobjs[i]);
-      rmobjs[i].timestamp=rmobjs[i].timestamp+100;
+      if((rmobjs[i].radar_DistX < 50) && (fabs(rmobjs[i].radar_DistY) < 20)){
+        if((fabs(rmobjs[i].radar_VrelX+Carinfo.Speed)>1.5)||(rmobjs[i].fusion_flag==1)){
+          msg.objs.push_back(rmobjs[i]);
+          rmobjs[i].timestamp=rmobjs[i].timestamp+100;
+        }
       }
     }
     chatter_pub.publish(msg);

@@ -19,6 +19,8 @@ public:
   int turn_for_intersection;//用于路口的转向信息
   vector<double> RelX;//当前路段坐标点串x
   vector<double> RelY;//当前路段坐标点串y
+  vector<double> Next_RelX;//下一路段坐标点串x
+  vector<double> Next_RelY;//下一路段坐标点串y
   int newroad;//是否进入新的道路，置1表示进入
 
 public:
