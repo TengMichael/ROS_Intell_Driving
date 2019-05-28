@@ -394,7 +394,6 @@ int main(int argc, char **argv)
   ros::Subscriber sub4 = nh.subscribe<milradar::obj208_multi>("milradar_obj208_4", 1000, boost::bind(&sensor208,_1,4));
   ros::Subscriber sub5 = nh.subscribe<milradar::obj208_multi>("milradar_obj208_5", 1000, boost::bind(&sensor208,_1,5));
   ros::Subscriber sub6 = nh.subscribe<milradar::obj208_multi>("milradar_obj208_6", 1000, boost::bind(&sensor208,_1,6));
-
   ros::Subscriber sub7 = nh.subscribe("mobileye_Obstacle", 1000, mobileye_obstacles);
   ros::Subscriber sub8 = nh.subscribe("mobileye_Lane", 1000, mobileye_lane);
   ros::Subscriber sub9 = nh.subscribe<mobileye::vehicle_info>("vehicle_info", 1000, car_information);
