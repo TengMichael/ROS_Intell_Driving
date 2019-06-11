@@ -142,7 +142,7 @@ void fusion_front_radar208_radar408(){
           dist_max1 = dist1(0);
           j_min = j;
         }
-      } // if radar208_1 is in defined gate
+      } // if radar208_2 is in defined gate
       for (uint8_t k = 0; k < Obj208_ID_Total[1]; k++){ // 3rd for
         // radar208_2 is in defined gate
         if ((fabs(objs408[i].DistX - objs208[1][k].DistX) < gate_X / 2) && (fabs(objs408[i].DistY - objs208[1][k].DistY) < gate_Y / 2)){
